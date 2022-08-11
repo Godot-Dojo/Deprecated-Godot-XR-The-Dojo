@@ -1,5 +1,7 @@
 # Godot XR Avatar
 
+<img src="./XRBody-1.gif" alt="Keyboard GIF" width="568" height="320">
+
 This repository contains a demo scene for having a full body player avatar using Godot's XR Plugin and XR Tools plugin.
 
 This repo's code is based heavily from / derived from the work of SYBIOTE (https://github.com/SYBIOTE) based on an unpublished project for VR avatars that he graciously shared.
