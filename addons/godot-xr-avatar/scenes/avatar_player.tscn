@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=2]
+[gd_scene load_steps=64 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/godot-xr-tools/assets/PlayerBody.tscn" type="PackedScene" id=2]
@@ -7915,6 +7915,20 @@ tracks/66/keys = PoolRealArray( 0, 1, 0, 0, 0, -8.14603e-08, 0, 0, 1, 1, 1, 1, 1
 [sub_resource type="AnimationNodeAnimation" id=80]
 animation = "T-pose"
 
+[sub_resource type="AnimationNodeAnimation" id=123]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=124]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=125]
+filter_enabled = true
+filters = [ "Armature/Skeleton:middle_01_l", "Armature/Skeleton:middle_02_l", "Armature/Skeleton:middle_03_l", "Armature/Skeleton:middle_03_l_end", "Armature/Skeleton:pinky_01_l", "Armature/Skeleton:pinky_02_l", "Armature/Skeleton:pinky_03_l", "Armature/Skeleton:pinky_03_l_end", "Armature/Skeleton:ring_01_l", "Armature/Skeleton:ring_02_l", "Armature/Skeleton:ring_03_l", "Armature/Skeleton:ring_03_l_end", "Armature/Skeleton:thumb_01_l", "Armature/Skeleton:thumb_02_l", "Armature/Skeleton:thumb_03_l", "Armature/Skeleton:thumb_03_l_end" ]
+
+[sub_resource type="AnimationNodeBlend2" id=126]
+filter_enabled = true
+filters = [ "Armature/Skeleton:index_01_l", "Armature/Skeleton:index_02_l", "Armature/Skeleton:index_03_l", "Armature/Skeleton:index_03_l_end" ]
+
 [sub_resource type="AnimationNodeAnimation" id=117]
 animation = "forward"
 
@@ -7942,16 +7956,46 @@ blend_point_3/pos = Vector2( -1, 0 )
 blend_point_4/node = SubResource( 121 )
 blend_point_4/pos = Vector2( 0, 0 )
 
+[sub_resource type="AnimationNodeAnimation" id=127]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=128]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=129]
+filter_enabled = true
+filters = [ "Armature/Skeleton:middle_01_r", "Armature/Skeleton:middle_02_r", "Armature/Skeleton:middle_03_r", "Armature/Skeleton:middle_03_r_end", "Armature/Skeleton:pinky_01_r", "Armature/Skeleton:pinky_02_r", "Armature/Skeleton:pinky_03_r", "Armature/Skeleton:pinky_03_r_end", "Armature/Skeleton:ring_01_r", "Armature/Skeleton:ring_02_r", "Armature/Skeleton:ring_03_r", "Armature/Skeleton:ring_03_r_end", "Armature/Skeleton:thumb_01_r", "Armature/Skeleton:thumb_02_r", "Armature/Skeleton:thumb_03_r", "Armature/Skeleton:thumb_03_r_end" ]
+
+[sub_resource type="AnimationNodeBlend2" id=130]
+filter_enabled = true
+filters = [ "Armature/Skeleton:index_01_r", "Armature/Skeleton:index_02_r", "Armature/Skeleton:index_03_r", "Armature/Skeleton:index_03_r_end" ]
+
 [sub_resource type="AnimationNodeBlendTree" id=122]
-graph_offset = Vector2( -165.348, 38.434 )
+graph_offset = Vector2( -310.801, 45.0532 )
 nodes/Add2/node = SubResource( 79 )
 nodes/Add2/position = Vector2( 320, 140 )
 nodes/Animation/node = SubResource( 80 )
 nodes/Animation/position = Vector2( 60, 100 )
+nodes/leftGrip/node = SubResource( 123 )
+nodes/leftGrip/position = Vector2( 420, 340 )
+nodes/leftTrigger/node = SubResource( 124 )
+nodes/leftTrigger/position = Vector2( 720, 340 )
+nodes/lefthandpose/node = SubResource( 125 )
+nodes/lefthandpose/position = Vector2( 640, 140 )
+nodes/lefthandposetrig/node = SubResource( 126 )
+nodes/lefthandposetrig/position = Vector2( 940, 140 )
 nodes/movement/node = SubResource( 86 )
 nodes/movement/position = Vector2( 40, 240 )
-nodes/output/position = Vector2( 540, 120 )
-node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "output", 0, "Add2" ]
+nodes/output/position = Vector2( 1800, 140 )
+nodes/rightGrip/node = SubResource( 127 )
+nodes/rightGrip/position = Vector2( 1040, 360 )
+nodes/rightTrigger/node = SubResource( 128 )
+nodes/rightTrigger/position = Vector2( 1400, 340 )
+nodes/righthandpose/node = SubResource( 129 )
+nodes/righthandpose/position = Vector2( 1240, 140 )
+nodes/righthandposetrig/node = SubResource( 130 )
+nodes/righthandposetrig/position = Vector2( 1560, 160 )
+node_connections = [ "output", 0, "righthandposetrig", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
 
 [node name="avatar_player" type="Spatial"]
 
@@ -7970,28 +8014,6 @@ strafe = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
 collision_layer = 131072
 margin = 0.004
-
-[node name="Skeleton" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
-bones/0/bound_children = [  ]
-bones/1/bound_children = [  ]
-bones/2/bound_children = [  ]
-bones/3/bound_children = [  ]
-bones/4/bound_children = [  ]
-bones/5/bound_children = [  ]
-bones/6/bound_children = [  ]
-bones/7/bound_children = [  ]
-bones/8/bound_children = [  ]
-bones/9/bound_children = [  ]
-bones/10/bound_children = [  ]
-bones/11/bound_children = [  ]
-bones/12/bound_children = [  ]
-bones/13/bound_children = [  ]
-bones/14/bound_children = [  ]
-bones/15/bound_children = [  ]
-bones/16/bound_children = [  ]
-bones/17/bound_children = [  ]
-bones/18/bound_children = [  ]
-bones/19/bound_children = [  ]
 
 [node name="BoneRoot" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, -2.50192e-40, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 7.2293e-21, 0.000360775, -0.0235019 )
@@ -8365,7 +8387,7 @@ bones/55/name = "head_end"
 bones/55/parent = 54
 bones/55/rest = Transform( 1, -3.55533e-12, 3.10241e-12, 3.55533e-12, 1, -4.05126e-08, -3.10241e-12, 4.05126e-08, 1, 3.75755e-13, 0.15869, -4.65619e-09 )
 bones/55/enabled = true
-bones/55/bound_children = [  ]
+bones/55/bound_children = [ NodePath("character_height") ]
 bones/56/name = "thigh_l"
 bones/56/parent = 1
 bones/56/rest = Transform( 0.884977, 0.0883841, -0.457169, 0.201269, -0.957971, 0.204408, -0.419889, -0.272911, -0.865569, 0.11374, -0.00225836, -0.012278 )
@@ -8380,7 +8402,7 @@ bones/58/name = "foot_l"
 bones/58/parent = 57
 bones/58/rest = Transform( 0.994067, -0.0154558, -0.107667, 0.104244, 0.41798, 0.902455, 0.0310545, -0.908325, 0.417111, 4.24916e-09, 0.458613, 2.32831e-10 )
 bones/58/enabled = true
-bones/58/bound_children = [  ]
+bones/58/bound_children = [ NodePath("left_foot") ]
 bones/59/name = "ball_l"
 bones/59/parent = 58
 bones/59/rest = Transform( 0.823613, -0.077509, -0.561831, 0.348754, 0.850404, 0.393934, 0.44725, -0.52039, 0.727435, 2.2319e-09, 0.150714, -4.86616e-08 )
@@ -8405,7 +8427,7 @@ bones/63/name = "foot_r"
 bones/63/parent = 62
 bones/63/rest = Transform( 0.994067, 0.0154551, 0.107671, -0.104247, 0.41798, 0.902455, -0.0310568, -0.908325, 0.417111, 7.71252e-09, 0.458614, 0 )
 bones/63/enabled = true
-bones/63/bound_children = [  ]
+bones/63/bound_children = [ NodePath("right_foot") ]
 bones/64/name = "ball_r"
 bones/64/parent = 63
 bones/64/rest = Transform( 0.823612, 0.0775111, 0.561831, -0.348756, 0.850403, 0.393933, -0.447249, -0.52039, 0.727435, -1.41899e-08, 0.150714, 1.44355e-08 )
@@ -8522,7 +8544,11 @@ active = true
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:Root")
 parameters/Add2/add_amount = 0.0
+parameters/lefthandpose/blend_amount = 0
+parameters/lefthandposetrig/blend_amount = 0
 parameters/movement/blend_position = Vector2( 0, 0.5 )
+parameters/righthandpose/blend_amount = 0
+parameters/righthandposetrig/blend_amount = 0
 
 [node name="PlayerBody" parent="FPController" instance=ExtResource( 2 )]
 

@@ -229,6 +229,15 @@ func _physics_process(delta):
 	head.basis = Basis(angles)
 	skeleton.set_bone_pose(skeleton.find_bone("head"),head)
 
+
+	#perform hand grip
+	$AnimationTree.set("parameters/lefthandpose/blend_amount", ARVRHelpers.get_left_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_GRIP))
+	$AnimationTree.set("parameters/righthandpose/blend_amount", ARVRHelpers.get_right_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_GRIP))
+	$AnimationTree.set("parameters/lefthandposetrig/blend_amount", ARVRHelpers.get_left_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
+	$AnimationTree.set("parameters/righthandposetrig/blend_amount", ARVRHelpers.get_right_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
+
+	
+
 	# Perform player movement animation
 	var dx = -_avatar_move_controller.get_joystick_axis(0);
 	var dy = _avatar_move_controller.get_joystick_axis(1);
@@ -236,7 +245,7 @@ func _physics_process(delta):
 	#var dx = player_velocity_normalized.x
 	#var dy = player_velocity_normalized.z
 	var move = Vector2(dx,dy)
-	print(move)
+	#print(move)
 	$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
 	$AnimationTree.set("parameters/Add2/add_amount", 1)
 	update_ik_anim(left_target,Raycast_L,left_foot,LL_db,ik_raycast_height,foot_offset)
