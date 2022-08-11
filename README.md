@@ -1,6 +1,6 @@
 # Godot XR Avatar
+<img src="./XRBody-2.gif" alt="Keyboard GIF" width="568" height="320">
 
-<img src="./XRBody-1.gif" alt="Keyboard GIF" width="568" height="320">
 
 This repository contains a demo scene for having a full body player avatar using Godot's XR Plugin and XR Tools plugin.
 
@@ -23,6 +23,8 @@ Therefore, work, perhaps substantial work, is still required to enable this avat
 
 READ THE INSTRUCTIONS BELOW.
 
+<img src="./XRBody-1.gif" alt="Keyboard GIF" width="568" height="320">
+
 ## Versions
 
 This is in an beta state, it is working but there are issues to be expected.
@@ -39,7 +41,7 @@ Setup your XR rig as you see fit.
 
 Add your avatar character as a child of your ARVROrigin node (by default, this will be called "FPController" with the OpenXR / XR Tools assets)
 
-At the root of your avatar character, which should be a spatial node, attach the avatargodot.gd script found in scenes/vr_body to the spatial node.
+At the root of your avatar character, which should be a spatial node, attach the avatar.gd script found in addons/godot-xr-avatar/scripts to the spatial node.
 
 Follow the steps indicated in the top comments of the avatar.gd script to finish setting up your character, copied and pasted here:
 
