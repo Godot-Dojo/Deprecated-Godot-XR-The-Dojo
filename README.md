@@ -1,5 +1,5 @@
 # Godot XR Avatar
-<img src="./media/XRBody-2.gif" alt="Keyboard GIF" width="568" height="320">
+![XRBodyGIF](media/XRBody-2.gif) 
 
 
 This repository contains a demo scene for having a full body player avatar using Godot's XR Plugin and XR Tools plugin.
@@ -23,7 +23,7 @@ Therefore, work, perhaps substantial work, is still required to enable this avat
 
 READ THE INSTRUCTIONS BELOW.
 
-<img src="./media/XRBody-1.gif" alt="Keyboard GIF" width="568" height="320">
+![XRBodyGIF1](media/XRBody-1.gif) 
 
 ## Versions
 
