@@ -76,8 +76,13 @@ The avatar legs are controlled by animations.  You need to have animations for w
 Then you need to set up the AnimationTree child of the avatar as you see in the demo scene - with the idle animation as the main AnimationRootNode and then a BlendSpace2d that has the animations assigned to the four points of the diamond of the blendspace.  The avatar code then blends these animations depending on what direction the player is moving.  Check the included avatar for examples.  You can then also enable hand poses by adding additional nodes to the AnimationTree if you have a hand pose animation set up for your avatar.
 
 ## Video Tutorials
+Part I
+https://www.youtube.com/watch?v=C55BjXUfjSs
 
-Tutorials forthcoming.
+Part II
+https://www.youtube.com/watch?v=xd6zUODRrUY
+
+more Tutorials forthcoming.
 
 Licensing
 ---------
