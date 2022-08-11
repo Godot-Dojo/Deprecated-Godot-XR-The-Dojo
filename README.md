@@ -82,6 +82,9 @@ https://www.youtube.com/watch?v=C55BjXUfjSs
 Part II
 https://www.youtube.com/watch?v=xd6zUODRrUY
 
+Part III
+https://youtu.be/watch?v=qpspPmxu9BQ
+
 more Tutorials forthcoming.
 
 Licensing
