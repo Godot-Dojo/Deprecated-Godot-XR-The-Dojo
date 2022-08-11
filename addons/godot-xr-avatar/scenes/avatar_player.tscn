@@ -7971,7 +7971,7 @@ filter_enabled = true
 filters = [ "Armature/Skeleton:index_01_r", "Armature/Skeleton:index_02_r", "Armature/Skeleton:index_03_r", "Armature/Skeleton:index_03_r_end" ]
 
 [sub_resource type="AnimationNodeBlendTree" id=122]
-graph_offset = Vector2( -310.801, 45.0532 )
+graph_offset = Vector2( -160.417, 49.0208 )
 nodes/Add2/node = SubResource( 79 )
 nodes/Add2/position = Vector2( 320, 140 )
 nodes/Animation/node = SubResource( 80 )
@@ -7995,7 +7995,7 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "output", 0, "righthandposetrig", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
+node_connections = [ "output", 0, "righthandposetrig", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger" ]
 
 [node name="avatar_player" type="Spatial"]
 
@@ -8099,6 +8099,7 @@ left_controller_path = NodePath("../LeftHandController")
 right_controller_path = NodePath("../RightHandController")
 left_hand_path = NodePath("../LeftHandController/LeftPhysicsHand")
 right_hand_path = NodePath("../RightHandController/RightPhysicsHand")
+head_mesh_node_paths = [ NodePath("Armature/Skeleton/mesh_Eyes"), NodePath("Armature/Skeleton/mesh_Head"), NodePath("Armature/Skeleton/mesh_Visor") ]
 height_offset = 0.25
 foot_offset = 0.1
 smoothing = 0.8
@@ -8546,7 +8547,7 @@ root_motion_track = NodePath("Armature/Skeleton:Root")
 parameters/Add2/add_amount = 0.0
 parameters/lefthandpose/blend_amount = 0
 parameters/lefthandposetrig/blend_amount = 0
-parameters/movement/blend_position = Vector2( 0, 0.5 )
+parameters/movement/blend_position = Vector2( 1, 0.5 )
 parameters/righthandpose/blend_amount = 0
 parameters/righthandposetrig/blend_amount = 0
 

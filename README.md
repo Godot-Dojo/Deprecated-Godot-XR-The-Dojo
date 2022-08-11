@@ -1,5 +1,5 @@
 # Godot XR Avatar
-<img src="./XRBody-2.gif" alt="Keyboard GIF" width="568" height="320">
+<img src="./media/XRBody-2.gif" alt="Keyboard GIF" width="568" height="320">
 
 
 This repository contains a demo scene for having a full body player avatar using Godot's XR Plugin and XR Tools plugin.
@@ -23,7 +23,7 @@ Therefore, work, perhaps substantial work, is still required to enable this avat
 
 READ THE INSTRUCTIONS BELOW.
 
-<img src="./XRBody-1.gif" alt="Keyboard GIF" width="568" height="320">
+<img src="./media/XRBody-1.gif" alt="Keyboard GIF" width="568" height="320">
 
 ## Versions
 
@@ -39,9 +39,15 @@ Install the OpenXR and XR Tools plugins as directed on their respective sites an
 
 Setup your XR rig as you see fit.
 
+There are pictures of the various inspector windows and steps here in the "media" folder of the project, and you should also watch the tutorial videos.
+
 Add your avatar character as a child of your ARVROrigin node (by default, this will be called "FPController" with the OpenXR / XR Tools assets)
 
 At the root of your avatar character, which should be a spatial node, attach the avatar.gd script found in addons/godot-xr-avatar/scripts to the spatial node.
+
+If needed, rename the node above your Skeleton node in your imported avatar "Armature" as the code depends on this naming.
+
+Rotate the Skeleton node 180 degrees on the Y axis (rotation_degrees.y = 180) if needed to ensure that the face of your avatar points away from the Z (negative) axis.
 
 Follow the steps indicated in the top comments of the avatar.gd script to finish setting up your character, copied and pasted here:
 
@@ -65,7 +71,7 @@ Then there should be no errors in the script and you should now have export vari
 
 Be sure to choose your node paths for your ARVROrigin, ARVRCamera, left controller, right controller, and left and right hand nodes and select which controller you are using for direct movement.
 
-If you want to hide the head node, be sure to select the nodes that pertain to the head/face in your avatar in the export array indicated for that purpose (head mesh nodes) and then choose the box to hide the head mesh.
+If you want to hide the head node, be sure to select the nodes that pertain to the head/face in your avatar in the export array indicated for that purpose in the Inspector ("Head Mesh Node Paths") and then choose the box to hide the head mesh.
 
 You can choose whether to hide the heads or hand meshes as export variables.
 
