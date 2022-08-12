@@ -7996,7 +7996,7 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "output", 0, "righthandposetrig", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "Add2", 0, "Animation", "Add2", 1, "movement", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
+node_connections = [ "output", 0, "righthandposetrig", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip" ]
 
 [node name="avatar_player" type="Spatial"]
 
@@ -8076,18 +8076,21 @@ transform = Transform( 0.463311, -0.822464, -0.329992, -0.51281, 0.0548708, -0.8
 
 [node name="Function_Pickup" parent="FPController/LeftHandController" index="2" instance=ExtResource( 15 )]
 
-[node name="Function_Turn_movement" parent="FPController/RightHandController" index="0" instance=ExtResource( 3 )]
+[node name="Function_Direct_movement" parent="FPController/RightHandController" index="0" instance=ExtResource( 7 )]
+max_speed = 2.0
+
+[node name="Function_Turn_movement" parent="FPController/RightHandController" index="1" instance=ExtResource( 3 )]
 smooth_rotation = true
 
-[node name="RightPhysicsHand" parent="FPController/RightHandController" index="1" instance=ExtResource( 6 )]
+[node name="RightPhysicsHand" parent="FPController/RightHandController" index="2" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
 
-[node name="Function_Jump_movement" parent="FPController/RightHandController" index="2" instance=ExtResource( 5 )]
+[node name="Function_Jump_movement" parent="FPController/RightHandController" index="3" instance=ExtResource( 5 )]
 jump_button_id = 7
 
-[node name="Function_Crouch_movement" parent="FPController/RightHandController" index="3" instance=ExtResource( 9 )]
+[node name="Function_Crouch_movement" parent="FPController/RightHandController" index="4" instance=ExtResource( 9 )]
 
-[node name="Function_Pickup" parent="FPController/RightHandController" index="4" instance=ExtResource( 15 )]
+[node name="Function_Pickup" parent="FPController/RightHandController" index="5" instance=ExtResource( 15 )]
 
 [node name="avatar" type="Spatial" parent="FPController"]
 script = ExtResource( 13 )
