@@ -22,22 +22,6 @@ export (NodePath) var left_hand_path = null
 export (NodePath) var right_hand_path = null
 export(Array, NodePath) var head_mesh_node_paths = []
 
-## enum and set avatar movement controller - the one that has the direct movement function
-enum Avatar_Move_Controller {
-	LEFT,		# Use left controller
-	RIGHT,		# Use right controler
-}
-
-export (Avatar_Move_Controller) var avatar_move_controller: int = Avatar_Move_Controller.LEFT
-
-# variables for export nodes relating to XRRig
-var arvrorigin : ARVROrigin
-var arvrcamera : ARVRCamera
-var left_controller :ARVRController
-var right_controller : ARVRController
-var left_hand = null
-var right_hand = null
-var _avatar_move_controller : ARVRController
 
 #export variables to hide head or physics hand mesh
 export var head_visible := false
@@ -45,54 +29,49 @@ export var hand_mesh_visible := false
 
 
 #export variables to fine tune avatar movement
-export var height_offset:float = 0
-export var foot_offset:float = .15
-export var ik_raycast_height:float = 2
-export var min_max_interpolation:Vector2 = Vector2(0.03,.9)
-export var smoothing = 0.3
+export var height_offset := 0.0
+export var foot_offset := 0.15
+export var ik_raycast_height := 2.0
+export var min_max_interpolation := Vector2(0.03, 0.9)
+export var smoothing := 0.3
 
-#set all nodes 
-
-onready var left_foot = $Armature/Skeleton/left_foot
-onready var right_foot = $Armature/Skeleton/right_foot
-onready var LL_ik =$Armature/Skeleton/SkeletonIKLegL
-onready var RL_ik = $Armature/Skeleton/SkeletonIKLegR
-onready var skeleton = $Armature/Skeleton
 
 #Other variables needed for IK
-var max_height 
-var avatar_height
-var prev_move = Vector2(0,0)
+var max_height : float
+var avatar_height : float
+var prev_move := Vector2.ZERO
 
 
 #variables used for automatic creation of targets for IK and Raycasts
-var left_hand_target = null
-var right_hand_target = null
-var left_target = null
-var right_target = null
-var left_target_transform = null
-var right_target_transform = null
-var RL_dB = null
-var LL_db = null
-var Raycast_L = null
-var Raycast_R = null
-var armature_scale = null
+var left_hand_target : Position3D = null
+var right_hand_target : Position3D = null
+var left_target : Position3D = null
+var right_target : Position3D = null
+var left_target_transform : Position3D = null
+var right_target_transform : Position3D = null
+var Raycast_L : RayCast = null
+var Raycast_R : RayCast = null
+var RL_dB := Basis.IDENTITY
+var LL_db := Basis.IDENTITY
+var armature_scale := Vector3.ONE
+
+#set all nodes 
+onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
+onready var arvrcamera := ARVRHelpers.get_arvr_camera(self, arvrcamera_path)
+onready var left_controller := ARVRHelpers.get_left_controller(self, left_controller_path)
+onready var right_controller := ARVRHelpers.get_right_controller(self, right_controller_path)
+onready var left_hand : Spatial = get_node(left_hand_path)
+onready var right_hand : Spatial = get_node(right_hand_path)
+onready var player_body := PlayerBody.get_player_body(self)
+onready var left_foot : BoneAttachment = $Armature/Skeleton/left_foot
+onready var right_foot : BoneAttachment = $Armature/Skeleton/right_foot
+onready var LL_ik : SkeletonIK = $Armature/Skeleton/SkeletonIKLegL
+onready var RL_ik : SkeletonIK = $Armature/Skeleton/SkeletonIKLegR
+onready var skeleton : Skeleton = $Armature/Skeleton
 
 func _ready():
-	#set all nodes from export variables
-	arvrorigin = get_node(arvrorigin_path)
-	arvrcamera = get_node(arvrcamera_path)
-	left_controller = get_node(left_controller_path)
-	right_controller = get_node(right_controller_path)
-	left_hand = get_node(left_hand_path)
-	right_hand = get_node(right_hand_path)
-	if avatar_move_controller == Avatar_Move_Controller.LEFT:
-		_avatar_move_controller = left_controller
-	else:
-		_avatar_move_controller = right_controller
-	
 	#set avatar height to player
-	avatar_height= $Armature/Skeleton/character_height.transform.origin.y
+	avatar_height = $Armature/Skeleton/character_height.transform.origin.y
 	$Armature.scale *= get_current_player_height()/$Armature/Skeleton/character_height.transform.origin.y
 	armature_scale = $Armature.scale
 	max_height = get_current_player_height()
@@ -191,14 +170,14 @@ func _ready():
 		
 		
 		
-func look_at_y(from:Vector3 , to:Vector3, up_ref:Vector3 = Vector3.UP):
-	var forward = (to-from).normalized()
-	var right = up_ref.normalized().cross(forward).normalized()
+func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
+	var forward := (to-from).normalized()
+	var right := up_ref.normalized().cross(forward).normalized()
 	forward = right.cross(up_ref).normalized()
-	return Basis(right,up_ref,forward)
+	return Basis(right, up_ref, forward)
 
 
-func update_ik_anim(target,raycast,bone_attach,d_b,avatar_height,hit_offset):
+func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachment, d_b: Basis, avatar_height: float, hit_offset: float) -> void:
 	var bone_pos = bone_attach.global_transform.origin
 	raycast.global_transform.origin = bone_pos + Vector3.UP*avatar_height
 	target.global_transform.origin = bone_pos
@@ -211,11 +190,12 @@ func update_ik_anim(target,raycast,bone_attach,d_b,avatar_height,hit_offset):
 			target.global_transform.basis = look_at_y(Vector3.ZERO,$Armature.global_transform.basis.z,raycast.get_collision_normal())
 	target.rotation.y = $Armature.rotation.y
 
-func get_current_player_height():
+
+func get_current_player_height() -> float:
 	 return arvrcamera.transform.origin.y
 
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	# Move the avatar under the camera and facing in the direction of the camera
 	var avatar_pos: Vector3 = arvrorigin.global_transform.xform(Plane.PLANE_XZ.project(arvrcamera.transform.origin))
 	var avatar_dir_z := Plane.PLANE_XZ.project(arvrcamera.global_transform.basis.z).normalized()
@@ -229,8 +209,8 @@ func _physics_process(delta):
 	skeleton.transform.origin.y = get_current_player_height() - avatar_height + height_offset
    
 	# Rotate the head Y bone (look up/down)
-	var head = skeleton.get_bone_pose(skeleton.find_bone("head"))
-	var angles = arvrcamera.rotation
+	var head := skeleton.get_bone_pose(skeleton.find_bone("head"))
+	var angles := arvrcamera.rotation
 	angles.x *= -1;angles.z *= -1
 	angles.y -= lerp_angle(angles.y,arvrcamera.rotation.y,delta)
 	head.basis = Basis(angles)
@@ -245,19 +225,19 @@ func _physics_process(delta):
 
 	
 
+	# Calculate foot movement based on players actual ground-movement velocity
+	#var player_velocity := player_body.velocity# - player_body.ground_velocity
+	#player_velocity = $Armature.global_transform.basis.xform_inv(player_velocity)
+	#var move := Vector2(player_velocity.x, player_velocity.z)
+	
+	# Calculate foot movement based on playees requested ground-movement velocity
+	var move := player_body.ground_control_velocity
+
 	# Perform player movement animation
-	var dx = -_avatar_move_controller.get_joystick_axis(0);
-	var dy = _avatar_move_controller.get_joystick_axis(1);
-	#var player_velocity_normalized = PlayerBody.get_player_body(arvrorigin).velocity.normalized()
-	#var dx = player_velocity_normalized.x
-	#var dy = player_velocity_normalized.z
-	var move = Vector2(dx,dy)
-	#print(move)
 	$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
 	$AnimationTree.set("parameters/Add2/add_amount", 1)
 	update_ik_anim(left_target,Raycast_L,left_foot,LL_db,ik_raycast_height,foot_offset)
 	update_ik_anim(right_target,Raycast_R,right_foot,RL_dB,ik_raycast_height,foot_offset)
 	LL_ik.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
 	RL_ik.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
-	var prev_move = move
-	
+	prev_move = move
