@@ -4,15 +4,15 @@ extends Spatial
 
 #This code is NOT fully automated.  It does require some actions in the editor to work with the creation of some nodes.  It needs: 
 #(1) an AnimationTree node with proper animation blends set as a child of avatar and pointing to the character AnimationPlayer
-#(2) SkeletonIKL node set to Root Bone of Left Shoulder and Tip Bone set to Left Hand, Use Magnet, Magnet.X = 10, Interpolation set to 1  
-#(3) SkeletonIKR node set to Root Bone of Right Shoulder and Tip Bone set to Right Hand, Use Magnet, Magnet.X = -10, Interpolation set to 1 
+#(2) SkeletonIKL node set to Root Bone of left upper arm and Tip Bone set to Left Hand, Use Magnet, Magnet.x = 3, Magnet.y = -5, Magnet z = -10, [old value was just Magnet.x = 10] Interpolation set to 1  
+#(3) SkeletonIKR node set to Root Bone of Right Shoulder and Tip Bone set to Right Hand, Use Magnet, Magnet.x = -3, Magnet.y = -5, Magnet.z = -10, [old value was just Magnet.x = -10] Interpolation set to 1 
 #(4) SkeletonIKLegL node set to LeftUpLeg and Tip Bone set to LeftFoot, Use Magnet, Magnet (.2,0,1), Interpolation set to 1; 
 #(5) SkeletonIKLegR node set to RightUpLeg and Tip Bone set to RightFoot, Use Magnet, Magnet (-.2,0,1), Interpolation set to 1; 
 #(6) bone attachment for character_height set to top of avatar head/Head_Top_End
 #(7) bone attachment right_foot set to RightFoot; 
 #(8) bone attachment left_foot set to LeftFoot
 
-#new TB code to set export variables to key elements of XR Rig necessary for avatar movement
+#set export variables to key elements of XR Rig necessary for avatar movement
 #this makes this more modular because no longer depends on hardcoded naming of XR rig which players may have changed
 export (NodePath) var arvrorigin_path = null
 export (NodePath) var arvrcamera_path = null
@@ -22,7 +22,7 @@ export (NodePath) var left_hand_path = null
 export (NodePath) var right_hand_path = null
 export(Array, NodePath) var head_mesh_node_paths = []
 
-## new TB code - enum and set avatar movement controller - the one that has the direct movement function
+## enum and set avatar movement controller - the one that has the direct movement function
 enum Avatar_Move_Controller {
 	LEFT,		# Use left controller
 	RIGHT,		# Use right controler
@@ -30,7 +30,7 @@ enum Avatar_Move_Controller {
 
 export (Avatar_Move_Controller) var avatar_move_controller: int = Avatar_Move_Controller.LEFT
 
-# new TB code - variables for export nodes relating to XRRig
+# variables for export nodes relating to XRRig
 var arvrorigin : ARVROrigin
 var arvrcamera : ARVRCamera
 var left_controller :ARVRController
@@ -39,12 +39,12 @@ var left_hand = null
 var right_hand = null
 var _avatar_move_controller : ARVRController
 
-#new TB code export variables to hide head or physics hand mesh
+#export variables to hide head or physics hand mesh
 export var head_visible := false
 export var hand_mesh_visible := false
 
 
-#original SYBIOTE export variables to finetune avatar movement
+#export variables to fine tune avatar movement
 export var height_offset:float = 0
 export var foot_offset:float = .15
 export var ik_raycast_height:float = 2
@@ -65,7 +65,7 @@ var avatar_height
 var prev_move = Vector2(0,0)
 
 
-#new TB variables used for automatic creation of targets for IK and Raycasts
+#variables used for automatic creation of targets for IK and Raycasts
 var left_hand_target = null
 var right_hand_target = null
 var left_target = null
@@ -76,9 +76,10 @@ var RL_dB = null
 var LL_db = null
 var Raycast_L = null
 var Raycast_R = null
+var armature_scale = null
 
 func _ready():
-	#new TB code to set all nodes properly from export variables
+	#set all nodes from export variables
 	arvrorigin = get_node(arvrorigin_path)
 	arvrcamera = get_node(arvrcamera_path)
 	left_controller = get_node(left_controller_path)
@@ -90,7 +91,7 @@ func _ready():
 	else:
 		_avatar_move_controller = right_controller
 	
-	#TB code to create left hand and right hand targets automatically that were already set in SYBIOTE's code	
+	#create left hand and right hand targets automatically that were already set in SYBIOTE's code	
 	left_hand_target = Position3D.new()
 	left_hand_target.name = "left_target"
 	left_controller.add_child(left_hand_target, true)
@@ -104,11 +105,11 @@ func _ready():
 	right_hand_target.rotation_degrees.z = 90
 	
 	
-	#TB code to match avatar hands to physics hands recommended positions
+	# match avatar hands to XR Tools hands positions
 	left_controller.get_node("left_target").translation = left_hand.translation
 	right_controller.get_node("right_target").translation = right_hand.translation
 	
-	#TB code to automatically generate other helper target nodes used in the IK
+	#Automatically generate other helper target nodes used in the IK
 	left_target = Position3D.new()
 	left_target.name = "LL_c"
 	add_child(left_target, true)
@@ -119,7 +120,6 @@ func _ready():
 	left_target.add_child(left_target_transform, true)
 		#match target rotations to bone attachment rotations which are avatar-specific
 	left_target_transform.rotation_degrees.x = left_foot.rotation_degrees.x + $Armature/Skeleton.rotation_degrees.x
-			#add 180 here to account for new rotation of skeleton 180 degrees instead of avatar
 	left_target_transform.rotation_degrees.y = left_foot.rotation_degrees.y + $Armature/Skeleton.rotation_degrees.y
 	left_target_transform.rotation_degrees.z = left_foot.rotation_degrees.z + $Armature/Skeleton.rotation_degrees.z
 	
@@ -133,12 +133,11 @@ func _ready():
 	right_target.add_child(right_target_transform, true)
 		#match target rotations to bone attachment rotations which are avatar-specific
 	right_target_transform.rotation_degrees.x = right_foot.rotation_degrees.x + $Armature/Skeleton.rotation_degrees.x
-		#add 180 here to account for new rotation of skeleton 180 degrees instead of avatar
 	right_target_transform.rotation_degrees.y = right_foot.rotation_degrees.y + $Armature/Skeleton.rotation_degrees.y
 	right_target_transform.rotation_degrees.z = right_foot.rotation_degrees.z + + $Armature/Skeleton.rotation_degrees.z
 	
 	
-	#TB code to set skeleton targets to the automatically generated target nodes
+	#Set skeleton targets to the automatically generated target nodes
 	$Armature/Skeleton/SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/left_target"))
 	$Armature/Skeleton/SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/right_target"))
 	LL_ik.set_target_node(NodePath("../../../LL_c/LL_t"))
@@ -170,18 +169,20 @@ func _ready():
 	#set avatar height to player
 	avatar_height= $Armature/Skeleton/character_height.global_transform.origin.y
 	$Armature.scale *= get_current_player_height()/$Armature/Skeleton/character_height.global_transform.origin.y
+	armature_scale = $Armature.scale
 	max_height = get_current_player_height()
-	print($Armature.scale)
+#	print("Armature scale at ready is:")
+#	print($Armature.scale)
 	
-	#new TB code to hide head to prevent visual glitches if export variable so indicates; another way to do this might be to change the eyeforward offset
+	#hide head to prevent visual glitches if export variable so indicates; another way to do this might be to change the eyeforward offset
 	if head_visible == false:
 		for mesh_path in head_mesh_node_paths:
 			var head_mesh_part : MeshInstance = get_node(mesh_path)
 			head_mesh_part.layers = 1 << 19
-			#head_mesh_part.visible = false
+			
 		
 		
-	#new TB code to hide hands if export variable so indicates
+	#hide XR tools hand meshes if export variable so indicates
 	if hand_mesh_visible == false:
 		left_hand.visible = false
 		right_hand.visible = false
@@ -213,12 +214,15 @@ func get_current_player_height():
 
 
 func _physics_process(delta):
-		# Move the avatar under the camera and facing in the direction of the camera
+	# Move the avatar under the camera and facing in the direction of the camera
 	var avatar_pos: Vector3 = arvrorigin.global_transform.xform(Plane.PLANE_XZ.project(arvrcamera.transform.origin))
 	var avatar_dir_z := Plane.PLANE_XZ.project(arvrcamera.global_transform.basis.z).normalized()
 	var avatar_dir_x := Vector3.UP.cross(avatar_dir_z)
 	$Armature.global_transform = Transform(avatar_dir_x, Vector3.UP, avatar_dir_z, avatar_pos)
-   
+	$Armature.global_scale(armature_scale*self.scale) #without this, armature scale reverts to pre-scaling values
+	#print("Armature scale after physics process is:")
+	#print($Armature.scale)
+	
 	# Position the skeleton Y to adjust for the player height
 	skeleton.transform.origin.y = get_current_player_height() - avatar_height + height_offset
    
@@ -231,7 +235,7 @@ func _physics_process(delta):
 	skeleton.set_bone_pose(skeleton.find_bone("head"),head)
 
 
-	#perform hand grip
+	#perform hand grip animations using AnimationTree by adding grip and trigger hand poses to IK animation
 	$AnimationTree.set("parameters/lefthandpose/blend_amount", ARVRHelpers.get_left_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_GRIP))
 	$AnimationTree.set("parameters/righthandpose/blend_amount", ARVRHelpers.get_right_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_GRIP))
 	$AnimationTree.set("parameters/lefthandposetrig/blend_amount", ARVRHelpers.get_left_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
