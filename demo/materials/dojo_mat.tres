@@ -3,4 +3,5 @@
 [ext_resource path="res://demo/textures/dojo.png" type="Texture" id=1]
 
 [resource]
+params_cull_mode = 2
 albedo_texture = ExtResource( 1 )
