@@ -46,6 +46,7 @@ shape = SubResource( 3 )
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 visible = false
 mesh = SubResource( 4 )
+material/0 = null
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 1024, 768 )
@@ -53,8 +54,22 @@ size = Vector2( 1024, 768 )
 [node name="Camera" type="Camera" parent="Viewport"]
 transform = Transform( -1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.09935, -3.91639 )
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="FrontView" type="Sprite3D" parent="."]
 transform = Transform( 0.265, 0, 0, 0, 0.265, 0, 0, 0, 1, 0, 1.03134, -4.01153 )
+flip_h = true
+flip_v = true
+texture = SubResource( 5 )
+
+[node name="LeftView" type="Sprite3D" parent="."]
+transform = Transform( 7.45058e-09, 0, 1, 0, 0.265, 0, -0.265, 0, 2.98023e-08, -1.5, 1.03134, -2.51153 )
+visible = false
+flip_h = true
+flip_v = true
+texture = SubResource( 5 )
+
+[node name="RightView" type="Sprite3D" parent="."]
+transform = Transform( -1.15835e-08, 0, -1, 0, 0.265, 0, 0.265, 0, -4.37114e-08, 1.5, 1.03134, -2.51153 )
+visible = false
 flip_h = true
 flip_v = true
 texture = SubResource( 5 )

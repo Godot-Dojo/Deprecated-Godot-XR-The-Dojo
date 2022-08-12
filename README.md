@@ -53,9 +53,9 @@ Follow the steps indicated in the top comments of the avatar.gd script to finish
 
 (1) add an AnimationTree node as a child of the avatar root Spatial with proper animation blends pointing to the character AnimationPlayer
 
-(2) add a SkeletonIK node as a child of the avatar root Spatial called "SkeletonIKL" set to Root Bone of Left Shoulder and Tip Bone set to Left Hand, Use Magnet, Magnet.X = 10, Interpolation set to 1  
+(2) add a SkeletonIK node as a child of the avatar root Spatial called "SkeletonIKL" set to Root Bone of Left Upper Arm and Tip Bone set to Left Hand, Use Magnet, Magnet (3,-5,-10), Interpolation set to 1  
 
-(3) add a SkeletonIK node as a child of the avatar root Spatial called "SkeletonIKR" set to Root Bone of Right Shoulder and Tip Bone set to Right Hand, Use Magnet, Magnet.X = -10, Interpolation set to 1 
+(3) add a SkeletonIK node as a child of the avatar root Spatial called "SkeletonIKR" set to Root Bone of Right Upper Arm and Tip Bone set to Right Hand, Use Magnet, Magnet (-3,-5,-10), Interpolation set to 1 
 
 (4) add a SkeletonIK node as a child of the avatar root Spatial called "SkeletonIKLegL" set to LeftUpLeg and Tip Bone set to LeftFoot, Use Magnet, Magnet (.2,0,1), Interpolation set to 1; 
 
