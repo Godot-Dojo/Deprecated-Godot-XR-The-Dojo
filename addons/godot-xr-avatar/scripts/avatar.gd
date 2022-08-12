@@ -176,8 +176,9 @@ func _ready():
 	#new TB code to hide head to prevent visual glitches if export variable so indicates; another way to do this might be to change the eyeforward offset
 	if head_visible == false:
 		for mesh_path in head_mesh_node_paths:
-			var head_mesh_part = get_node(mesh_path)
-			head_mesh_part.visible = false
+			var head_mesh_part : MeshInstance = get_node(mesh_path)
+			head_mesh_part.layers = 1 << 19
+			#head_mesh_part.visible = false
 		
 		
 	#new TB code to hide hands if export variable so indicates
