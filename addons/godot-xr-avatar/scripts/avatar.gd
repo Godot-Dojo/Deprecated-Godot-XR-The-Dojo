@@ -91,6 +91,14 @@ func _ready():
 	else:
 		_avatar_move_controller = right_controller
 	
+	#set avatar height to player
+	avatar_height= $Armature/Skeleton/character_height.transform.origin.y
+	$Armature.scale *= get_current_player_height()/$Armature/Skeleton/character_height.transform.origin.y
+	armature_scale = $Armature.scale
+	max_height = get_current_player_height()
+#	print("Armature scale at ready is:")
+#	print($Armature.scale)
+	
 	#create left hand and right hand targets automatically that were already set in SYBIOTE's code	
 	left_hand_target = Position3D.new()
 	left_hand_target.name = "left_target"
@@ -166,13 +174,7 @@ func _ready():
 	LL_ik.start()
 	RL_ik.start()
 	
-	#set avatar height to player
-	avatar_height= $Armature/Skeleton/character_height.global_transform.origin.y
-	$Armature.scale *= get_current_player_height()/$Armature/Skeleton/character_height.global_transform.origin.y
-	armature_scale = $Armature.scale
-	max_height = get_current_player_height()
-#	print("Armature scale at ready is:")
-#	print($Armature.scale)
+	
 	
 	#hide head to prevent visual glitches if export variable so indicates; another way to do this might be to change the eyeforward offset
 	if head_visible == false:
