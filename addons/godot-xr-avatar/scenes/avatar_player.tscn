@@ -7995,7 +7995,7 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "output", 0, "righthandposetrig", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger" ]
+node_connections = [ "output", 0, "righthandposetrig", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "Add2", 0, "Animation", "Add2", 1, "movement", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip" ]
 
 [node name="avatar_player" type="Spatial"]
 
@@ -8012,8 +8012,28 @@ strafe = true
 
 [node name="LeftPhysicsHand" parent="FPController/LeftHandController" index="1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
-collision_layer = 131072
-margin = 0.004
+
+[node name="Skeleton" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
+bones/0/bound_children = [  ]
+bones/1/bound_children = [  ]
+bones/2/bound_children = [  ]
+bones/3/bound_children = [  ]
+bones/4/bound_children = [  ]
+bones/5/bound_children = [  ]
+bones/6/bound_children = [  ]
+bones/7/bound_children = [  ]
+bones/8/bound_children = [  ]
+bones/9/bound_children = [  ]
+bones/10/bound_children = [  ]
+bones/11/bound_children = [  ]
+bones/12/bound_children = [  ]
+bones/13/bound_children = [  ]
+bones/14/bound_children = [  ]
+bones/15/bound_children = [  ]
+bones/16/bound_children = [  ]
+bones/17/bound_children = [  ]
+bones/18/bound_children = [  ]
+bones/19/bound_children = [  ]
 
 [node name="BoneRoot" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, -2.50192e-40, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 7.2293e-21, 0.000360775, -0.0235019 )
@@ -8080,8 +8100,6 @@ smooth_rotation = true
 
 [node name="RightPhysicsHand" parent="FPController/RightHandController" index="1" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
-collision_layer = 131072
-margin = 0.004
 
 [node name="Function_Jump_movement" parent="FPController/RightHandController" index="2" instance=ExtResource( 5 )]
 jump_button_id = 7
@@ -8388,7 +8406,7 @@ bones/55/name = "head_end"
 bones/55/parent = 54
 bones/55/rest = Transform( 1, -3.55533e-12, 3.10241e-12, 3.55533e-12, 1, -4.05126e-08, -3.10241e-12, 4.05126e-08, 1, 3.75755e-13, 0.15869, -4.65619e-09 )
 bones/55/enabled = true
-bones/55/bound_children = [ NodePath("character_height") ]
+bones/55/bound_children = [  ]
 bones/56/name = "thigh_l"
 bones/56/parent = 1
 bones/56/rest = Transform( 0.884977, 0.0883841, -0.457169, 0.201269, -0.957971, 0.204408, -0.419889, -0.272911, -0.865569, 0.11374, -0.00225836, -0.012278 )
@@ -8403,7 +8421,7 @@ bones/58/name = "foot_l"
 bones/58/parent = 57
 bones/58/rest = Transform( 0.994067, -0.0154558, -0.107667, 0.104244, 0.41798, 0.902455, 0.0310545, -0.908325, 0.417111, 4.24916e-09, 0.458613, 2.32831e-10 )
 bones/58/enabled = true
-bones/58/bound_children = [ NodePath("left_foot") ]
+bones/58/bound_children = [  ]
 bones/59/name = "ball_l"
 bones/59/parent = 58
 bones/59/rest = Transform( 0.823613, -0.077509, -0.561831, 0.348754, 0.850404, 0.393934, 0.44725, -0.52039, 0.727435, 2.2319e-09, 0.150714, -4.86616e-08 )
@@ -8428,7 +8446,7 @@ bones/63/name = "foot_r"
 bones/63/parent = 62
 bones/63/rest = Transform( 0.994067, 0.0154551, 0.107671, -0.104247, 0.41798, 0.902455, -0.0310568, -0.908325, 0.417111, 7.71252e-09, 0.458614, 0 )
 bones/63/enabled = true
-bones/63/bound_children = [ NodePath("right_foot") ]
+bones/63/bound_children = [  ]
 bones/64/name = "ball_r"
 bones/64/parent = 63
 bones/64/rest = Transform( 0.823612, 0.0775111, 0.561831, -0.348756, 0.850403, 0.393933, -0.447249, -0.52039, 0.727435, -1.41899e-08, 0.150714, 1.44355e-08 )
@@ -8476,17 +8494,17 @@ material/0 = ExtResource( 14 )
 
 [node name="SkeletonIKL" type="SkeletonIK" parent="FPController/avatar/Armature/Skeleton"]
 process_priority = 1
-root_bone = "clavicle_l"
+root_bone = "upperarm_l"
 tip_bone = "hand_l"
 use_magnet = true
-magnet = Vector3( 10, 0, 0 )
+magnet = Vector3( 3, -5, -10 )
 
 [node name="SkeletonIKR" type="SkeletonIK" parent="FPController/avatar/Armature/Skeleton"]
 process_priority = 1
-root_bone = "clavicle_r"
+root_bone = "upperarm_r"
 tip_bone = "hand_r"
 use_magnet = true
-magnet = Vector3( -10, 0, 0 )
+magnet = Vector3( -3, -5, -10 )
 
 [node name="SkeletonIKLegL" type="SkeletonIK" parent="FPController/avatar/Armature/Skeleton"]
 process_priority = 1
