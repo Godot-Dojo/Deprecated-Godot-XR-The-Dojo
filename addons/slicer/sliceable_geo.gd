@@ -64,8 +64,8 @@ func _create_cut_body(_sign,mesh_instance,cutplane : Plane):
 				#print("using cross section material")
 				#print(mat)
 			else:
-#				mat = _mesh.mesh.surface_get_material(i) #this was not working properly
-				mat = _cross_section_material
+				mat = _mesh.mesh.surface_get_material(i) #this was not working properly
+#				mat = _cross_section_material
 				#print("using regular materal")
 				#print(mat)
 			object.mesh.surface_set_material(i,mat)

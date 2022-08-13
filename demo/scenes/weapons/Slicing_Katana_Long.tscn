@@ -94,4 +94,5 @@ collision_mask = 131072
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.367767, -0.00441357, 0 )
 shape = SubResource( 9 )
 
+[connection signal="body_entered" from="SlicingArea" to="SlicingArea" method="_on_SlicingArea_body_entered"]
 [connection signal="body_exited" from="SlicingArea" to="SlicingArea" method="_on_SlicingArea_body_exited"]
