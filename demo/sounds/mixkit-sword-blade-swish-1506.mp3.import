@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/mixkit-sword-blade-swish-1506.mp3-c468ad5507b2aa4822841fcb8af973cd.mp3str"
+
+[deps]
+
+source_file="res://demo/sounds/mixkit-sword-blade-swish-1506.mp3"
+dest_files=[ "res://.import/mixkit-sword-blade-swish-1506.mp3-c468ad5507b2aa4822841fcb8af973cd.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

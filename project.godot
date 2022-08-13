@@ -173,6 +173,16 @@ _global_script_classes=[ {
 "class": "XRToolsPickable",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/Object_pickable.gd"
+}, {
+"base": "Reference",
+"class": "slice_calculator",
+"language": "GDScript",
+"path": "res://addons/slicer/slice_calc.gd"
+}, {
+"base": "RigidBody",
+"class": "sliceable",
+"language": "GDScript",
+"path": "res://addons/slicer/sliceable_geo.gd"
 } ]
 _global_script_class_icons={
 "ARVRHelpers": "",
@@ -207,7 +217,9 @@ _global_script_class_icons={
 "XRToolsInteractableBody": "",
 "XRToolsMoveTo": "",
 "XRToolsPhysicsHand": "",
-"XRToolsPickable": ""
+"XRToolsPickable": "",
+"slice_calculator": "",
+"sliceable": ""
 }
 
 [application]
