@@ -1,4 +1,5 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
+
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
@@ -8,7 +9,10 @@
 [ext_resource path="res://demo/scenes/mapobjects/HolderForPickableSwords.tscn" type="PackedScene" id=6]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_M.tscn" type="PackedScene" id=7]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_S.tscn" type="PackedScene" id=8]
-[ext_resource path="res://demo/audioFX/music/Midnight in the Green House.mp3" type="AudioStream" id=9]
+
+[ext_resource path="res://demo/scenes/managers/WeaponManager.gd" type="Script" id=9]
+[ext_resource path="res://demo/scenes/managers/HapticManager.gd" type="Script" id=10]
+[ext_resource path="res://demo/audioFX/music/Midnight in the Green House.mp3" type="AudioStream" id=99]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")
@@ -283,23 +287,35 @@ mesh = SubResource( 11 )
 [node name="CollisionShape" type="CollisionShape" parent="DemoGrabCube"]
 shape = SubResource( 12 )
 
-[node name="Katana_Long" parent="." instance=ExtResource( 5 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.06865, 1.39542, -0.216369 )
-
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
 
 [node name="HolderForPickableSwords" parent="." instance=ExtResource( 6 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.00541, -0.00499028, -0.0572867 )
 
-[node name="Slicing_Katana_M" parent="." instance=ExtResource( 7 )]
+[node name="WeaponManager" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="Slicing_Katana_Long" parent="WeaponManager" groups=["swords"] instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.06865, 1.39542, -0.216369 )
+
+[node name="Slicing_Katana_M" parent="WeaponManager" groups=["swords"] instance=ExtResource( 7 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.97589, 0.964123, -0.159193 )
 
-[node name="Katana_S" parent="." instance=ExtResource( 8 )]
+[node name="Slicing_Katana_S" parent="WeaponManager" groups=["swords"] instance=ExtResource( 8 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.93966, 0.527654, -0.125481 )
 
+[node name="SoundManager" type="Node" parent="."]
+
+[node name="HapticManager" type="Node" parent="."]
+script = ExtResource( 10 )
+
+[connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
+[connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]
+[connection signal="picked_up" from="WeaponManager/Slicing_Katana_S" to="WeaponManager" method="_on_Slicing_Katana_S_picked_up"]
+=======
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource( 9 )
+stream = ExtResource( 99 )
 attenuation_model = 2
 unit_db = 3.0
 autoplay = true

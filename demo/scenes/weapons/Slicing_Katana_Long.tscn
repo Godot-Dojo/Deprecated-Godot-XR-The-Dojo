@@ -57,7 +57,7 @@ transform = Transform( 0.999995, 2.44757e-06, -0.00323726, -0.00323726, -7.88786
 mesh = SubResource( 6 )
 material/0 = ExtResource( 3 )
 
-[node name="holder_l" type="MeshInstance" parent="."]
+[node name="holder" type="MeshInstance" parent="."]
 transform = Transform( 0.999995, 2.44757e-06, -0.00323726, -0.00323726, -7.88786e-05, -0.999995, -2.70456e-06, 1, -7.87973e-05, 0, 0, 0 )
 visible = false
 mesh = SubResource( 5 )
