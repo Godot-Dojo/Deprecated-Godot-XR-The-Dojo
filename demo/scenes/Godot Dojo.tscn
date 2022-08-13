@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_S.tscn" type="PackedScene" id=8]
 [ext_resource path="res://demo/scenes/managers/WeaponManager.gd" type="Script" id=9]
 [ext_resource path="res://demo/scenes/managers/HapticManager.gd" type="Script" id=10]
+[ext_resource path="res://demo/sounds/Midnight in the Green House.mp3" type="AudioStream" id=11]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")
@@ -303,6 +304,15 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.9758
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.93966, 0.527654, -0.125481 )
 
 [node name="SoundManager" type="Node" parent="."]
+
+[node name="Music - Midnight in the Green House by Kevin MacLeod" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = ExtResource( 11 )
+attenuation_model = 2
+unit_db = -30.0
+unit_size = 5.0
+max_db = -15.0
+autoplay = true
+max_distance = 50.0
 
 [node name="HapticManager" type="Node" parent="."]
 script = ExtResource( 10 )
