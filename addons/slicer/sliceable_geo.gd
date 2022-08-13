@@ -50,7 +50,8 @@ func _create_cut_body(_sign,mesh_instance,cutplane : Plane):
 	object.mesh = mesh_instance
 	object.scale = _mesh.scale
 	if _mesh.mesh.get_surface_count() > 0:
-#		print(_mesh.mesh.get_surface_count())
+		print("mesh surface count is")
+		print(_mesh.mesh.get_surface_count())
 		var material_count
 		if _cross_section_material != null:
 			 material_count= _mesh.mesh.get_surface_count()+1
@@ -60,8 +61,13 @@ func _create_cut_body(_sign,mesh_instance,cutplane : Plane):
 			var mat 
 			if i == material_count -1 and _cross_section_material != null:
 				mat = _cross_section_material
+				#print("using cross section material")
+				#print(mat)
 			else:
-				mat = _mesh.mesh.surface_get_material(i)
+#				mat = _mesh.mesh.surface_get_material(i) #this was not working properly
+				mat = _cross_section_material
+				#print("using regular materal")
+				#print(mat)
 			object.mesh.surface_set_material(i,mat)
 	#create collider 
 	var coll = CollisionShape.new()

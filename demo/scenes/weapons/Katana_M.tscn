@@ -40,8 +40,7 @@ transform = Transform( 0.999961, 1.47801e-09, -0.00876975, -0.00876975, -2.38416
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
 
-[node name="katana_m" type="MeshInstance" parent="holder_m"]
-transform = Transform( 1, 0, 8.50869e-16, 0, 1, 0, 4.44043e-16, 0, 1, 0, 0, 0 )
+[node name="katana_m" type="MeshInstance" parent="."]
+transform = Transform( 0.999961, 1.47801e-09, -0.00876975, -0.00876975, -2.38416e-07, -0.999962, -1.86265e-09, 1, -2.38419e-07, 0, 0, 0 )
 mesh = SubResource( 2 )
-skeleton = NodePath("../..")
 material/0 = ExtResource( 1 )
