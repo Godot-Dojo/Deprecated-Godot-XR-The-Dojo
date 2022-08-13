@@ -83,13 +83,13 @@ Then you need to set up the AnimationTree child of the avatar as you see in the 
 
 ## Video Tutorials
 Part I
-https://youtu.be/1eQYntG9cL0
+https://www.youtube.com/watch?v=C55BjXUfjSs
 
 Part II
-https://youtu.be/tuefQ1VzQNQ
+https://www.youtube.com/watch?v=xd6zUODRrUY
 
 Part III
-https://youtu.be/FD4P59h0VjY
+https://youtu.be/watch?v=qpspPmxu9BQ
 
 more Tutorials forthcoming.
 
