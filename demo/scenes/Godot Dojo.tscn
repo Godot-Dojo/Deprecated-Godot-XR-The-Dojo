@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://demo/scenes/mapobjects/HolderForPickableSwords.tscn" type="PackedScene" id=6]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_M.tscn" type="PackedScene" id=7]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_S.tscn" type="PackedScene" id=8]
+[ext_resource path="res://demo/audioFX/music/Midnight in the Green House.mp3" type="AudioStream" id=9]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")
@@ -296,3 +297,10 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.9758
 
 [node name="Katana_S" parent="." instance=ExtResource( 8 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.93966, 0.527654, -0.125481 )
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 9 )
+attenuation_model = 2
+unit_db = 3.0
+autoplay = true
+max_distance = 500.0
