@@ -51,7 +51,7 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="holder_m" type="MeshInstance" parent="."]
+[node name="holder" type="MeshInstance" parent="."]
 transform = Transform( 0.999961, 1.47801e-09, -0.00876975, -0.00876975, -2.38416e-07, -0.999962, -1.86265e-09, 1, -2.38419e-07, 0, 0, 0 )
 visible = false
 mesh = SubResource( 1 )
