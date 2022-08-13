@@ -1,10 +1,13 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=3]
 [ext_resource path="res://demo/scenes/mapobjects/SliceableWoodenman.tscn" type="PackedScene" id=4]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=5]
+[ext_resource path="res://demo/scenes/mapobjects/HolderForPickableSwords.tscn" type="PackedScene" id=6]
+[ext_resource path="res://demo/scenes/weapons/Slicing_Katana_M.tscn" type="PackedScene" id=7]
+[ext_resource path="res://demo/scenes/weapons/Slicing_Katana_S.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")
@@ -280,7 +283,16 @@ mesh = SubResource( 11 )
 shape = SubResource( 12 )
 
 [node name="Katana_Long" parent="." instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.182064, 0.535996, 2.12226 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.06865, 1.39542, -0.216369 )
 
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
+
+[node name="HolderForPickableSwords" parent="." instance=ExtResource( 6 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.00541, -0.00499028, -0.0572867 )
+
+[node name="Slicing_Katana_M" parent="." instance=ExtResource( 7 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.97589, 0.964123, -0.159193 )
+
+[node name="Katana_S" parent="." instance=ExtResource( 8 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.93966, 0.527654, -0.125481 )
