@@ -81,15 +81,20 @@ The avatar legs are controlled by animations.  You need to have animations for w
 
 Then you need to set up the AnimationTree child of the avatar as you see in the demo scene - with the idle animation as the main AnimationRootNode and then a BlendSpace2d that has the animations assigned to the four points of the diamond of the blendspace.  The avatar code then blends these animations depending on what direction the player is moving.  Check the included avatar for examples.  You can then also enable hand poses by adding additional nodes to the AnimationTree if you have a hand pose animation set up for your avatar.
 
-## Video Tutorials
-Part I
-https://www.youtube.com/watch?v=C55BjXUfjSs
+## Video Tutorials - hosted on YoutTube
+### Tutorial 01 - Setup MPFBv2 Addon and Brief Intro
 
-Part II
-https://www.youtube.com/watch?v=xd6zUODRrUY
+[<img src="https://i.ytimg.com/vi/1eQYntG9cL0/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=1eQYntG9cL0 "Tutorial 01")
 
-Part III
-https://youtu.be/watch?v=qpspPmxu9BQ
+
+### Tutorial 02 - Makehuman to Blender/ Splitting mesh into parts
+
+[<img src="https://i.ytimg.com/vi/tuefQ1VzQNQ/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=tuefQ1VzQNQ=397s "Tutorial 02")
+
+
+### Tutorial 03 - import and Avatar Setup inside Godot
+
+[<img src="https://i.ytimg.com/vi/FD4P59h0VjY/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=FD4P59h0VjY "Tutorial 03")
 
 more Tutorials forthcoming.
 
@@ -99,4 +104,6 @@ The CODE in this repository is licensed under the MIT license, however everythin
 
 About this repository
 ---------------------
-This repository was created by and is maintained by DigitalN8m4r3 and teddybear082
+#### This repository was created by and is maintained by
+##### (alphabetical order)
+##### DigitalN8m4r3, teddybear082, Malcolm Nixon
