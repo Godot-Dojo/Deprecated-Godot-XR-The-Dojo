@@ -106,4 +106,6 @@ About this repository
 ---------------------
 #### This repository was created by and is maintained by
 ##### (alphabetical order)
-##### DigitalN8m4r3, teddybear082, Malcolm Nixon
+##### Malcolm Nixon
+##### Miodrag Šejić aka DigitalN8m4r3
+##### teddybear082
