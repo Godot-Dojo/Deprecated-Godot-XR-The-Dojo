@@ -400,12 +400,19 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04494, 0.333809, -2.73094 )
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.34782 )
 
 [node name="avatar" parent="shadow/FPController" index="3"]
-arvrorigin_path = NodePath("..")
-arvrcamera_path = NodePath("../ARVRCamera")
-left_controller_path = NodePath("../LeftHandController")
-right_controller_path = NodePath("../RightHandController")
-left_hand_path = NodePath("../LeftHandController/LeftPhysicsHand")
-right_hand_path = NodePath("../RightHandController/RightPhysicsHand")
+script = null
+
+[node name="Armature" parent="shadow/FPController/avatar" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 1.62921e-07, 0, -1.62921e-07, 1, 0, 0, 0 )
+
+[node name="right_foot" parent="shadow/FPController/avatar/Armature/Skeleton" index="9"]
+transform = Transform( 0.962131, -0.272431, -0.00919127, -0.133505, -0.441559, -0.887243, 0.237655, 0.85487, -0.461208, -0.0756051, 0.0667476, 0.0172574 )
+
+[node name="left_foot" parent="shadow/FPController/avatar/Armature/Skeleton" index="10"]
+transform = Transform( 0.962131, 0.272431, 0.00919178, 0.133505, -0.441558, -0.887244, -0.237655, 0.85487, -0.461208, 0.0756046, 0.0667479, 0.0172576 )
+
+[node name="character_height" parent="shadow/FPController/avatar/Armature/Skeleton" index="11"]
+transform = Transform( 1, 1.35379e-07, -2.1085e-07, -4.27693e-08, 0.999113, 0.042122, -2.12992e-09, -0.042121, 0.999113, -1.27091e-07, 1.70727, 0.0349293 )
 
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]
