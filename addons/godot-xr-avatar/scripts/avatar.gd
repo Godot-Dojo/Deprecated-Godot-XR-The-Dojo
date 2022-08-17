@@ -78,23 +78,36 @@ func _ready():
 #	print("Armature scale at ready is:")
 #	print($Armature.scale)
 	
-	#create left hand and right hand targets automatically that were already set in SYBIOTE's code	
+	#create left hand and right hand targets and child them to VR hands (new version to obviate IK reliance on controller nodes)
 	left_hand_target = Position3D.new()
 	left_hand_target.name = "left_target"
-	left_controller.add_child(left_hand_target, true)
+	left_hand.add_child(left_hand_target, true)
 	left_hand_target.rotation_degrees.y = 90
 	left_hand_target.rotation_degrees.z = -90
 	
 	right_hand_target = Position3D.new()
 	right_hand_target.name = "right_target"
-	right_controller.add_child(right_hand_target, true)
+	right_hand.add_child(right_hand_target, true)
 	right_hand_target.rotation_degrees.y = -90
 	right_hand_target.rotation_degrees.z = 90
 	
+	#create left hand and right hand targets automatically that were already set in SYBIOTE's code	
+	#left_hand_target = Position3D.new()
+	#left_hand_target.name = "left_target"
+	#left_controller.add_child(left_hand_target, true)
+	#left_hand_target.rotation_degrees.y = 90
+	#left_hand_target.rotation_degrees.z = -90
+	
+	#right_hand_target = Position3D.new()
+	#right_hand_target.name = "right_target"
+	#right_controller.add_child(right_hand_target, true)
+	#right_hand_target.rotation_degrees.y = -90
+	#right_hand_target.rotation_degrees.z = 90
+	
 	
 	# match avatar hands to XR Tools hands positions
-	left_controller.get_node("left_target").translation = left_hand.translation
-	right_controller.get_node("right_target").translation = right_hand.translation
+	#left_controller.get_node("left_target").translation = left_hand.translation
+	#right_controller.get_node("right_target").translation = right_hand.translation
 	
 	#Automatically generate other helper target nodes used in the IK
 	left_target = Position3D.new()
@@ -125,8 +138,18 @@ func _ready():
 	
 	
 	#Set skeleton targets to the automatically generated target nodes
-	$Armature/Skeleton/SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/left_target"))
-	$Armature/Skeleton/SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/right_target"))
+	if left_controller_path != null:
+		$Armature/Skeleton/SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/" + left_hand.name + "/left_target"))
+	else:
+		print("Left controller path not found, assuming just using hand node.")
+		$Armature/Skeleton/SkeletonIKL.set_target_node(NodePath("../../../../" + left_hand.name + "/left_target"))
+	
+	if right_controller_path != null:
+		$Armature/Skeleton/SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/" + right_hand.name + "/right_target"))
+	else:
+		print("Right controller path not found, assuming just using hand node.")
+		$Armature/Skeleton/SkeletonIKR.set_target_node(NodePath("../../../../" + right_hand.name + "/right_target"))
+	
 	LL_ik.set_target_node(NodePath("../../../LL_c/LL_t"))
 	RL_ik.set_target_node(NodePath("../../../RL_c/Rl_t"))
 	
@@ -218,12 +241,14 @@ func _physics_process(delta: float) -> void:
 
 
 	#perform hand grip animations using AnimationTree by adding grip and trigger hand poses to IK animation
-	$AnimationTree.set("parameters/lefthandpose/blend_amount", ARVRHelpers.get_left_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_GRIP))
-	$AnimationTree.set("parameters/righthandpose/blend_amount", ARVRHelpers.get_right_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_GRIP))
-	$AnimationTree.set("parameters/lefthandposetrig/blend_amount", ARVRHelpers.get_left_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
-	$AnimationTree.set("parameters/righthandposetrig/blend_amount", ARVRHelpers.get_right_controller(arvrorigin).get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
-
-	
+	if left_controller_path != null and right_controller_path != null:
+		$AnimationTree.set("parameters/lefthandpose/blend_amount", left_controller.get_joystick_axis(JOY_VR_ANALOG_GRIP))
+		$AnimationTree.set("parameters/righthandpose/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_GRIP))
+		$AnimationTree.set("parameters/lefthandposetrig/blend_amount", left_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
+		$AnimationTree.set("parameters/righthandposetrig/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
+	else:
+		print("Can't find left or right controller path so cannot set hand animation blends")
+		
 
 	# Calculate foot movement based on players actual ground-movement velocity
 	#var player_velocity := player_body.velocity# - player_body.ground_velocity
