@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://demo/sounds/Midnight in the Green House.mp3" type="AudioStream" id=11]
 [ext_resource path="res://demo/scenes/mapobjects/DestructableCubeTarget.tscn" type="PackedScene" id=12]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/female_shadow.tscn" type="PackedScene" id=13]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/sybotshadow.tscn" type="PackedScene" id=14]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/male_shadow.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")
@@ -413,6 +415,12 @@ transform = Transform( 0.962131, 0.272431, 0.00919178, 0.133505, -0.441558, -0.8
 
 [node name="character_height" parent="shadow/FPController/avatar/Armature/Skeleton" index="11"]
 transform = Transform( 1, 1.35379e-07, -2.1085e-07, -4.27693e-08, 0.999113, 0.042122, -2.12992e-09, -0.042121, 0.999113, -1.27091e-07, 1.70727, 0.0349293 )
+
+[node name="shadow2" parent="." instance=ExtResource( 14 )]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.96281, 0, -3.04401 )
+
+[node name="shadow3" parent="." instance=ExtResource( 15 )]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1.69741, 0, -3.27056 )
 
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]
