@@ -1,6 +1,5 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=53 format=2]
 
-[ext_resource path="res://addons/godot-xr-avatar/scripts/shadow.gd" type="Script" id=1]
 [ext_resource path="res://demo/materials/avatar_female_skin_mat.tres" type="Material" id=2]
 [ext_resource path="res://demo/materials/avatar_eye.tres" type="Material" id=3]
 [ext_resource path="res://demo/materials/avatar_female_mat.tres" type="Material" id=4]
@@ -7972,10 +7971,11 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "output", 0, "righthandposetrig", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "Add2", 0, "Animation", "Add2", 1, "movement", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
+node_connections = [ "output", 0, "righthandposetrig", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
 
 [node name="shadow" type="Spatial"]
 script = ExtResource( 5 )
+smoothing = 0.8
 
 [node name="FPController" type="Position3D" parent="."]
 
@@ -7990,19 +7990,9 @@ script = ExtResource( 5 )
 [node name="RightPhysicsHand" type="Position3D" parent="FPController/RightHandController"]
 
 [node name="avatar" type="Spatial" parent="FPController"]
-script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
-arvrorigin_path = NodePath("")
-arvrcamera_path = NodePath("")
-left_controller_path = NodePath("")
-right_controller_path = NodePath("")
-left_hand_path = NodePath("")
-right_hand_path = NodePath("")
-height_offset = 0.25
-foot_offset = 0.1
-smoothing = 0.8
 
 [node name="Armature" type="Spatial" parent="FPController/avatar"]
 transform = Transform( 1, 0, 0, 0, 1, 1.62921e-07, 0, -1.62921e-07, 1, 0, 0, 0 )

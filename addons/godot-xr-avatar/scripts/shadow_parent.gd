@@ -59,13 +59,19 @@ var armature_scale := Vector3.ONE
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	#get player nodes
+	#get player nodes - need to probably change these to export variables or proper terminology for hands when hand tracking
 	player_arvrorigin = get_parent().get_node("avatar_player/FPController")
 	player_arvrcamera = get_parent().get_node("avatar_player/FPController/ARVRCamera")
-	player_left_controller = get_parent().get_node("avatar_player/FPController/LeftHandController")
-	player_right_controller = get_parent().get_node("avatar_player/FPController/RightHandController")
-	player_left_hand = get_parent().get_node("avatar_player/FPController/LeftHandController/LeftPhysicsHand")
-	player_right_hand = get_parent().get_node("avatar_player/FPController/RightHandController/RightPhysicsHand")
+	player_left_controller = get_parent().get_node_or_null("avatar_player/FPController/LeftHandController")
+	player_right_controller = get_parent().get_node_or_null("avatar_player/FPController/RightHandController")
+	if player_left_controller != null:
+		player_left_hand = get_parent().get_node("avatar_player/FPController/LeftHandController/LeftPhysicsHand")
+	else:
+		player_left_hand = get_parent().get_node("avatar_player/FPController/LeftPhysicsHand")
+	if player_right_controller != null:
+		player_right_hand = get_parent().get_node("avatar_player/FPController/RightHandController/RightPhysicsHand")
+	else:
+		player_right_hand = get_parent().get_node("avatar_player/FPController/RightPhysicsHand")
 	player_player_body = get_parent().get_node("avatar_player/FPController/PlayerBody")
 	
 	#set avatar height and scale
@@ -81,20 +87,20 @@ func _ready():
 	#create left hand and right hand targets automatically 	
 	left_hand_target = Position3D.new()
 	left_hand_target.name = "left_target"
-	left_controller.add_child(left_hand_target, true)
+	left_hand.add_child(left_hand_target, true)
 	left_hand_target.rotation_degrees.y = 90
 	left_hand_target.rotation_degrees.z = -90
 	
 	right_hand_target = Position3D.new()
 	right_hand_target.name = "right_target"
-	right_controller.add_child(right_hand_target, true)
+	right_hand.add_child(right_hand_target, true)
 	right_hand_target.rotation_degrees.y = -90
 	right_hand_target.rotation_degrees.z = 90
 	
 	
 	# match avatar hands to XR Tools hands positions
-	left_controller.get_node("left_target").translation = left_hand.translation
-	right_controller.get_node("right_target").translation = right_hand.translation
+	#left_controller.get_node("left_target").translation = left_hand.translation
+	#right_controller.get_node("right_target").translation = right_hand.translation
 	
 	#Automatically generate other helper target nodes used in the IK
 	left_target = Position3D.new()
@@ -126,8 +132,8 @@ func _ready():
 	
 	
 	#Set skeleton targets to the automatically generated target nodes
-	$FPController/avatar/Armature/Skeleton/SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/left_target"))
-	$FPController/avatar/Armature/Skeleton/SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/right_target"))
+	$FPController/avatar/Armature/Skeleton/SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/" + left_hand.name + "/left_target"))
+	$FPController/avatar/Armature/Skeleton/SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/" + right_hand.name + "/right_target"))
 	LL_ik.set_target_node(NodePath("../../../LL_c/LL_t"))
 	RL_ik.set_target_node(NodePath("../../../RL_c/Rl_t"))
 	
@@ -201,7 +207,18 @@ func get_right_controller_trigger():
 func get_player_body_velocity():
 	return player_player_body.ground_control_velocity
 
-
+func get_left_handpose_blend():
+	return player_arvrorigin.get_node("avatar/AnimationTree").get("parameters/lefthandpose/blend_amount")
+	
+func get_left_trigger_blend():
+	return player_arvrorigin.get_node("avatar/AnimationTree").get("parameters/lefthandposetrig/blend_amount")
+	
+	
+func get_right_handpose_blend():
+	return player_arvrorigin.get_node("avatar/AnimationTree").get("parameters/righthandpose/blend_amount")
+	
+func get_right_trigger_blend():
+	return player_arvrorigin.get_node("avatar/AnimationTree").get("parameters/righthandposetrig/blend_amount")
 
 		
 		
@@ -281,9 +298,9 @@ func _physics_process(delta):
 
 	
 	#perform hand grip animations using AnimationTree by adding grip and trigger hand poses to IK animation
-	$FPController/avatar/AnimationTree.set("parameters/lefthandpose/blend_amount", get_left_controller_grip())
-	$FPController/avatar/AnimationTree.set("parameters/righthandpose/blend_amount", get_right_controller_grip())
-	$FPController/avatar/AnimationTree.set("parameters/lefthandposetrig/blend_amount", get_left_controller_trigger()) 
-	$FPController/avatar/AnimationTree.set("parameters/righthandposetrig/blend_amount", get_right_controller_trigger())
+	$FPController/avatar/AnimationTree.set("parameters/lefthandpose/blend_amount", get_left_handpose_blend()) #get_left_controller_grip())
+	$FPController/avatar/AnimationTree.set("parameters/righthandpose/blend_amount", get_right_handpose_blend()) #get_right_controller_grip())
+	$FPController/avatar/AnimationTree.set("parameters/lefthandposetrig/blend_amount", get_left_trigger_blend()) #get_left_controller_trigger()) 
+	$FPController/avatar/AnimationTree.set("parameters/righthandposetrig/blend_amount", get_right_trigger_blend()) #get_right_controller_trigger())
 
 	
