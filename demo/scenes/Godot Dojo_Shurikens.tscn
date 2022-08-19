@@ -1,5 +1,6 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
+[ext_resource path="res://addons/godot-xr-avatar/scenes/sybotshadow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://demo/scenes/managers/WeaponManager.gd" type="Script" id=2]
 [ext_resource path="res://demo/scenes/mapobjects/DestructableTable.tscn" type="PackedScene" id=3]
 [ext_resource path="res://demo/scenes/managers/HapticManager.gd" type="Script" id=4]
@@ -360,61 +361,26 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.9758
 [node name="Slicing_Katana_S" parent="WeaponManager" groups=["swords"] instance=ExtResource( 14 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.93966, 0.527654, -0.125481 )
 
-[node name="Shuriken5" parent="WeaponManager" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03554, 0.495368, 3.00749 )
-sleeping = true
-
-[node name="Shuriken6" parent="WeaponManager" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117409, 0.495368, 1.91304 )
-sleeping = true
-
-[node name="Shuriken7" parent="WeaponManager" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03554, 0.495368, 3.00749 )
-sleeping = true
-
-[node name="Shuriken8" parent="WeaponManager" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03554, 0.495368, 3.00749 )
-sleeping = true
-
 [node name="Shuriken" parent="WeaponManager" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.666944, 0.49549, 2.18714 )
-sleeping = true
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.415947, 0.496635, 1.81264 )
 
-[node name="Shuriken2" parent="WeaponManager" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.666944, 0.49549, 2.18714 )
-sleeping = true
+[node name="Shuriken_4Spike" parent="WeaponManager" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.519831, 1.72902 )
 
-[node name="Shuriken3" parent="WeaponManager" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.666944, 0.49549, 2.18714 )
-sleeping = true
+[node name="Shuriken_4Spike2" parent="WeaponManager" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.273852, 0.519831, 1.77692 )
 
-[node name="Shuriken4" parent="WeaponManager" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.666944, 0.49549, 2.18714 )
-sleeping = true
+[node name="Shuriken_4Star" parent="WeaponManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02869, 0.494653, 2.60889 )
 
-[node name="Shuriken9" parent="WeaponManager" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.497198, 3 )
+[node name="Shuriken_4Star2" parent="WeaponManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90217, 0.494653, 2.31462 )
 
-[node name="Shuriken10" parent="WeaponManager" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.497198, 3 )
+[node name="Shuriken_8Star" parent="WeaponManager" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.907704, 0.510162, 2.3161 )
 
-[node name="Shuriken11" parent="WeaponManager" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.497198, 3 )
-
-[node name="Shuriken12" parent="WeaponManager" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.497198, 3 )
-
-[node name="Shuriken13" parent="WeaponManager" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.583154, 0.49944, 2.18999 )
-
-[node name="Shuriken14" parent="WeaponManager" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.583154, 0.49944, 2.18999 )
-
-[node name="Shuriken15" parent="WeaponManager" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.583154, 0.49944, 2.18999 )
-
-[node name="Shuriken16" parent="WeaponManager" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.583154, 0.49944, 2.18999 )
+[node name="Shuriken_8Star2" parent="WeaponManager" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.720192, 0.510162, 1.97163 )
 
 [node name="SoundManager" type="Node" parent="."]
 
@@ -432,6 +398,9 @@ script = ExtResource( 4 )
 
 [node name="DestructableTable" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.78659 )
+
+[node name="shadow" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.41005 )
 
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]

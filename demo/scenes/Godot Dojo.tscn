@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://demo/scenes/managers/WeaponManager.gd" type="Script" id=9]
 [ext_resource path="res://demo/scenes/managers/HapticManager.gd" type="Script" id=10]
 [ext_resource path="res://demo/sounds/Midnight in the Green House.mp3" type="AudioStream" id=11]
-[ext_resource path="res://demo/scenes/mapobjects/DestructableCubeTarget.tscn" type="PackedScene" id=12]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/female_shadow.tscn" type="PackedScene" id=13]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/sybotshadow.tscn" type="PackedScene" id=14]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/male_shadow.tscn" type="PackedScene" id=15]
@@ -372,9 +371,6 @@ max_distance = 50.0
 
 [node name="HapticManager" type="Node" parent="."]
 script = ExtResource( 10 )
-
-[node name="DestructableCubeTarget" parent="." instance=ExtResource( 12 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04494, 0.333809, -2.73094 )
 
 [node name="shadow" parent="." instance=ExtResource( 13 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.34782 )
