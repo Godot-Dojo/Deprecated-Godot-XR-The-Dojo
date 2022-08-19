@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://demo/materials/trailmaterial.tres" type="Material" id=1]
 [ext_resource path="res://demo/scripts/shuriken.gd" type="Script" id=2]
 [ext_resource path="res://demo/materials/katana_mat.tres" type="Material" id=3]
 [ext_resource path="res://demo/scripts/MotionTrail.gd" type="Script" id=4]
+[ext_resource path="res://addons/slicer/slicer.gd" type="Script" id=5]
 
 [sub_resource type="ArrayMesh" id=3]
 resource_name = "Katana_Stand_Plane000"
@@ -23,7 +24,11 @@ surfaces/0 = {
 margin = 0.005
 extents = Vector3( 0.0519174, 0.0120823, 0.0516366 )
 
-[node name="Shuriken" type="RigidBody"]
+[sub_resource type="BoxShape" id=4]
+margin = 0.01
+extents = Vector3( 0.06, 0.03, 0.06 )
+
+[node name="Shuriken_4Star" type="RigidBody" groups=["shurikens"]]
 collision_layer = 11
 collision_mask = 11
 continuous_cd = true
@@ -56,5 +61,24 @@ scaleTexture = false
 startColor = Color( 0, 0.133333, 0.290196, 0.501961 )
 endColor = Color( 0, 0, 0, 0 )
 
+[node name="SlicingArea" type="Area" parent="."]
+script = ExtResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="SlicingArea"]
+shape = SubResource( 4 )
+
+[node name="mesh" type="MeshInstance" parent="SlicingArea"]
+
+[node name="A" type="Position3D" parent="SlicingArea/mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0, -0.06 )
+
+[node name="B" type="Position3D" parent="SlicingArea/mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0, 0.06 )
+
+[node name="C" type="Position3D" parent="SlicingArea/mesh"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0, 0 )
+
 [connection signal="dropped" from="." to="MotionTrail" method="_on_Shuriken_dropped"]
 [connection signal="picked_up" from="." to="MotionTrail" method="_on_Shuriken_picked_up"]
+[connection signal="body_entered" from="SlicingArea" to="SlicingArea" method="_on_SlicingArea_body_entered"]
+[connection signal="body_exited" from="SlicingArea" to="SlicingArea" method="_on_SlicingArea_body_exited"]

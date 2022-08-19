@@ -1,8 +1,7 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=24 format=2]
 
-[ext_resource path="res://demo/scenes/mapobjects/Table_round.tscn" type="PackedScene" id=1]
 [ext_resource path="res://demo/scenes/managers/WeaponManager.gd" type="Script" id=2]
-[ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=3]
+[ext_resource path="res://demo/scenes/mapobjects/DestructableTable.tscn" type="PackedScene" id=3]
 [ext_resource path="res://demo/scenes/managers/HapticManager.gd" type="Script" id=4]
 [ext_resource path="res://demo/scenes/weapons/Throwing_Shuriken.tscn" type="PackedScene" id=5]
 [ext_resource path="res://demo/scenes/weapons/Throwing_Shuriken_4Spike.tscn" type="PackedScene" id=6]
@@ -12,7 +11,6 @@
 [ext_resource path="res://demo/scenes/mapobjects/SliceableWoodenman.tscn" type="PackedScene" id=10]
 [ext_resource path="res://demo/scenes/mapobjects/HolderForPickableSwords.tscn" type="PackedScene" id=11]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=12]
-[ext_resource path="res://demo/scenes/mapobjects/DestructableCubeTarget.tscn" type="PackedScene" id=13]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_S.tscn" type="PackedScene" id=14]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_M.tscn" type="PackedScene" id=15]
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=16]
@@ -52,13 +50,6 @@ extents = Vector3( 0.1, 2, 0.1 )
 
 [sub_resource type="BoxShape" id=10]
 extents = Vector3( 0.7, 0.5, 0.1 )
-
-[sub_resource type="CubeMesh" id=11]
-size = Vector3( 0.4, 0.4, 0.4 )
-
-[sub_resource type="BoxShape" id=12]
-margin = 0.02
-extents = Vector3( 0.2, 0.2, 0.2 )
 
 [node name="Godot Dojo" type="Spatial"]
 
@@ -351,20 +342,6 @@ transform = Transform( 0.962555, 0.242927, -0.120313, 0.00337049, -0.454487, -0.
 [node name="character_height" parent="avatar_player/FPController/avatar/Armature/Skeleton" index="12"]
 transform = Transform( 1, 4.38753e-06, 1.88619e-07, -4.49422e-06, 0.999992, 0.00405826, -1.07534e-07, -0.00405829, 0.999992, 8.14329e-06, 1.8453, 0.046462 )
 
-[node name="DemoGrabCube" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 2.7571 )
-collision_layer = 131073
-collision_mask = 131073
-script = ExtResource( 3 )
-reset_transform_on_pickup = false
-ranged_grab_method = 0
-
-[node name="MeshInstance" type="MeshInstance" parent="DemoGrabCube"]
-mesh = SubResource( 11 )
-
-[node name="CollisionShape" type="CollisionShape" parent="DemoGrabCube"]
-shape = SubResource( 12 )
-
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
 
@@ -388,7 +365,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03554, 0.495368, 3.00749 )
 sleeping = true
 
 [node name="Shuriken6" parent="WeaponManager" instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03554, 0.495368, 3.00749 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.117409, 0.495368, 1.91304 )
 sleeping = true
 
 [node name="Shuriken7" parent="WeaponManager" instance=ExtResource( 8 )]
@@ -453,11 +430,8 @@ max_distance = 50.0
 [node name="HapticManager" type="Node" parent="."]
 script = ExtResource( 4 )
 
-[node name="DestructableCubeTarget" parent="." instance=ExtResource( 13 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.04494, 0.333809, -2.73094 )
-
-[node name="Table_round" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3 )
+[node name="DestructableTable" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.78659 )
 
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
 [connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]

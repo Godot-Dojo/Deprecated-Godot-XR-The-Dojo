@@ -3,8 +3,14 @@ extends Node
 onready var long_sword_scene = load("res://demo/scenes/weapons/Slicing_Katana_Long.tscn")
 onready var medium_sword_scene = load("res://demo/scenes/weapons/Slicing_Katana_M.tscn")
 onready var short_sword_scene = load("res://demo/scenes/weapons/Slicing_Katana_S.tscn")
+onready var shuriken_scene = load("res://demo/scenes/weapons/Throwing_Shuriken.tscn")
+onready var shuriken_4spike_scene = load("res://demo/scenes/weapons/Throwing_Shuriken_4Spike.tscn")
+onready var shuriken_4star_scene = load("res://demo/scenes/weapons/Throwing_Shuriken_4Star.tscn")
+onready var shuriken_8star_scene = load("res://demo/scenes/weapons/Throwing_Shuriken_8Star.tscn")
+
 var shadow_group := []
 var sword_group := []
+var shuriken_group := []
 var item_in_player_hand_left = null
 var item_in_player_hand_right = null
 var drop_left_item = false
@@ -12,6 +18,7 @@ var drop_right_item = false
 
 #signal weapon_picked_up(weapon, weapon_name, holding_controller_name)
 #signal weapon_holstered(weapon, weapon_name)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass 
@@ -19,7 +26,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
-#	
+	#pass
 
 
 
@@ -119,7 +126,7 @@ func shadow_drop_weapon(weapon_name, which_controller):
 					var shadow_weapon = shadow_hand.get_node(weapon_name)
 					shadow_weapon.queue_free()
 					drop_left_item = true
-					
+
 			
 			if item_in_player_hand_right != null:
 				if weapon_name == item_in_player_hand_right.name:
@@ -128,6 +135,7 @@ func shadow_drop_weapon(weapon_name, which_controller):
 					var shadow_weapon = shadow_hand.get_node(weapon_name)
 					shadow_weapon.queue_free()
 					drop_right_item = true
+
 		
 		if which_controller != null:
 			var shadow_controller = shadow.get_node("FPController/"+ which_controller.name)
@@ -140,14 +148,18 @@ func shadow_drop_weapon(weapon_name, which_controller):
 			shadow_weapon.queue_free()
 			if which_controller.name == "LeftHandController":
 				drop_left_item = true
+
 			if which_controller.name == "RightHandController":
-				drop_right_item = true	
+				drop_right_item = true
+	
 	
 	if drop_left_item == true:			
 		item_in_player_hand_left = null	
-	
+		drop_left_item = false
+		
 	if drop_right_item == true:
-		item_in_player_hand_right = null	
+		item_in_player_hand_right = null
+		drop_right_item = false	
 
 func _on_Slicing_Katana_Long_dropped(pickable):
 	shadow_drop_weapon(pickable.name, null) # Replace with function body.

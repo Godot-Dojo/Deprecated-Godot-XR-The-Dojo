@@ -393,7 +393,7 @@ func _flip_normal(currentNormals):
 		flippedNormals.push_back(-normal);
 	return flippedNormals
 func _smooth_vertex():
-	print("smooth")
+#	print("smooth")
 	_smoothen(_positiveSideVertices[_current_surf_idx], _positiveSideNormals[_current_surf_idx], _positiveSideTriangles[_current_surf_idx]);
 	_smoothen(_negativeSideVertices[_current_surf_idx], _negativeSideNormals[_current_surf_idx], _negativeSideTriangles[_current_surf_idx]);
 func _smoothen(vertices,normals,triangles):
@@ -414,7 +414,7 @@ func _smoothen(vertices,normals,triangles):
 	for x in normals:
 		x.normalized()
 func _add_reverse_winded_triangle():
-	print("rev winded triangle")
+#	print("rev winded triangle")
 	var positiveVertsStartIndex = _positiveSideVertices[_current_surf_idx].size();
 	_positiveSideVertices[_current_surf_idx].append_array(_positiveSideVertices[_current_surf_idx]);
 	_positiveSideUvs[_current_surf_idx].append_array(_positiveSideUvs[_current_surf_idx]);

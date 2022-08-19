@@ -1,8 +1,7 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=3]
 [ext_resource path="res://demo/scenes/mapobjects/SliceableWoodenman.tscn" type="PackedScene" id=4]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=5]
 [ext_resource path="res://demo/scenes/mapobjects/HolderForPickableSwords.tscn" type="PackedScene" id=6]
@@ -50,13 +49,6 @@ extents = Vector3( 0.1, 2, 0.1 )
 
 [sub_resource type="BoxShape" id=10]
 extents = Vector3( 0.7, 0.5, 0.1 )
-
-[sub_resource type="CubeMesh" id=11]
-size = Vector3( 0.4, 0.4, 0.4 )
-
-[sub_resource type="BoxShape" id=12]
-margin = 0.02
-extents = Vector3( 0.2, 0.2, 0.2 )
 
 [node name="Godot Dojo" type="Spatial"]
 
@@ -348,20 +340,6 @@ transform = Transform( 0.962555, 0.242927, -0.120313, 0.00337049, -0.454487, -0.
 
 [node name="character_height" parent="avatar_player/FPController/avatar/Armature/Skeleton" index="12"]
 transform = Transform( 1, 4.38753e-06, 1.88619e-07, -4.49422e-06, 0.999992, 0.00405826, -1.07534e-07, -0.00405829, 0.999992, 8.14329e-06, 1.8453, 0.046462 )
-
-[node name="DemoGrabCube" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 2.7571 )
-collision_layer = 131073
-collision_mask = 131073
-script = ExtResource( 3 )
-reset_transform_on_pickup = false
-ranged_grab_method = 0
-
-[node name="MeshInstance" type="MeshInstance" parent="DemoGrabCube"]
-mesh = SubResource( 11 )
-
-[node name="CollisionShape" type="CollisionShape" parent="DemoGrabCube"]
-shape = SubResource( 12 )
 
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
