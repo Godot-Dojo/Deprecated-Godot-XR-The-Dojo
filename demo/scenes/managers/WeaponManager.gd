@@ -21,7 +21,11 @@ var drop_right_item = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass 
+	if get_tree().has_group("shurikens"):
+		shuriken_group = get_tree().get_nodes_in_group("shurikens")
+		for shuriken in shuriken_group:
+			shuriken.connect("picked_up", self, "_on_Shuriken_picked_up")
+			shuriken.connect("dropped", self, "_on_Shuriken_dropped")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -77,7 +81,26 @@ func _on_Slicing_Katana_S_picked_up(pickable):
 		
 		
 		#emit_signal("weapon_holstered", pickable, pickable.name)
-
+func _on_Shuriken_picked_up(pickable):
+	if pickable.picked_up_by != null and pickable.by_controller != null:
+		if pickable.by_controller.name == "LeftHandController":
+			item_in_player_hand_left = pickable
+		if pickable.by_controller.name == "RightHandController":
+			item_in_player_hand_right = pickable
+		shadow_pick_up_weapon(pickable.name, pickable.by_controller)
+		# Replace with function body.
+		#emit_signal("weapon_picked_up", pickable, pickable.name, pickable.by_controller.name)
+	else:
+		shadow_drop_weapon(pickable.name, pickable.by_controller)
+	
+func _on_Shuriken_dropped(pickable):
+	var left_hand = get_parent().get_node("avatar_player/FPController/LeftHandController/LeftPhysicsHand")
+	var right_hand = get_parent().get_node("avatar_player/FPController/RightHandController/RightPhysicsHand")
+	if pickable.global_transform.origin.distance_to(left_hand.global_transform.origin) < pickable.global_transform.origin.distance_to(right_hand.global_transform.origin):
+	#(pickable.transform.origin - left_hand.transform.origin).length() < (pickable.transform.origin-right_hand.transform.origin).length():
+		shadow_drop_weapon(pickable.name, left_hand.get_parent())
+	else:
+		shadow_drop_weapon(pickable.name, right_hand.get_parent())
 
 func unsheath_sword(pickable_sword):
 	pickable_sword.get_node("holder").visible = false
@@ -88,12 +111,20 @@ func sheath_sword(pickable_sword):
 
 func shadow_pick_up_weapon(weapon_name, which_controller):
 	var weapon_to_hold_scene = null
-	if weapon_name == "Slicing_Katana_Long":
+	if weapon_name.begins_with("Slicing_Katana_Long"):
 		weapon_to_hold_scene = long_sword_scene
-	if weapon_name == "Slicing_Katana_M":
+	elif weapon_name.begins_with("Slicing_Katana_M"):
 		weapon_to_hold_scene = medium_sword_scene
-	if weapon_name == "Slicing_Katana_S":
+	elif weapon_name.begins_with("Slicing_Katana_S"):
 		weapon_to_hold_scene = short_sword_scene
+	elif weapon_name.begins_with("Shuriken_4Spike"):
+		weapon_to_hold_scene = shuriken_4spike_scene 
+	elif weapon_name.begins_with("Shuriken_4Star"):
+		weapon_to_hold_scene = shuriken_4star_scene
+	elif weapon_name.begins_with("Shuriken_8Star"):
+		weapon_to_hold_scene = shuriken_8star_scene
+	elif weapon_name.begins_with("Shuriken"):
+		weapon_to_hold_scene = shuriken_scene
 		
 	shadow_group = get_tree().get_nodes_in_group("shadows")
 	for shadow in shadow_group:
@@ -105,10 +136,13 @@ func shadow_pick_up_weapon(weapon_name, which_controller):
 		if which_controller.name == "RightHandController":
 			shadow_hand = shadow_controller.get_node("RightPhysicsHand")
 		shadow_hand.add_child(held_weapon)
-		held_weapon.rotation_degrees.y = -90
-		held_weapon.rotation_degrees.z = -90
-		held_weapon.translation.y = .05
-		held_weapon.translation.z = -.05
+		if weapon_name.begins_with("Slicing"):
+			held_weapon.rotation_degrees.y = -90
+			held_weapon.rotation_degrees.z = -90
+			held_weapon.translation.y = .05
+			held_weapon.translation.z = -.05
+		if weapon_name.begins_with("Shuriken"):
+			held_weapon.translation.z = -.15
 		if held_weapon.get_node_or_null("holder") != null:
 			held_weapon.get_node("holder").visible = false
 	
@@ -144,8 +178,11 @@ func shadow_drop_weapon(weapon_name, which_controller):
 				shadow_hand = shadow_controller.get_node("LeftPhysicsHand") 
 			if which_controller.name == "RightHandController":
 				shadow_hand = shadow_controller.get_node("RightPhysicsHand")
-			var shadow_weapon = shadow_hand.get_node(weapon_name)
-			shadow_weapon.queue_free()
+			var hand_children = shadow_hand.get_children()
+			for child in hand_children:
+				if weapon_name.begins_with(child.name):
+					var shadow_weapon = child
+					shadow_weapon.queue_free()
 			if which_controller.name == "LeftHandController":
 				drop_left_item = true
 
