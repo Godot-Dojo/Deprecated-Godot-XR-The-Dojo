@@ -50,8 +50,8 @@ func _create_cut_body(_sign,mesh_instance,cutplane : Plane):
 	object.mesh = mesh_instance
 	object.scale = _mesh.scale
 	if _mesh.mesh.get_surface_count() > 0:
-		print("mesh surface count is")
-		print(_mesh.mesh.get_surface_count())
+	#	print("mesh surface count is")
+	#	print(_mesh.mesh.get_surface_count())
 		var material_count
 		if _cross_section_material != null:
 			 material_count= _mesh.mesh.get_surface_count()+1
