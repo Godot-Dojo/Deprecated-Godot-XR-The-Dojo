@@ -7985,10 +7985,11 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "output", 0, "righthandposetrig", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
+node_connections = [ "output", 0, "righthandposetrig", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "Add2", 0, "Animation", "Add2", 1, "movement", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger" ]
 
-[node name="shadow" type="Spatial"]
+[node name="shadow" type="Spatial" groups=["shadows"]]
 script = ExtResource( 1 )
+height_offset = 0.25
 smoothing = 0.8
 
 [node name="FPController" type="Position3D" parent="."]
