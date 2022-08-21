@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player_readyplayerme.tscn" type="PackedScene" id=1]
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://demo/scenes/managers/HapticManager.gd" type="Script" id=8]
 [ext_resource path="res://demo/sounds/Midnight in the Green House.mp3" type="AudioStream" id=9]
 [ext_resource path="res://demo/scenes/managers/WeaponManager-Revised.gd" type="Script" id=10]
+[ext_resource path="res://demo/scripts/talking_head.gd" type="Script" id=11]
+[ext_resource path="res://demo/scripts/lip_sync.gd" type="Script" id=12]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")
@@ -309,12 +311,20 @@ bones/6/bound_children = [ NodePath("character_height") ]
 bones/59/bound_children = [ NodePath("left_foot") ]
 bones/64/bound_children = [ NodePath("right_foot") ]
 
-[connection signal="dropped" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_dropped"]
-[connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
-[connection signal="dropped" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_dropped"]
-[connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]
-[connection signal="dropped" from="WeaponManager/Slicing_Katana_S" to="WeaponManager" method="_on_Slicing_Katana_S_dropped"]
-[connection signal="picked_up" from="WeaponManager/Slicing_Katana_S" to="WeaponManager" method="_on_Slicing_Katana_S_picked_up"]
+[node name="Wolf3D_Head" parent="avatar_player/FPController/avatar/Armature/Skeleton" index="4"]
+script = ExtResource( 11 )
+
+[node name="LipSync" type="Node" parent="avatar_player/FPController/avatar/Armature/Skeleton/Wolf3D_Head" index="0"]
+script = ExtResource( 12 )
+
+[node name="character_height" parent="avatar_player/FPController/avatar/Armature/Skeleton" index="13"]
+transform = Transform( 1, -4.76494e-07, 1.02981e-07, 4.76507e-07, 1, 1.97534e-06, -1.02875e-07, -1.98279e-06, 1, -1.79984e-07, 1.86452, 0.046523 )
+
+[node name="left_foot" parent="avatar_player/FPController/avatar/Armature/Skeleton" index="14"]
+transform = Transform( -0.996548, 0.0169523, -0.0816123, -0.076824, -0.566729, 0.820313, -0.0323453, 0.823732, 0.566061, 0.152143, 0.126343, -0.0415903 )
+
+[node name="right_foot" parent="avatar_player/FPController/avatar/Armature/Skeleton" index="15"]
+transform = Transform( -0.996545, -0.0169366, 0.0816147, 0.0768154, -0.566767, 0.820291, 0.0323629, 0.823705, 0.566096, -0.152146, 0.126344, -0.0416304 )
 
 [editable path="avatar_player"]
 [editable path="avatar_player/FPController"]

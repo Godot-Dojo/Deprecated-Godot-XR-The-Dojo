@@ -287,6 +287,15 @@ func _physics_process(delta):
 	var move = get_player_body_velocity()
 	
 	
+	#switch to squat move pose if moving while in a crouch
+	if abs(move.y) > .25 and get_current_player_height() < (.9 * max_height):
+		$FPController/avatar/Armature/Skeleton/SkeletonIKLegL.magnet = lerp($FPController/avatar/Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(1,3,3), delta)
+		$FPController/avatar/Armature/Skeleton/SkeletonIKLegR.magnet = lerp($FPController/avatar/Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-1,3,3), delta)
+	else:
+		$FPController/avatar/Armature/Skeleton/SkeletonIKLegL.magnet = lerp($FPController/avatar/Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(.2,0,1), delta)
+		$FPController/avatar/Armature/Skeleton/SkeletonIKLegR.magnet = lerp($FPController/avatar/Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-.2,0,1), delta)
+
+	
 	# Perform player movement animation
 	$FPController/avatar/AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
 	$FPController/avatar/AnimationTree.set("parameters/Add2/add_amount", 1)
@@ -294,6 +303,8 @@ func _physics_process(delta):
 	update_ik_anim(right_target,Raycast_R,right_foot,RL_dB,ik_raycast_height,foot_offset)
 	LL_ik.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
 	RL_ik.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
+	
+	
 	prev_move = move
 
 	

@@ -85,6 +85,11 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/overrides/GroundPhysicsSettings.gd"
 }, {
 "base": "Node",
+"class": "LipSync",
+"language": "GDScript",
+"path": "res://demo/scripts/lip_sync.gd"
+}, {
+"base": "Node",
 "class": "MovementProvider",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/functions/MovementProvider.gd"
@@ -200,6 +205,7 @@ _global_script_class_icons={
 "Function_WindMovement": "",
 "GroundPhysics": "",
 "GroundPhysicsSettings": "",
+"LipSync": "",
 "MovementProvider": "res://addons/godot-xr-tools/editor/icons/XRToolsMovementProvider.svg",
 "Object_climbable": "res://addons/godot-xr-tools/editor/icons/XRToolsHand.svg",
 "PlayerBody": "res://addons/godot-xr-tools/editor/icons/XRToolsBody.svg",
@@ -227,6 +233,10 @@ _global_script_class_icons={
 config/name="Godot-XR-Avatar"
 run/main_scene="res://demo/scenes/Godot Dojo.tscn"
 config/icon="res://icon.png"
+
+[audio]
+
+enable_audio_input=true
 
 [display]
 
