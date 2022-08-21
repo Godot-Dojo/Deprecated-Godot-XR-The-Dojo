@@ -1,3 +1,7 @@
+# Author: Malcolm Nixon https://github.com/Malcolmnixon
+# GitHub Project Page: To be released as a addon for the Godot Engine
+# License: MIT
+
 class_name LipSync
 extends Node
 
