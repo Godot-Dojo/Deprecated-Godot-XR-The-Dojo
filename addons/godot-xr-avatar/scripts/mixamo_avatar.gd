@@ -232,12 +232,12 @@ func _physics_process(delta: float) -> void:
 	skeleton.transform.origin.y = get_current_player_height() - avatar_height + height_offset
    
 	# Rotate the head Y bone (look up/down)
-	var head := skeleton.get_bone_pose(skeleton.find_bone("mixamorig1_Head"))
+	var head := skeleton.get_bone_pose(skeleton.find_bone("mixamorig_Head"))
 	var angles := arvrcamera.rotation
 	angles.x *= -1;angles.z *= -1
 	angles.y -= lerp_angle(angles.y,arvrcamera.rotation.y,delta)
 	head.basis = Basis(angles)
-	skeleton.set_bone_pose(skeleton.find_bone("mixamorig1_Head"),head)
+	skeleton.set_bone_pose(skeleton.find_bone("mixamorig_Head"),head)
 
 
 	#perform hand grip animations using AnimationTree by adding grip and trigger hand poses to IK animation
