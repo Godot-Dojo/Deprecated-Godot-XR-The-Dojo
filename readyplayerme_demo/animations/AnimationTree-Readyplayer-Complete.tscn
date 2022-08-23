@@ -1,0 +1,100 @@
+[gd_scene load_steps=18 format=2]
+
+[sub_resource type="AnimationNodeAdd2" id=1]
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "T-pose"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=5]
+filter_enabled = true
+filters = [ "Armature/Skeleton:LeftHandMiddle1", "Armature/Skeleton:LeftHandMiddle2", "Armature/Skeleton:LeftHandMiddle3", "Armature/Skeleton:LeftHandMiddle4", "Armature/Skeleton:LeftHandPinky1", "Armature/Skeleton:LeftHandPinky2", "Armature/Skeleton:LeftHandPinky3", "Armature/Skeleton:LeftHandPinky4", "Armature/Skeleton:LeftHandRing1", "Armature/Skeleton:LeftHandRing2", "Armature/Skeleton:LeftHandRing3", "Armature/Skeleton:LeftHandRing4", "Armature/Skeleton:LeftHandThumb1", "Armature/Skeleton:LeftHandThumb2", "Armature/Skeleton:LeftHandThumb3", "Armature/Skeleton:LeftHandThumb4" ]
+
+[sub_resource type="AnimationNodeBlend2" id=6]
+filter_enabled = true
+filters = [ "Armature/Skeleton:LeftHandIndex1", "Armature/Skeleton:LeftHandIndex2", "Armature/Skeleton:LeftHandIndex3", "Armature/Skeleton:LeftHandIndex4" ]
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "T-pose"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "forward"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "backwards"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "left"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=12]
+blend_point_0/node = SubResource( 7 )
+blend_point_0/pos = Vector2( 0, 0 )
+blend_point_1/node = SubResource( 8 )
+blend_point_1/pos = Vector2( 0, 0.4 )
+blend_point_2/node = SubResource( 9 )
+blend_point_2/pos = Vector2( 0, -0.4 )
+blend_point_3/node = SubResource( 10 )
+blend_point_3/pos = Vector2( -1, 0 )
+blend_point_4/node = SubResource( 11 )
+blend_point_4/pos = Vector2( 1, 0 )
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=15]
+filter_enabled = true
+filters = [ "Armature/Skeleton:RightHandMiddle1", "Armature/Skeleton:RightHandMiddle2", "Armature/Skeleton:RightHandMiddle3", "Armature/Skeleton:RightHandMiddle4", "Armature/Skeleton:RightHandPinky1", "Armature/Skeleton:RightHandPinky2", "Armature/Skeleton:RightHandPinky3", "Armature/Skeleton:RightHandPinky4", "Armature/Skeleton:RightHandRing1", "Armature/Skeleton:RightHandRing2", "Armature/Skeleton:RightHandRing3", "Armature/Skeleton:RightHandRing4", "Armature/Skeleton:RightHandThumb1", "Armature/Skeleton:RightHandThumb2", "Armature/Skeleton:RightHandThumb3", "Armature/Skeleton:RightHandThumb4" ]
+
+[sub_resource type="AnimationNodeBlend2" id=16]
+filter_enabled = true
+filters = [ "Armature/Skeleton:RightHandIndex1", "Armature/Skeleton:RightHandIndex2", "Armature/Skeleton:RightHandIndex3", "Armature/Skeleton:RightHandIndex4" ]
+
+[sub_resource type="AnimationNodeBlendTree" id=17]
+graph_offset = Vector2( -461.313, -53.8457 )
+nodes/Add2/node = SubResource( 1 )
+nodes/Add2/position = Vector2( -560, 40 )
+nodes/Animation/node = SubResource( 2 )
+nodes/Animation/position = Vector2( -800, 40 )
+nodes/leftGrip/node = SubResource( 3 )
+nodes/leftGrip/position = Vector2( -440, 240 )
+nodes/leftTrigger/node = SubResource( 4 )
+nodes/leftTrigger/position = Vector2( -140, 240 )
+nodes/lefthandpose/node = SubResource( 5 )
+nodes/lefthandpose/position = Vector2( -240, 40 )
+nodes/lefthandposetrig/node = SubResource( 6 )
+nodes/lefthandposetrig/position = Vector2( 40, 40 )
+nodes/movement/node = SubResource( 12 )
+nodes/movement/position = Vector2( -800, 220 )
+nodes/output/position = Vector2( 800, 100 )
+nodes/rightGrip/node = SubResource( 13 )
+nodes/rightGrip/position = Vector2( 120, 240 )
+nodes/rightTrigger/node = SubResource( 14 )
+nodes/rightTrigger/position = Vector2( 400, 240 )
+nodes/righthandpose/node = SubResource( 15 )
+nodes/righthandpose/position = Vector2( 320, 40 )
+nodes/righthandposetrig/node = SubResource( 16 )
+nodes/righthandposetrig/position = Vector2( 580, 40 )
+node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "output", 0, "righthandposetrig" ]
+
+[node name="AnimationTree" type="AnimationTree"]
+tree_root = SubResource( 17 )
+anim_player = NodePath("../AnimationPlayer")
+process_mode = 0
+root_motion_track = NodePath("Armature/Skeleton:Hips")
+parameters/Add2/add_amount = 1.0
+parameters/lefthandpose/blend_amount = 0.0
+parameters/lefthandposetrig/blend_amount = 0.0
+parameters/movement/blend_position = Vector2( 0, 0 )
+parameters/righthandpose/blend_amount = 0.0
+parameters/righthandposetrig/blend_amount = 0.0
