@@ -1,0 +1,88 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=17 format=2]
+
+[sub_resource type="AnimationNodeAdd2" id=79]
+
+[sub_resource type="AnimationNodeAnimation" id=80]
+animation = "T-pose"
+
+[sub_resource type="AnimationNodeAnimation" id=123]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=124]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=125]
+filter_enabled = true
+filters = [ "Armature/Skeleton:middle_01_l", "Armature/Skeleton:middle_02_l", "Armature/Skeleton:middle_03_l", "Armature/Skeleton:middle_03_l_end", "Armature/Skeleton:mixamorig_LeftHandMiddle1", "Armature/Skeleton:mixamorig_LeftHandMiddle2", "Armature/Skeleton:mixamorig_LeftHandMiddle3", "Armature/Skeleton:mixamorig_LeftHandMiddle4", "Armature/Skeleton:mixamorig_LeftHandPinky1", "Armature/Skeleton:mixamorig_LeftHandPinky2", "Armature/Skeleton:mixamorig_LeftHandPinky3", "Armature/Skeleton:mixamorig_LeftHandPinky4", "Armature/Skeleton:mixamorig_LeftHandRing1", "Armature/Skeleton:mixamorig_LeftHandRing2", "Armature/Skeleton:mixamorig_LeftHandRing3", "Armature/Skeleton:mixamorig_LeftHandRing4", "Armature/Skeleton:mixamorig_LeftHandThumb1", "Armature/Skeleton:mixamorig_LeftHandThumb2", "Armature/Skeleton:mixamorig_LeftHandThumb3", "Armature/Skeleton:mixamorig_LeftHandThumb4", "Armature/Skeleton:pinky_01_l", "Armature/Skeleton:pinky_02_l", "Armature/Skeleton:pinky_03_l", "Armature/Skeleton:pinky_03_l_end", "Armature/Skeleton:ring_01_l", "Armature/Skeleton:ring_02_l", "Armature/Skeleton:ring_03_l", "Armature/Skeleton:ring_03_l_end", "Armature/Skeleton:thumb_01_l", "Armature/Skeleton:thumb_02_l", "Armature/Skeleton:thumb_03_l", "Armature/Skeleton:thumb_03_l_end" ]
+
+[sub_resource type="AnimationNodeBlend2" id=126]
+filter_enabled = true
+filters = [ "Armature/Skeleton:index_01_l", "Armature/Skeleton:index_02_l", "Armature/Skeleton:index_03_l", "Armature/Skeleton:index_03_l_end", "Armature/Skeleton:mixamorig_LeftHandIndex1", "Armature/Skeleton:mixamorig_LeftHandIndex2", "Armature/Skeleton:mixamorig_LeftHandIndex3", "Armature/Skeleton:mixamorig_LeftHandIndex4" ]
+
+[sub_resource type="AnimationNodeAnimation" id=131]
+animation = "forward"
+
+[sub_resource type="AnimationNodeAnimation" id=132]
+animation = "backwards"
+
+[sub_resource type="AnimationNodeAnimation" id=133]
+animation = "right"
+
+[sub_resource type="AnimationNodeAnimation" id=134]
+animation = "left"
+
+[sub_resource type="AnimationNodeAnimation" id=135]
+animation = "idle"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=86]
+blend_point_0/node = SubResource( 131 )
+blend_point_0/pos = Vector2( 0, 0.4 )
+blend_point_1/node = SubResource( 132 )
+blend_point_1/pos = Vector2( 0, -0.4 )
+blend_point_2/node = SubResource( 133 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 134 )
+blend_point_3/pos = Vector2( -1, 0 )
+blend_point_4/node = SubResource( 135 )
+blend_point_4/pos = Vector2( 0, 0 )
+
+[sub_resource type="AnimationNodeAnimation" id=127]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=128]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=129]
+filter_enabled = true
+filters = [ "Armature/Skeleton:middle_01_r", "Armature/Skeleton:middle_02_r", "Armature/Skeleton:middle_03_r", "Armature/Skeleton:middle_03_r_end", "Armature/Skeleton:mixamorig_RightHandMiddle1", "Armature/Skeleton:mixamorig_RightHandMiddle2", "Armature/Skeleton:mixamorig_RightHandMiddle3", "Armature/Skeleton:mixamorig_RightHandMiddle4", "Armature/Skeleton:mixamorig_RightHandPinky1", "Armature/Skeleton:mixamorig_RightHandPinky2", "Armature/Skeleton:mixamorig_RightHandPinky3", "Armature/Skeleton:mixamorig_RightHandPinky4", "Armature/Skeleton:mixamorig_RightHandRing1", "Armature/Skeleton:mixamorig_RightHandRing2", "Armature/Skeleton:mixamorig_RightHandRing3", "Armature/Skeleton:mixamorig_RightHandRing4", "Armature/Skeleton:mixamorig_RightHandThumb1", "Armature/Skeleton:mixamorig_RightHandThumb2", "Armature/Skeleton:mixamorig_RightHandThumb3", "Armature/Skeleton:mixamorig_RightHandThumb4", "Armature/Skeleton:pinky_01_r", "Armature/Skeleton:pinky_02_r", "Armature/Skeleton:pinky_03_r", "Armature/Skeleton:pinky_03_r_end", "Armature/Skeleton:ring_01_r", "Armature/Skeleton:ring_02_r", "Armature/Skeleton:ring_03_r", "Armature/Skeleton:ring_03_r_end", "Armature/Skeleton:thumb_01_r", "Armature/Skeleton:thumb_02_r", "Armature/Skeleton:thumb_03_r", "Armature/Skeleton:thumb_03_r_end" ]
+
+[sub_resource type="AnimationNodeBlend2" id=130]
+filter_enabled = true
+filters = [ "Armature/Skeleton:index_01_r", "Armature/Skeleton:index_02_r", "Armature/Skeleton:index_03_r", "Armature/Skeleton:index_03_r_end", "Armature/Skeleton:mixamorig_RightHandIndex1", "Armature/Skeleton:mixamorig_RightHandIndex2", "Armature/Skeleton:mixamorig_RightHandIndex3", "Armature/Skeleton:mixamorig_RightHandIndex4" ]
+
+[resource]
+graph_offset = Vector2( -175.565, 22.9433 )
+nodes/Add2/node = SubResource( 79 )
+nodes/Add2/position = Vector2( 320, 140 )
+nodes/Animation/node = SubResource( 80 )
+nodes/Animation/position = Vector2( 60, 100 )
+nodes/leftGrip/node = SubResource( 123 )
+nodes/leftGrip/position = Vector2( 420, 340 )
+nodes/leftTrigger/node = SubResource( 124 )
+nodes/leftTrigger/position = Vector2( 720, 340 )
+nodes/lefthandpose/node = SubResource( 125 )
+nodes/lefthandpose/position = Vector2( 640, 140 )
+nodes/lefthandposetrig/node = SubResource( 126 )
+nodes/lefthandposetrig/position = Vector2( 940, 140 )
+nodes/movement/node = SubResource( 86 )
+nodes/movement/position = Vector2( 40, 240 )
+nodes/output/position = Vector2( 1800, 140 )
+nodes/rightGrip/node = SubResource( 127 )
+nodes/rightGrip/position = Vector2( 1040, 360 )
+nodes/rightTrigger/node = SubResource( 128 )
+nodes/rightTrigger/position = Vector2( 1400, 340 )
+nodes/righthandpose/node = SubResource( 129 )
+nodes/righthandpose/position = Vector2( 1240, 140 )
+nodes/righthandposetrig/node = SubResource( 130 )
+nodes/righthandposetrig/position = Vector2( 1560, 160 )
+node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "output", 0, "righthandposetrig" ]

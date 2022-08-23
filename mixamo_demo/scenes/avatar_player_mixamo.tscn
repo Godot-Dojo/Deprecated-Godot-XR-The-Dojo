@@ -7755,7 +7755,7 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "Add2", 0, "Animation", "Add2", 1, "movement", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "output", 0, "righthandposetrig" ]
+node_connections = [ "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "output", 0, "righthandposetrig" ]
 
 [node name="avatar_player" type="Spatial"]
 
@@ -7846,7 +7846,7 @@ bones/6/name = "mixamorig_HeadTop_End"
 bones/6/parent = 5
 bones/6/rest = Transform( 1, 0, 0, 0, 1, -3.3212e-08, 0, 3.3212e-08, 1, 0, 0.215257, 0.0631659 )
 bones/6/enabled = true
-bones/6/bound_children = [  ]
+bones/6/bound_children = [ NodePath("character_height") ]
 bones/7/name = "mixamorig_LeftShoulder"
 bones/7/parent = 3
 bones/7/rest = Transform( -0.00609791, 0.974142, -0.225855, 0.00012517, -0.225858, -0.97416, -0.999982, -0.0059686, 0.00125533, 0.0744406, 0.134307, -0.000437126 )
@@ -8101,7 +8101,7 @@ bones/57/name = "mixamorig_LeftFoot"
 bones/57/parent = 56
 bones/57/rest = Transform( 0.999859, -0.0142344, -0.00894617, -6.29574e-07, 0.53209, -0.846687, 0.0168122, 0.846568, 0.532015, -1.17018e-08, 0.434994, -9.54969e-12 )
 bones/57/enabled = true
-bones/57/bound_children = [  ]
+bones/57/bound_children = [ NodePath("left_foot") ]
 bones/58/name = "mixamorig_LeftToeBase"
 bones/58/parent = 57
 bones/58/rest = Transform( 0.999485, -0.0165163, -0.0275072, -2.2091e-06, 0.857292, -0.51483, 0.0320849, 0.514565, 0.856851, -6.26005e-09, 0.159717, 5.48316e-08 )
@@ -8126,7 +8126,7 @@ bones/62/name = "mixamorig_RightFoot"
 bones/62/parent = 61
 bones/62/rest = Transform( 0.99984, 0.014782, 0.0100914, 2.07685e-07, 0.563814, -0.825902, -0.0178982, 0.825769, 0.563724, -8.62212e-09, 0.435021, -2.67391e-10 )
 bones/62/enabled = true
-bones/62/bound_children = [  ]
+bones/62/bound_children = [ NodePath("right_foot") ]
 bones/63/name = "mixamorig_RightToeBase"
 bones/63/parent = 62
 bones/63/rest = Transform( 0.999562, 0.0158389, 0.0250067, -1.36904e-07, 0.844801, -0.535081, -0.0296008, 0.534847, 0.844431, -7.52243e-09, 0.153895, -1.45519e-08 )

@@ -377,6 +377,7 @@ script = ExtResource( 10 )
 
 [node name="shadow" parent="." instance=ExtResource( 13 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.34782 )
+height_offset = 0.15
 
 [node name="Armature" parent="shadow/FPController/avatar" index="0"]
 transform = Transform( 1, 0, 0, 0, 1, 1.62921e-07, 0, -1.62921e-07, 1, 0, 0, 0 )

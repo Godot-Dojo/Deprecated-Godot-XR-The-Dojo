@@ -1,0 +1,89 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=17 format=2]
+
+[sub_resource type="AnimationNodeAdd2" id=37]
+filters = [ "Armature/Skeleton:LeftFoot", "Armature/Skeleton:LeftHandRing3", "Armature/Skeleton:LeftHandRing4", "Armature/Skeleton:LeftLeg", "Armature/Skeleton:LeftToeBase", "Armature/Skeleton:LeftToe_End", "Armature/Skeleton:LeftUpLeg", "Armature/Skeleton:RightFoot", "Armature/Skeleton:RightLeg", "Armature/Skeleton:RightToeBase", "Armature/Skeleton:RightToe_End", "Armature/Skeleton:RightUpLeg" ]
+
+[sub_resource type="AnimationNodeAnimation" id=38]
+animation = "T-pose"
+
+[sub_resource type="AnimationNodeAnimation" id=39]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=40]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=41]
+filter_enabled = true
+filters = [ "Armature/Skeleton:Ctrl_Middle1_Left", "Armature/Skeleton:Ctrl_Middle2_Left", "Armature/Skeleton:Ctrl_Middle3_Left", "Armature/Skeleton:Ctrl_Pinky1_Left", "Armature/Skeleton:Ctrl_Pinky2_Left", "Armature/Skeleton:Ctrl_Pinky3_Left", "Armature/Skeleton:Ctrl_Ring1_Left", "Armature/Skeleton:Ctrl_Ring2_Left", "Armature/Skeleton:Ctrl_Ring3_Left", "Armature/Skeleton:Ctrl_Thumb1_Left", "Armature/Skeleton:Ctrl_Thumb2_Left", "Armature/Skeleton:Ctrl_Thumb3_Left", "Armature/Skeleton:LeftHandMiddle1", "Armature/Skeleton:LeftHandMiddle2", "Armature/Skeleton:LeftHandMiddle3", "Armature/Skeleton:LeftHandMiddle4", "Armature/Skeleton:LeftHandPinky1", "Armature/Skeleton:LeftHandPinky2", "Armature/Skeleton:LeftHandPinky3", "Armature/Skeleton:LeftHandPinky4", "Armature/Skeleton:LeftHandRing1", "Armature/Skeleton:LeftHandRing2", "Armature/Skeleton:LeftHandRing3", "Armature/Skeleton:LeftHandRing4", "Armature/Skeleton:LeftHandThumb1", "Armature/Skeleton:LeftHandThumb2", "Armature/Skeleton:LeftHandThumb3", "Armature/Skeleton:LeftHandThumb4", "Armature/Skeleton:mixamorig1_LeftHandMiddle1", "Armature/Skeleton:mixamorig1_LeftHandMiddle2", "Armature/Skeleton:mixamorig1_LeftHandMiddle3", "Armature/Skeleton:mixamorig1_LeftHandMiddle4", "Armature/Skeleton:mixamorig1_LeftHandPinky1", "Armature/Skeleton:mixamorig1_LeftHandPinky2", "Armature/Skeleton:mixamorig1_LeftHandPinky3", "Armature/Skeleton:mixamorig1_LeftHandPinky4", "Armature/Skeleton:mixamorig1_LeftHandRing1", "Armature/Skeleton:mixamorig1_LeftHandRing2", "Armature/Skeleton:mixamorig1_LeftHandRing3", "Armature/Skeleton:mixamorig1_LeftHandRing4", "Armature/Skeleton:mixamorig1_LeftHandThumb1", "Armature/Skeleton:mixamorig1_LeftHandThumb2", "Armature/Skeleton:mixamorig1_LeftHandThumb3", "Armature/Skeleton:mixamorig1_LeftHandThumb4" ]
+
+[sub_resource type="AnimationNodeBlend2" id=42]
+filter_enabled = true
+filters = [ "Armature/Skeleton:Ctrl_Index1_Left", "Armature/Skeleton:Ctrl_Index2_Left", "Armature/Skeleton:Ctrl_Index3_Left", "Armature/Skeleton:LeftHandIndex1", "Armature/Skeleton:LeftHandIndex2", "Armature/Skeleton:LeftHandIndex3", "Armature/Skeleton:LeftHandIndex4", "Armature/Skeleton:mixamorig1_LeftHandIndex1", "Armature/Skeleton:mixamorig1_LeftHandIndex2", "Armature/Skeleton:mixamorig1_LeftHandIndex3", "Armature/Skeleton:mixamorig1_LeftHandIndex4" ]
+
+[sub_resource type="AnimationNodeAnimation" id=43]
+animation = "T-pose"
+
+[sub_resource type="AnimationNodeAnimation" id=44]
+animation = "forward"
+
+[sub_resource type="AnimationNodeAnimation" id=45]
+animation = "backwards"
+
+[sub_resource type="AnimationNodeAnimation" id=46]
+animation = "left"
+
+[sub_resource type="AnimationNodeAnimation" id=47]
+animation = "right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=48]
+blend_point_0/node = SubResource( 43 )
+blend_point_0/pos = Vector2( 0, 0 )
+blend_point_1/node = SubResource( 44 )
+blend_point_1/pos = Vector2( 0, 0.4 )
+blend_point_2/node = SubResource( 45 )
+blend_point_2/pos = Vector2( 0, -0.4 )
+blend_point_3/node = SubResource( 46 )
+blend_point_3/pos = Vector2( -1, 0 )
+blend_point_4/node = SubResource( 47 )
+blend_point_4/pos = Vector2( 1, 0 )
+
+[sub_resource type="AnimationNodeAnimation" id=49]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=50]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeBlend2" id=51]
+filter_enabled = true
+filters = [ "Armature/Skeleton:Ctrl_Middle1_Right", "Armature/Skeleton:Ctrl_Middle2_Right", "Armature/Skeleton:Ctrl_Middle3_Right", "Armature/Skeleton:Ctrl_Pinky1_Right", "Armature/Skeleton:Ctrl_Pinky2_Right", "Armature/Skeleton:Ctrl_Pinky3_Right", "Armature/Skeleton:Ctrl_Ring1_Right", "Armature/Skeleton:Ctrl_Ring2_Right", "Armature/Skeleton:Ctrl_Ring3_Right", "Armature/Skeleton:Ctrl_Thumb1_Right", "Armature/Skeleton:Ctrl_Thumb2_Right", "Armature/Skeleton:Ctrl_Thumb3_Right", "Armature/Skeleton:RightHandMiddle1", "Armature/Skeleton:RightHandMiddle2", "Armature/Skeleton:RightHandMiddle3", "Armature/Skeleton:RightHandMiddle4", "Armature/Skeleton:RightHandPinky1", "Armature/Skeleton:RightHandPinky2", "Armature/Skeleton:RightHandPinky3", "Armature/Skeleton:RightHandPinky4", "Armature/Skeleton:RightHandRing1", "Armature/Skeleton:RightHandRing2", "Armature/Skeleton:RightHandRing3", "Armature/Skeleton:RightHandRing4", "Armature/Skeleton:RightHandThumb1", "Armature/Skeleton:RightHandThumb2", "Armature/Skeleton:RightHandThumb3", "Armature/Skeleton:RightHandThumb4", "Armature/Skeleton:mixamorig1_RightHandMiddle1", "Armature/Skeleton:mixamorig1_RightHandMiddle2", "Armature/Skeleton:mixamorig1_RightHandMiddle3", "Armature/Skeleton:mixamorig1_RightHandMiddle4", "Armature/Skeleton:mixamorig1_RightHandPinky1", "Armature/Skeleton:mixamorig1_RightHandPinky2", "Armature/Skeleton:mixamorig1_RightHandPinky3", "Armature/Skeleton:mixamorig1_RightHandPinky4", "Armature/Skeleton:mixamorig1_RightHandRing1", "Armature/Skeleton:mixamorig1_RightHandRing2", "Armature/Skeleton:mixamorig1_RightHandRing3", "Armature/Skeleton:mixamorig1_RightHandRing4", "Armature/Skeleton:mixamorig1_RightHandThumb1", "Armature/Skeleton:mixamorig1_RightHandThumb2", "Armature/Skeleton:mixamorig1_RightHandThumb3", "Armature/Skeleton:mixamorig1_RightHandThumb4" ]
+
+[sub_resource type="AnimationNodeBlend2" id=36]
+filter_enabled = true
+filters = [ "Armature/Skeleton:Ctrl_Index1_Right", "Armature/Skeleton:Ctrl_Index2_Right", "Armature/Skeleton:Ctrl_Index3_Right", "Armature/Skeleton:RightHandIndex1", "Armature/Skeleton:RightHandIndex2", "Armature/Skeleton:RightHandIndex3", "Armature/Skeleton:RightHandIndex4", "Armature/Skeleton:mixamorig1_RightHandIndex1", "Armature/Skeleton:mixamorig1_RightHandIndex2", "Armature/Skeleton:mixamorig1_RightHandIndex3", "Armature/Skeleton:mixamorig1_RightHandIndex4" ]
+
+[resource]
+graph_offset = Vector2( -442, -18 )
+nodes/Add2/node = SubResource( 37 )
+nodes/Add2/position = Vector2( 0, 40 )
+nodes/Animation/node = SubResource( 38 )
+nodes/Animation/position = Vector2( -220, 40 )
+nodes/leftGrip/node = SubResource( 39 )
+nodes/leftGrip/position = Vector2( 80, 240 )
+nodes/leftTrigger/node = SubResource( 40 )
+nodes/leftTrigger/position = Vector2( 340, 240 )
+nodes/lefthandpose/node = SubResource( 41 )
+nodes/lefthandpose/position = Vector2( 280, 40 )
+nodes/lefthandposetrig/node = SubResource( 42 )
+nodes/lefthandposetrig/position = Vector2( 540, 40 )
+nodes/movement/node = SubResource( 48 )
+nodes/movement/position = Vector2( -240, 180 )
+nodes/output/position = Vector2( 1400, 60 )
+nodes/rightGrip/node = SubResource( 49 )
+nodes/rightGrip/position = Vector2( 620, 240 )
+nodes/rightTrigger/node = SubResource( 50 )
+nodes/rightTrigger/position = Vector2( 900, 240 )
+nodes/righthandpose/node = SubResource( 51 )
+nodes/righthandpose/position = Vector2( 820, 40 )
+nodes/righthandposetrig/node = SubResource( 36 )
+nodes/righthandposetrig/position = Vector2( 1100, 40 )
+node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "output", 0, "righthandposetrig" ]
