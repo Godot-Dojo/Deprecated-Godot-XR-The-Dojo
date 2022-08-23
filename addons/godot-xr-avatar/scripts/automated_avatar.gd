@@ -19,7 +19,6 @@ export(Array, NodePath) var head_mesh_node_paths = []
 #export variable to decide whether to turn avatar skeelton 180 degrees (on by default)
 export var turn_character_180 := true
 
-
 #export variables to hide head or physics hand mesh
 export var head_visible := false
 export var hand_mesh_visible := false
@@ -27,6 +26,17 @@ export var hand_mesh_visible := false
 #export variables for whether someone will use LipSync or not, and if so, identify node that will contain mouth visemes
 export var use_automated_lipsync := false
 export (NodePath) var face_mesh_with_visemes_path = null
+
+#export variable for whether using automated animation player and animation tree creation based on provided Godot-XR-avatar animations
+enum AutomaticAnimation {
+	NO,		# Don't use automatic animation creation, dev needs to create own animation player and tree nodes
+	MAKEHUMAN,		# Use automatic animation creation for make human avatar
+	MIXAMO,			# Use automatic animation creation for mixamo avatar
+	READYPLAYERME   # Use automatic animation creation for readyplayerme avatar
+}
+#set default not to create animations so as to not overwrite what may have been custom created for imported avatar
+export (AutomaticAnimation) var auto_anim_choice: int = AutomaticAnimation.NO
+
 
 #export variables to fine tune avatar movement
 export var height_offset := 0.25
@@ -97,6 +107,10 @@ var Viseme_Kk : float
 var Viseme_Nn : float
 var Viseme_Sil : float
 
+#variables used for automatic animation player and tree if selected
+var animationplayer : AnimationPlayer = null
+var animationtree : AnimationTree = null
+
 #set all nodes 
 onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
 onready var arvrcamera := ARVRHelpers.get_arvr_camera(self, arvrcamera_path)
@@ -109,6 +123,7 @@ onready var skeleton : Skeleton = $Armature/Skeleton
 
 #In the ready function we automatically create most of the nodes used for the IK and set them to the right values
 func _ready():
+	
 	#turn skeleton by 180 degrees if set by export variable (default) so facing the correct direction
 	skeleton.rotation_degrees.y = 180.0
 	
@@ -286,7 +301,36 @@ func _ready():
 		left_hand.visible = false
 		right_hand.visible = false
 		
-
+	#create automatic animations if option selected
+	if auto_anim_choice == AutomaticAnimation.NO:
+		print("No automated animations selected. You need to have your own animationplayer and animation tree nodes.")
+		
+	elif auto_anim_choice == AutomaticAnimation.MAKEHUMAN:
+		animationplayer = load("res://addons/godot-xr-avatar/animations/AnimationPlayer.tscn").instance()
+		animationplayer.name = "AnimationPlayer"
+		add_child(animationplayer,true)
+		animationtree = load("res://addons/godot-xr-avatar/animations/AnimationTree-MH-Complete.tscn").instance()
+		animationtree.name = "AnimationTree"
+		add_child(animationtree, true)
+		animationtree.active = true
+	
+	elif auto_anim_choice == AutomaticAnimation.MIXAMO:
+		animationplayer = load("res://mixamo_demo/animations/AnimationPlayer.tscn").instance()
+		animationplayer.name = "AnimationPlayer"
+		add_child(animationplayer,true)
+		animationtree = load("res://mixamo_demo/animations/AnimationTree-mixamo-complete.tscn").instance()
+		animationtree.name = "AnimationTree"
+		add_child(animationtree, true)
+		animationtree.active = true
+		
+	elif auto_anim_choice == AutomaticAnimation.READYPLAYERME:
+		animationplayer = load("res://readyplayerme_demo/animations/AnimationPlayer.tscn").instance()
+		animationplayer.name = "AnimationPlayer"
+		add_child(animationplayer,true)
+		animationtree = load("res://readyplayerme_demo/animations/AnimationTree-Readyplayer-Complete.tscn").instance()
+		animationtree.name = "AnimationTree"
+		add_child(animationtree, true)
+		animationtree.active = true	
 			
 func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
 	var forward := (to-from).normalized()

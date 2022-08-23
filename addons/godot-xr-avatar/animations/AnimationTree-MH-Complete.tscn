@@ -5,6 +5,12 @@
 [sub_resource type="AnimationNodeAnimation" id=2]
 animation = "T-pose"
 
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "pose_fist"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "pose_fist"
+
 [sub_resource type="AnimationNodeBlend2" id=10]
 filter_enabled = true
 filters = [ "Armature/Skeleton:middle_01_l", "Armature/Skeleton:middle_02_l", "Armature/Skeleton:middle_03_l", "Armature/Skeleton:middle_03_l_end", "Armature/Skeleton:pinky_01_l", "Armature/Skeleton:pinky_02_l", "Armature/Skeleton:pinky_03_l", "Armature/Skeleton:pinky_03_l_end", "Armature/Skeleton:ring_01_l", "Armature/Skeleton:ring_02_l", "Armature/Skeleton:ring_03_l", "Armature/Skeleton:ring_03_l_end", "Armature/Skeleton:thumb_01_l", "Armature/Skeleton:thumb_02_l", "Armature/Skeleton:thumb_03_l", "Armature/Skeleton:thumb_03_l_end" ]
@@ -12,20 +18,6 @@ filters = [ "Armature/Skeleton:middle_01_l", "Armature/Skeleton:middle_02_l", "A
 [sub_resource type="AnimationNodeBlend2" id=11]
 filter_enabled = true
 filters = [ "Armature/Skeleton:index_01_l", "Armature/Skeleton:index_02_l", "Armature/Skeleton:index_03_l", "Armature/Skeleton:index_03_l_end" ]
-
-[sub_resource type="AnimationNodeBlend2" id=12]
-filter_enabled = true
-filters = [ "Armature/Skeleton:middle_01_r", "Armature/Skeleton:middle_02_r", "Armature/Skeleton:middle_03_r", "Armature/Skeleton:middle_03_r_end", "Armature/Skeleton:pinky_01_r", "Armature/Skeleton:pinky_02_r", "Armature/Skeleton:pinky_03_r", "Armature/Skeleton:pinky_03_r_end", "Armature/Skeleton:ring_01_r", "Armature/Skeleton:ring_02_r", "Armature/Skeleton:ring_03_r", "Armature/Skeleton:ring_03_r_end", "Armature/Skeleton:thumb_01_r", "Armature/Skeleton:thumb_02_r", "Armature/Skeleton:thumb_03_r", "Armature/Skeleton:thumb_03_r_end" ]
-
-[sub_resource type="AnimationNodeBlend2" id=13]
-filter_enabled = true
-filters = [ "Armature/Skeleton:index_01_r", "Armature/Skeleton:index_02_r", "Armature/Skeleton:index_03_r", "Armature/Skeleton:index_03_r_end" ]
-
-[sub_resource type="AnimationNodeAnimation" id=14]
-animation = "pose_fist"
-
-[sub_resource type="AnimationNodeAnimation" id=15]
-animation = "pose_fist"
 
 [sub_resource type="AnimationNodeAnimation" id=3]
 animation = "T-pose"
@@ -60,24 +52,28 @@ animation = "pose_fist"
 [sub_resource type="AnimationNodeAnimation" id=17]
 animation = "pose_fist"
 
+[sub_resource type="AnimationNodeBlend2" id=12]
+filter_enabled = true
+filters = [ "Armature/Skeleton:middle_01_r", "Armature/Skeleton:middle_02_r", "Armature/Skeleton:middle_03_r", "Armature/Skeleton:middle_03_r_end", "Armature/Skeleton:pinky_01_r", "Armature/Skeleton:pinky_02_r", "Armature/Skeleton:pinky_03_r", "Armature/Skeleton:pinky_03_r_end", "Armature/Skeleton:ring_01_r", "Armature/Skeleton:ring_02_r", "Armature/Skeleton:ring_03_r", "Armature/Skeleton:ring_03_r_end", "Armature/Skeleton:thumb_01_r", "Armature/Skeleton:thumb_02_r", "Armature/Skeleton:thumb_03_r", "Armature/Skeleton:thumb_03_r_end" ]
+
+[sub_resource type="AnimationNodeBlend2" id=13]
+filter_enabled = true
+filters = [ "Armature/Skeleton:index_01_r", "Armature/Skeleton:index_02_r", "Armature/Skeleton:index_03_r", "Armature/Skeleton:index_03_r_end" ]
+
 [sub_resource type="AnimationNodeBlendTree" id=9]
 graph_offset = Vector2( -3.05176e-05, 7.62939e-06 )
 nodes/Add2/node = SubResource( 1 )
 nodes/Add2/position = Vector2( 400, 120 )
 nodes/Animation/node = SubResource( 2 )
 nodes/Animation/position = Vector2( 180, 120 )
-nodes/handposeleft/node = SubResource( 10 )
-nodes/handposeleft/position = Vector2( 700, 120 )
-nodes/handposeleftrig/node = SubResource( 11 )
-nodes/handposeleftrig/position = Vector2( 960, 120 )
-nodes/handposeright/node = SubResource( 12 )
-nodes/handposeright/position = Vector2( 1220, 120 )
-nodes/handposerighttrig/node = SubResource( 13 )
-nodes/handposerighttrig/position = Vector2( 1500, 120 )
 nodes/leftGrip/node = SubResource( 14 )
 nodes/leftGrip/position = Vector2( 520, 320 )
 nodes/leftTrigger/node = SubResource( 15 )
 nodes/leftTrigger/position = Vector2( 780, 320 )
+nodes/lefthandpose/node = SubResource( 10 )
+nodes/lefthandpose/position = Vector2( 700, 120 )
+nodes/lefthandposetrig/node = SubResource( 11 )
+nodes/lefthandposetrig/position = Vector2( 960, 120 )
 nodes/movement/node = SubResource( 8 )
 nodes/movement/position = Vector2( 180, 280 )
 nodes/output/position = Vector2( 1740, 140 )
@@ -85,17 +81,20 @@ nodes/rightGrip/node = SubResource( 16 )
 nodes/rightGrip/position = Vector2( 1020, 320 )
 nodes/rightTrigger/node = SubResource( 17 )
 nodes/rightTrigger/position = Vector2( 1320, 320 )
-node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "handposeright", 0, "handposeleftrig", "handposeright", 1, "rightGrip", "handposeleft", 0, "Add2", "handposeleft", 1, "leftGrip", "handposerighttrig", 0, "handposeright", "handposerighttrig", 1, "rightTrigger", "handposeleftrig", 0, "handposeleft", "handposeleftrig", 1, "leftTrigger", "output", 0, "handposerighttrig" ]
+nodes/righthandpose/node = SubResource( 12 )
+nodes/righthandpose/position = Vector2( 1220, 120 )
+nodes/righthandposetrig/node = SubResource( 13 )
+nodes/righthandposetrig/position = Vector2( 1500, 120 )
+node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "output", 0, "righthandposetrig" ]
 
 [node name="AnimationTree" type="AnimationTree"]
 tree_root = SubResource( 9 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 process_mode = 0
 root_motion_track = NodePath("Armature/Skeleton:Root")
 parameters/Add2/add_amount = 0.0
-parameters/handposeleft/blend_amount = 0.0
-parameters/handposeleftrig/blend_amount = 0.0
-parameters/handposeright/blend_amount = 0.0
-parameters/handposerighttrig/blend_amount = 0.0
+parameters/lefthandpose/blend_amount = 0.0
+parameters/lefthandposetrig/blend_amount = 0.0
 parameters/movement/blend_position = Vector2( 0, 0 )
+parameters/righthandpose/blend_amount = 0.0
+parameters/righthandposetrig/blend_amount = 0.0
