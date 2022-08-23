@@ -402,10 +402,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.78659 )
 [node name="shadow" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.41005 )
 
-[connection signal="picked_up" from="WeaponManager/Slicing_Katana_Long" to="WeaponManager" method="_on_Slicing_Katana_Long_picked_up"]
-[connection signal="picked_up" from="WeaponManager/Slicing_Katana_M" to="WeaponManager" method="_on_Slicing_Katana_M_picked_up"]
-[connection signal="picked_up" from="WeaponManager/Slicing_Katana_S" to="WeaponManager" method="_on_Slicing_Katana_S_picked_up"]
-
 [editable path="avatar_player"]
 [editable path="avatar_player/FPController"]
 [editable path="avatar_player/FPController/LeftHandController/LeftPhysicsHand"]

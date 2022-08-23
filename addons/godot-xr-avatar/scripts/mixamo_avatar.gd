@@ -257,7 +257,15 @@ func _physics_process(delta: float) -> void:
 	
 	# Calculate foot movement based on playees requested ground-movement velocity
 	var move := player_body.ground_control_velocity
-
+	
+	#switch to squat move pose if moving while in a crouch
+	if abs(move.y) > .25 and get_current_player_height() < (.9 * max_height):
+		$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(1,3,3), delta)
+		$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-1,3,3), delta)
+	else:
+		$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(.2,0,1), delta)
+		$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-.2,0,1), delta)
+	
 	# Perform player movement animation
 	$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
 	$AnimationTree.set("parameters/Add2/add_amount", 1)

@@ -7996,7 +7996,7 @@ nodes/righthandpose/node = SubResource( 129 )
 nodes/righthandpose/position = Vector2( 1240, 140 )
 nodes/righthandposetrig/node = SubResource( 130 )
 nodes/righthandposetrig/position = Vector2( 1560, 160 )
-node_connections = [ "output", 0, "righthandposetrig", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "Add2", 0, "Animation", "Add2", 1, "movement" ]
+node_connections = [ "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "Add2", 0, "Animation", "Add2", 1, "movement", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "output", 0, "righthandposetrig" ]
 
 [node name="avatar_player" type="Spatial"]
 
