@@ -1,12 +1,10 @@
 extends Node
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 var current_scene = null
-var current_scene_name = null
 var scene_match = null
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	current_scene = get_tree().current_scene # Replace with function body.
