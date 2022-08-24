@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://addons/godot-xr-avatar/scenes/sybotshadow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://demo/scenes/managers/WeaponManager-Revised.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://demo/scenes/mapobjects/SliceableWoodenman.tscn" type="PackedScene" id=10]
 [ext_resource path="res://demo/scenes/mapobjects/HolderForPickableSwords.tscn" type="PackedScene" id=11]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=12]
+[ext_resource path="res://demo/scenes/managers/SceneManager.tscn" type="PackedScene" id=13]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_S.tscn" type="PackedScene" id=14]
 [ext_resource path="res://demo/scenes/weapons/Slicing_Katana_M.tscn" type="PackedScene" id=15]
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=16]
@@ -401,6 +402,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.78659 )
 
 [node name="shadow" parent="." instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.41005 )
+
+[node name="SceneManager" parent="." instance=ExtResource( 13 )]
 
 [editable path="avatar_player"]
 [editable path="avatar_player/FPController"]
