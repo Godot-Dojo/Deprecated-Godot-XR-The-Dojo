@@ -87,7 +87,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "LipSync",
 "language": "GDScript",
-"path": "res://demo/scripts/lip_sync.gd"
+"path": "res://addons/godot-lipsync/lip_sync.gd"
+}, {
+"base": "MovementProvider",
+"class": "Locomotion_WalkInPlace",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/functions/Function_WalkInPlace_movement.gd"
 }, {
 "base": "Node",
 "class": "MovementProvider",
@@ -206,6 +211,7 @@ _global_script_class_icons={
 "GroundPhysics": "",
 "GroundPhysicsSettings": "",
 "LipSync": "",
+"Locomotion_WalkInPlace": "",
 "MovementProvider": "res://addons/godot-xr-tools/editor/icons/XRToolsMovementProvider.svg",
 "Object_climbable": "res://addons/godot-xr-tools/editor/icons/XRToolsHand.svg",
 "PlayerBody": "res://addons/godot-xr-tools/editor/icons/XRToolsBody.svg",

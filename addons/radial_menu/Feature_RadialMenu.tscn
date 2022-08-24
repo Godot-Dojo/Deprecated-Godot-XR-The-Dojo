@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/radial_menu/Feature_RadialMenu.gd" type="Script" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode unshaded, depth_draw_never, depth_test_disable;
+
+uniform sampler2D albedo_texture;
+uniform bool selected;
+
+void vertex () {
+	
+}
+
+void fragment () {
+	vec4 color = texture(albedo_texture, UV);
+	ALBEDO = color.xyz;
+	ALPHA = color.w;
+	
+	if (color.w < 1e-6 && selected) {
+		ALBEDO = vec3(1.0, 1.0, 1.0);
+		ALPHA = 1.0;
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/selected = null
+
+[sub_resource type="QuadMesh" id=3]
+size = Vector2( 0.1, 0.1 )
+
+[node name="Feature_RadialMenu" type="Spatial"]
+script = ExtResource( 1 )
+menu_entries = [ "activity", "airplay", "alert-circle", "align-center", "anchor" ]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.841181, 0.540754, 0, -0.540754, 0.841181, 0, 1.14827, 1.96036 )
+
+[node name="IconTemplate" type="MeshInstance" parent="."]
+visible = false
+material_override = SubResource( 2 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Anchor" type="Spatial" parent="."]

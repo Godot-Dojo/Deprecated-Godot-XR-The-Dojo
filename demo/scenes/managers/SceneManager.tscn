@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/radial_menu/Feature_RadialMenu.gd" type="Script" id=1]
+[ext_resource path="res://demo/scenes/managers/SceneManager.gd" type="Script" id=2]
+[ext_resource path="res://addons/radial_menu/Feature_RadialMenu.tscn" type="PackedScene" id=3]
+
+[node name="SceneManager" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Feature_RadialMenu" type="Spatial" parent="." instance=ExtResource( 3 )]
+script = ExtResource( 1 )
+radial_controller_path = NodePath("../../avatar_player/FPController/LeftHandController")
+menu_entries = [ "three_shadows", "female_avatar", "sybot", "mixamo", "ready_player" ]
+
+[connection signal="entry_selected" from="Feature_RadialMenu" to="." method="_on_Feature_RadialMenu_entry_selected"]
