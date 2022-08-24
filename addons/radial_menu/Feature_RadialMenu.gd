@@ -1,4 +1,6 @@
 extends Spatial
+#This code was developed by lejar, https://github.com/lejar and adapted for this project
+
 
 signal entry_selected(entry)
 

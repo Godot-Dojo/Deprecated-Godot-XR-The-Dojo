@@ -257,6 +257,11 @@ shape = SubResource( 7 )
 
 [node name="avatar_player" parent="." instance=ExtResource( 1 )]
 
+[node name="Skeleton" parent="avatar_player/FPController/mixamo_avatar/Armature" index="0"]
+bones/6/bound_children = [  ]
+bones/57/bound_children = [  ]
+bones/62/bound_children = [  ]
+
 [node name="character_height" parent="avatar_player/FPController/mixamo_avatar/Armature/Skeleton" index="10"]
 transform = Transform( 1, 6.84885e-11, 6.3573e-08, -6.84749e-11, 1, -2.13731e-07, -6.3573e-08, 2.13731e-07, 1, 8.0792e-08, 1.83239, 0.0976701 )
 
