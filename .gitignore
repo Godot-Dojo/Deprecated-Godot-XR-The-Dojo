@@ -10,3 +10,4 @@ data*/
 # builds
 [Bb]uild/
 *.apk
+*.DS_Store
