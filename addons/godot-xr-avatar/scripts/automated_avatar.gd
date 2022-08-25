@@ -360,34 +360,34 @@ func get_current_player_height() -> float:
 #function used for LipSync if activated, set visemes to the corresponding blend shapes in the facial mesh
 func process_visemes(delta):
 	Viseme_Ch = $LipSync.visemes[LipSync.VISEME.VISEME_CH]
-#	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
+	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
 	Viseme_E = $LipSync.visemes[LipSync.VISEME.VISEME_E]
 	Viseme_Ff = $LipSync.visemes[LipSync.VISEME.VISEME_FF]
 	Viseme_I = $LipSync.visemes[LipSync.VISEME.VISEME_I]
 	Viseme_O = $LipSync.visemes[LipSync.VISEME.VISEME_O]
-	Viseme_Pp = $LipSync.visemes[LipSync.VISEME.VISEME_PP]
+#	Viseme_Pp = $LipSync.visemes[LipSync.VISEME.VISEME_PP]
 	Viseme_Rr = $LipSync.visemes[LipSync.VISEME.VISEME_RR]
 	Viseme_Ss = $LipSync.visemes[LipSync.VISEME.VISEME_SS]
 	Viseme_Th = $LipSync.visemes[LipSync.VISEME.VISEME_TH]
 	Viseme_U = $LipSync.visemes[LipSync.VISEME.VISEME_U]
 	Viseme_AA = $LipSync.visemes[LipSync.VISEME.VISEME_AA]
-#	Viseme_Kk = $LipSync.visemes[LipSync.VISEME.VISEME_KK]
+	Viseme_Kk = $LipSync.visemes[LipSync.VISEME.VISEME_KK]
 	Viseme_Nn = $LipSync.visemes[LipSync.VISEME.VISEME_NN]
 	Viseme_Sil = $LipSync.visemes[LipSync.VISEME.VISEME_SILENT]
 	
 	face_mesh.set("blend_shapes/viseme_CH", Viseme_Ch)
-#	face_mesh.set("blend_shapes/viseme_DD", Viseme_Dd)
+	face_mesh.set("blend_shapes/viseme_DD", Viseme_Dd)
 	face_mesh.set("blend_shapes/viseme_E", Viseme_E)
 	face_mesh.set("blend_shapes/viseme_FF", Viseme_Ff)
 	face_mesh.set("blend_shapes/viseme_I", Viseme_I)
 	face_mesh.set("blend_shapes/viseme_O", Viseme_O)
-	face_mesh.set("blend_shapes/viseme_PP", Viseme_Pp)
+#	face_mesh.set("blend_shapes/viseme_PP", Viseme_Pp)
 	face_mesh.set("blend_shapes/viseme_RR", Viseme_Rr)
 	face_mesh.set("blend_shapes/viseme_SS", Viseme_Ss)
 	face_mesh.set("blend_shapes/viseme_TH", Viseme_Th)
 	face_mesh.set("blend_shapes/viseme_U", Viseme_U)
 	face_mesh.set("blend_shapes/viseme_aa", Viseme_AA)
-#	face_mesh.set("blend_shapes/viseme_kk", Viseme_Kk)
+	face_mesh.set("blend_shapes/viseme_kk", Viseme_Kk)
 	face_mesh.set("blend_shapes/viseme_nn", Viseme_Nn)
 #	face_mesh.set("blend_shapes/viseme_sil", Viseme_Sil)
 	
