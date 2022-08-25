@@ -92,12 +92,16 @@ const REFERENCES = {
 	],
 	
 	# Can't detect stop sound at this point
-	#VISEME.VISEME_DD: [
+	VISEME.VISEME_DD: [
 	#	# /t/ (Take, haT)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#	# /d/ (Day, haD)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#],
+	# changed to TH - for the time being as it produces more accurate results
+		# /th/ (THink, THat)
+		[2.110933, 2.316846, 2.515543, 2.492, 2.550038, 1.938401, 1.603606, 1.257377, 0.957248, 0.498176, 0.269357, 0.213727, 0.167422, 0.125585, 0.13604, 0.206383, 0.228375, 0.160131, 0.131596, 0.121217],
+	],
 
 	VISEME.VISEME_E: [
 		# /e/ (Ever, bEd)
@@ -158,12 +162,16 @@ const REFERENCES = {
 	],
 	
 	# Can't detect stop sound at this point
-	#VISEME.VISEME_KK: [
+	VISEME.VISEME_KK: [
 	#	# /k/ (Call, weeK)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#	# /g/ (Gas, aGo)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#],
+	# changed to AA - for the time being as it produces more accurate results
+		# /A:/ (cAr, Art)
+		[1.340902, 0.968838, 0.824241, 0.972814, 0.856258, 0.736672, 0.740674, 1.191061, 1.678072, 1.782172, 1.389946, 1.680797, 2.374798, 2.006197, 0.750535, 0.311128, 0.173483, 0.091624, 0.068027, 0.061763],
+	],
 	
 	VISEME.VISEME_NN: [
 		# /n/ (Not, aNd)
@@ -223,7 +231,8 @@ func _ready() -> void:
 
 	# Get and configure the audio bus
 	var bus := _get_or_create_audio_bus(audio_bus_name)
-	AudioServer.set_bus_mute(bus, true)
+	# uncommented mute - for the time being
+	# AudioServer.set_bus_mute(bus, true)
 
 	# Get and configure the spectrum analyzer
 	var idx := _get_or_create_spectrum_analyzer(bus)
@@ -298,7 +307,8 @@ static func _get_or_create_audio_bus(name: String) -> int:
 	bus = AudioServer.bus_count
 	AudioServer.add_bus()
 	AudioServer.set_bus_name(bus, name)
-	AudioServer.set_bus_mute(bus, true)
+	# uncommented mute - for the time being
+	# AudioServer.set_bus_mute(bus, true)
 
 	# Return bus
 	print("LipSync: Created new audio bus ", bus, " (", name, ")")

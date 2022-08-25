@@ -25,7 +25,7 @@ func _ready():
 	
 func _physics_process(delta):
 	Viseme_Ch = $LipSync.visemes[LipSync.VISEME.VISEME_CH]
-#	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
+	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
 	Viseme_E = $LipSync.visemes[LipSync.VISEME.VISEME_E]
 	Viseme_Ff = $LipSync.visemes[LipSync.VISEME.VISEME_FF]
 	Viseme_I = $LipSync.visemes[LipSync.VISEME.VISEME_I]
@@ -36,12 +36,12 @@ func _physics_process(delta):
 	Viseme_Th = $LipSync.visemes[LipSync.VISEME.VISEME_TH]
 	Viseme_U = $LipSync.visemes[LipSync.VISEME.VISEME_U]
 	Viseme_AA = $LipSync.visemes[LipSync.VISEME.VISEME_AA]
-#	Viseme_Kk = $LipSync.visemes[LipSync.VISEME.VISEME_KK]
+	Viseme_Kk = $LipSync.visemes[LipSync.VISEME.VISEME_KK]
 	Viseme_Nn = $LipSync.visemes[LipSync.VISEME.VISEME_NN]
 	Viseme_Sil = $LipSync.visemes[LipSync.VISEME.VISEME_SILENT]
 	
 	self.set("blend_shapes/viseme_CH", Viseme_Ch)
-#	self.set("blend_shapes/viseme_DD", Viseme_Dd)
+	self.set("blend_shapes/viseme_DD", Viseme_Dd)
 	self.set("blend_shapes/viseme_E", Viseme_E)
 	self.set("blend_shapes/viseme_FF", Viseme_Ff)
 	self.set("blend_shapes/viseme_I", Viseme_I)
@@ -52,7 +52,7 @@ func _physics_process(delta):
 	self.set("blend_shapes/viseme_TH", Viseme_Th)
 	self.set("blend_shapes/viseme_U", Viseme_U)
 	self.set("blend_shapes/viseme_aa", Viseme_AA)
-#	self.set("blend_shapes/viseme_kk", Viseme_Kk)
+	self.set("blend_shapes/viseme_kk", Viseme_Kk)
 	self.set("blend_shapes/viseme_nn", Viseme_Nn)
 #	self.set("blend_shapes/viseme_sil", Viseme_Sil)
 	#lerping the silent value to try for smoother transitions
