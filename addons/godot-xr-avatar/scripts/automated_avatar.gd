@@ -106,7 +106,9 @@ var Viseme_AA : float
 var Viseme_Kk : float
 var Viseme_Nn : float
 var Viseme_Sil : float
-
+var blinktime : int = 0
+var blink_time_set  := false
+var blink_at : int = 0
 #variables used for automatic animation player and tree if selected
 var animationplayer : AnimationPlayer = null
 var animationtree : AnimationTree = null
@@ -394,8 +396,21 @@ func process_visemes(delta):
 	#lerping the silent value to try for smoother transitions
 	face_mesh.set("blend_shapes/viseme_sil", lerp(face_mesh.get("blend_shapes/viseme_sil"), Viseme_Sil, delta))
 	
-
-
+	#Create random blinking effect
+	if blink_time_set == false:
+		var random = RandomNumberGenerator.new()
+		random.randomize()
+		blink_at = random.randi_range(200, 400) # set random blink time, ~every 5 or so seconds, sometimes more, sometimes less
+		blink_time_set = true
+	blinktime+=1
+	if blinktime >= blink_at:
+		face_mesh.set("blend_shapes/eyeBlinkLeft", 1)   # blink
+		face_mesh.set("blend_shapes/eyeBlinkRight", 1)
+		yield(get_tree().create_timer(.33), "timeout")  # average blink time is 1/3 of a second
+		face_mesh.set("blend_shapes/eyeBlinkLeft", 0)
+		face_mesh.set("blend_shapes/eyeBlinkRight", 0)  # unblink
+		blinktime = 0
+		blink_time_set = false  # set next blink time randomly again
 
 #This is where the IK movement is actually done
 func _physics_process(delta: float) -> void:
