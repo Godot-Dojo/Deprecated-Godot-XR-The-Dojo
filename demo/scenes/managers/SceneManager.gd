@@ -36,3 +36,8 @@ func _on_Feature_RadialMenu_entry_selected(entry):
 		get_tree().change_scene("res://mixamo_demo/scenes/Godot_Dojo_Mixamo.tscn")
 	elif entry == "ready_player":
 		get_tree().change_scene("res://readyplayerme_demo/scenes/Godot_Dojo_ReadyPlayerMe.tscn")
+	elif entry == "seated_or_standing": 	
+		if get_parent().get_node("avatar_player/FPController/PlayerBody").player_height_offset == 0.0:
+			get_parent().get_node("avatar_player/FPController/PlayerBody").player_height_offset = 0.5	
+		else:
+			get_parent().get_node("avatar_player/FPController/PlayerBody").player_height_offset = 0.0
