@@ -96,6 +96,10 @@ Then you need to set up the AnimationTree child of the avatar as you see in the 
 
 [<img src="https://i.ytimg.com/vi/FD4P59h0VjY/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=FD4P59h0VjY "Tutorial 03")
 
+### Tutorial 04 - Setup ReadyPlayerMe
+
+[<img src="https://i.ytimg.com/vi/lHOygLW2yPI/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=lHOygLW2yPI "Tutorial 01")
+
 more Tutorials forthcoming.
 
 Licensing - Code: MIT License
@@ -117,4 +121,5 @@ About this repository
 ##### (alphabetical order)
 ##### Malcolm Nixon
 ##### Miodrag Šejić aka DigitalN8m4r3
+##### Rahul Ghosh aka SYBIOTE
 ##### teddybear082
