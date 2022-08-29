@@ -19,6 +19,9 @@ onready	var Viseme_AA : float
 onready	var Viseme_Kk : float
 onready	var Viseme_Nn : float
 onready	var Viseme_Sil : float
+var blinktime : int = 0
+var blink_time_set  := false
+var blink_at : int = 0
 
 func _ready():
 	pass
@@ -30,7 +33,7 @@ func _physics_process(delta):
 	Viseme_Ff = $LipSync.visemes[LipSync.VISEME.VISEME_FF]
 	Viseme_I = $LipSync.visemes[LipSync.VISEME.VISEME_I]
 	Viseme_O = $LipSync.visemes[LipSync.VISEME.VISEME_O]
-	Viseme_Pp = $LipSync.visemes[LipSync.VISEME.VISEME_PP]
+#	Viseme_Pp = $LipSync.visemes[LipSync.VISEME.VISEME_PP]
 	Viseme_Rr = $LipSync.visemes[LipSync.VISEME.VISEME_RR]
 	Viseme_Ss = $LipSync.visemes[LipSync.VISEME.VISEME_SS]
 	Viseme_Th = $LipSync.visemes[LipSync.VISEME.VISEME_TH]
@@ -46,7 +49,7 @@ func _physics_process(delta):
 	self.set("blend_shapes/viseme_FF", Viseme_Ff)
 	self.set("blend_shapes/viseme_I", Viseme_I)
 	self.set("blend_shapes/viseme_O", Viseme_O)
-	self.set("blend_shapes/viseme_PP", Viseme_Pp)
+#	self.set("blend_shapes/viseme_PP", Viseme_Pp)
 	self.set("blend_shapes/viseme_RR", Viseme_Rr)
 	self.set("blend_shapes/viseme_SS", Viseme_Ss)
 	self.set("blend_shapes/viseme_TH", Viseme_Th)
@@ -57,6 +60,25 @@ func _physics_process(delta):
 #	self.set("blend_shapes/viseme_sil", Viseme_Sil)
 	#lerping the silent value to try for smoother transitions
 	self.set("blend_shapes/viseme_sil", lerp(self.get("blend_shapes/viseme_sil"), Viseme_Sil, delta))
+	
+	#Create random blinking effect
+	if blink_time_set == false:
+		var random = RandomNumberGenerator.new()
+		random.randomize()
+		blink_at = random.randi_range(200, 400) # set random blink time, ~every 5 or so seconds, sometimes more, sometimes less
+		blink_time_set = true
+	blinktime+=1
+	if blinktime >= blink_at:
+		self.set("blend_shapes/eyeBlinkLeft", 1)   # blink
+		self.set("blend_shapes/eyeBlinkRight", 1)
+		yield(get_tree().create_timer(.33), "timeout")  # average blink time is 1/3 of a second
+		self.set("blend_shapes/eyeBlinkLeft", 0)
+		self.set("blend_shapes/eyeBlinkRight", 0)  # unblink
+		blinktime = 0
+		blink_time_set = false  # set next blink time randomly again
+
+	
+	
 	
 	#Trying with all lerps - too slow but preserving
 	#self.set("blend_shapes/viseme_CH", lerp(self.get("blend_shapes/viseme_CH"), Viseme_Ch, 20*delta))
