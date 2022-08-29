@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Jabberwocky-UK.ogg-0c1de9cbe4c9dd9ae197af5fd18b8d06.oggstr"
+
+[deps]
+
+source_file="res://addons/godot-lipsync/assets/Jabberwocky-UK.ogg"
+dest_files=[ "res://.import/Jabberwocky-UK.ogg-0c1de9cbe4c9dd9ae197af5fd18b8d06.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
