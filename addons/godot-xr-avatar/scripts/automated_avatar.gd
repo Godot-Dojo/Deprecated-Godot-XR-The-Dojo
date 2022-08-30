@@ -4,8 +4,8 @@ extends Spatial
 
 #This code is NOT fully automated.  It does require some actions in the editor to work with the creation of some nodes.  
 #It needs an AnimationTree node with proper animation blends set as a child of avatar and pointing to the character AnimationPlayer
-#You also need toset the export variables to correspond with nodes in your XR Rig and choose whetehr you want to use LipSync.
-
+#You also need to set the export variables to correspond with nodes in your XR Rig and choose whether you want to use LipSync.
+#Detailed information on use will be in the readme of the Godot-XR-Avatar readme.
 
 #set export variables to key elements of XR Rig necessary for avatar movement
 export (NodePath) var arvrorigin_path = null
@@ -87,7 +87,7 @@ var right_upper_leg_bone = null
 var left_foot_bone = null
 var right_foot_bone = null
 var num_of_skeleton_bones = null
-
+var substitute_head_bone = false
 #variables used for lipsync if activated
 var lipsync_node = null
 var face_mesh : MeshInstance = null
@@ -125,9 +125,13 @@ onready var skeleton : Skeleton = $Armature/Skeleton
 
 #In the ready function we automatically create most of the nodes used for the IK and set them to the right values
 func _ready():
+	#Display warning message if no animation tree or animation player found
+	if (get_node_or_null("AnimationTree") == null or get_node_or_null("AnimationPlayer") == null) and auto_anim_choice == AutomaticAnimation.NO:
+		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, animations will not work.")
 	
 	#turn skeleton by 180 degrees if set by export variable (default) so facing the correct direction
-	skeleton.rotation_degrees.y = 180.0
+	if turn_character_180 == true:
+		skeleton.rotation_degrees.y = 180.0
 	
 	#set skeleton offset to desired value by player (usually skeletons have to be moved back some so player can see the body when looking down)
 	skeleton.translation.z = avatar_z_offset
@@ -135,6 +139,9 @@ func _ready():
 	#find the bones needed to set Skeleton IK nodes (head, head top, left upper arm and hand, right upper arm and hand, left upper leg and foot, right upper leg and foot)
 	set_key_skeleton_nodes_for_IK(skeleton)
 	
+	if head_top_bone == null:
+		head_top_bone = head_bone
+		substitute_head_bone = true
 	#create bone attachment nodes and direct them to left and right foot bones
 	left_foot = BoneAttachment.new()
 	left_foot.name = "left_foot"
@@ -163,7 +170,10 @@ func _ready():
 	SkeletonIKL.set_root_bone(skeleton.get_bone_name(left_upper_arm_bone))
 	SkeletonIKL.set_tip_bone(skeleton.get_bone_name(left_hand_bone))
 	SkeletonIKL.use_magnet = true
-	SkeletonIKL.set_magnet_position(Vector3(3,-5,-10))
+	if turn_character_180 == true:
+		SkeletonIKL.set_magnet_position(Vector3(3,-5,-10))
+	else:
+		SkeletonIKL.set_magnet_position(Vector3(-3, -5, -10))
 	
 	
 	#create SkeletonIK node called SkeletonIKR and set it to use the upper arm and hand bones with a magnet for IK
@@ -173,7 +183,10 @@ func _ready():
 	SkeletonIKR.set_root_bone(skeleton.get_bone_name(right_upper_arm_bone))
 	SkeletonIKR.set_tip_bone(skeleton.get_bone_name(right_hand_bone))
 	SkeletonIKR.use_magnet = true
-	SkeletonIKR.set_magnet_position(Vector3(-3,-5,-10))
+	if turn_character_180 == true:
+		SkeletonIKR.set_magnet_position(Vector3(-3,-5,-10))
+	else:
+		SkeletonIKR.set_magnet_position(Vector3(3, -5, -10))
 	
 	#create SkeletonIK node called SkeletonIKLegL and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegL = SkeletonIK.new()
@@ -182,7 +195,10 @@ func _ready():
 	SkeletonIKLegL.set_root_bone(skeleton.get_bone_name(left_upper_leg_bone))
 	SkeletonIKLegL.set_tip_bone(skeleton.get_bone_name(left_foot_bone))
 	SkeletonIKLegL.use_magnet = true
-	SkeletonIKLegL.set_magnet_position(Vector3(0.2,0,1))
+	if turn_character_180 == true:
+		SkeletonIKLegL.set_magnet_position(Vector3(.2,0,1))
+	else:
+		SkeletonIKLegL.set_magnet_position(Vector3(-.2,0,1))
 	
 	#create SkeletonIK node called SkeletonIKLegR and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegR = SkeletonIK.new()
@@ -191,10 +207,22 @@ func _ready():
 	SkeletonIKLegR.set_root_bone(skeleton.get_bone_name(right_upper_leg_bone))
 	SkeletonIKLegR.set_tip_bone(skeleton.get_bone_name(right_foot_bone))
 	SkeletonIKLegR.use_magnet = true
-	SkeletonIKLegR.set_magnet_position(Vector3(-0.2,0,1))
+	if turn_character_180 == true:
+		SkeletonIKLegR.set_magnet_position(Vector3(-.2,0,1))
+	else:
+		SkeletonIKLegR.set_magnet_position(Vector3(.2,0,1))
 	
 	#set avatar height to player
-	avatar_height = character_height.transform.origin.y
+	if substitute_head_bone == false:
+		avatar_height = character_height.transform.origin.y
+	#if we didn't originally find a head end bone in the skeleton, look for alternatives
+	else:
+		#check for spatial that could be set by dev called "HeadEndBone", if exists, use that instead
+		if get_node_or_null("Armature/Skeleton/HeadEndBone") != null:
+			avatar_height = get_node("Armature/Skeleton/HeadEndBone").transform.origin.y
+		#if there wasn't a head end bone and not a spatial substitute, use rough math for where the head end bone likely would be
+		else:
+			avatar_height = character_height.transform.origin.y + .25
 	$Armature.scale *= get_current_player_height()/avatar_height
 	armature_scale = $Armature.scale
 	max_height = get_current_player_height()
@@ -208,12 +236,19 @@ func _ready():
 	left_hand_target.rotation_degrees.y = 90
 	left_hand_target.rotation_degrees.z = -90
 	
+	#VRM values
+	#left_hand_target.rotation_degrees.y = -90
+	#left_hand_target.rotation_degrees.x = 90
+	
 	right_hand_target = Position3D.new()
 	right_hand_target.name = "right_target"
 	right_hand.add_child(right_hand_target, true)
 	right_hand_target.rotation_degrees.y = -90
 	right_hand_target.rotation_degrees.z = 90
 	
+	#VRM values
+	#right_hand_target.rotation_degrees.y = 90
+	#right_hand_target.rotation_degrees.x = 90
 	
 	#Automatically generate other helper target nodes used in the IK for the foot IK calculations, LL_c, LL_t, RR_c, Rl_t)
 	left_target = Position3D.new()
@@ -439,13 +474,12 @@ func _physics_process(delta: float) -> void:
 
 
 	#perform hand grip animations using AnimationTree by adding grip and trigger hand poses to IK animation
-	if left_controller_path != null and right_controller_path != null:
+	if left_controller_path != null and right_controller_path != null and get_node_or_null("AnimationTree") != null:
 		$AnimationTree.set("parameters/lefthandpose/blend_amount", left_controller.get_joystick_axis(JOY_VR_ANALOG_GRIP))
 		$AnimationTree.set("parameters/righthandpose/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_GRIP))
 		$AnimationTree.set("parameters/lefthandposetrig/blend_amount", left_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
 		$AnimationTree.set("parameters/righthandposetrig/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
-	else:
-		print("Can't find left or right controller path so cannot set hand animation blends")
+	
 		
 
 	# Calculate foot movement based on players actual ground-movement velocity
@@ -453,20 +487,29 @@ func _physics_process(delta: float) -> void:
 	#player_velocity = $Armature.global_transform.basis.xform_inv(player_velocity)
 	#var move := Vector2(player_velocity.x, player_velocity.z)
 	
-	# Calculate foot movement based on player'ss requested ground-movement velocity
+	# Calculate foot movement based on player's requested ground-movement velocity
 	var move = player_body.ground_control_velocity
 
 	#switch to squat move pose if moving while in a crouch
 	if abs(move.y) > .25 and get_current_player_height() < (.9 * max_height):
-		$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(1,3,3), delta)
-		$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-1,3,3), delta)
+		if turn_character_180 == true:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(1,3,3), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-1,3,3), delta)
+		else:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(-1,3,3), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(1,3,3), delta)
 	else:
-		$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(.2,0,1), delta)
-		$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-.2,0,1), delta)
+		if turn_character_180 == true:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(.2,0,1), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-.2,0,1), delta)
+		else:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(-.2,0,1), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(.2,0,1), delta)
 	
 	# Perform player movement animation
-	$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
-	$AnimationTree.set("parameters/Add2/add_amount", 1)
+	if get_node_or_null("AnimationTree") != null:
+		$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
+		$AnimationTree.set("parameters/Add2/add_amount", 1)
 	update_ik_anim(left_target,Raycast_L,left_foot,LL_db,ik_raycast_height,foot_offset)
 	update_ik_anim(right_target,Raycast_R,right_foot,RL_dB,ik_raycast_height,foot_offset)
 	SkeletonIKLegL.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
@@ -538,7 +581,7 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 						r_upperarm_set = true
 				
 		elif bone_name.matchn("*upperleg*") or bone_name.matchn("*upper leg*") or bone_name.matchn("*upleg*") or bone_name.matchn("*thigh*"):
-			if bone_name.matchn("*left*") or bone_name.matchn("*l_") or bone_name.ends_with("_l"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 				if l_upperleg_set == false:
 					left_upper_leg_bone = skeleton_node.find_bone(bone_name)
 					print(left_upper_leg_bone)
