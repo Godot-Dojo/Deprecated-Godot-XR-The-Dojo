@@ -10,7 +10,7 @@
 # for the data analysis that was used to define the constants below
 # This is a port of NeoSparks' excellent work on this prototype for OQ-Toolkit for Godot to the OpenXR-Tools package
 # found here: https://github.com/NeoSpark314/godot_oculus_quest_toolkit/tree/master/OQ_Toolkit/OQ_ARVROrigin
-# I just changed the terminology to work with XR Tools, found here: 
+# I just changed the terminology to work with XR Tools.
 
 class_name Locomotion_WalkInPlace
 extends MovementProvider
