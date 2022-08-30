@@ -501,8 +501,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 			print("done looking at bones")
 			return
 		
-		if "head".is_subsequence_ofi(bone_name):
-			if !"top".is_subsequence_ofi(bone_name) and !"end".is_subsequence_ofi(bone_name):
+		if bone_name.matchn("*head*"):
+			if !(bone_name.matchn("*top*")) and !(bone_name.matchn("*end*")):
 				if head_set == false:
 					head_bone = skeleton_node.find_bone(bone_name)
 					print(head_bone)
@@ -519,9 +519,9 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					head_top_set = true
 				
 		
-		elif "bicep".is_subsequence_ofi(bone_name) or "arm".is_subsequence_ofi(bone_name):
-			if !"fore".is_subsequence_ofi(bone_name) and !"lower".is_subsequence_ofi(bone_name):
-				if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*bicep*" ) or bone_name.matchn("*arm*"):
+			if !(bone_name.matchn("*fore*")) and !(bone_name.matchn("*lower*")):
+				if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 					if l_upperarm_set == false:
 						left_upper_arm_bone = skeleton_node.find_bone(bone_name)
 						print(left_upper_arm_bone)
@@ -537,8 +537,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 						print(skeleton_node.get_bone_name(i))
 						r_upperarm_set = true
 				
-		elif "upperleg".is_subsequence_ofi(bone_name) or "upper leg".is_subsequence_ofi(bone_name) or "upleg".is_subsequence_ofi(bone_name) or "thigh".is_subsequence_ofi(bone_name):
-			if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*upperleg*") or bone_name.matchn("*upper leg*") or bone_name.matchn("*upleg*") or bone_name.matchn("*thigh*"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_") or bone_name.ends_with("_l"):
 				if l_upperleg_set == false:
 					left_upper_leg_bone = skeleton_node.find_bone(bone_name)
 					print(left_upper_leg_bone)
@@ -554,8 +554,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					print(skeleton_node.get_bone_name(i))
 					r_upperleg_set = true
 		
-		elif "hand".is_subsequence_ofi(bone_name) and check_if_finger_bone(bone_name) == false:
-			if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*hand*") and check_if_finger_bone(bone_name) == false:
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 				if l_hand_set == false:
 					left_hand_bone = skeleton_node.find_bone(bone_name)
 					print(left_hand_bone)
@@ -570,8 +570,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					print(skeleton_node.get_bone_name(i))
 					r_hand_set = true
 				
-		elif "foot".is_subsequence_ofi(bone_name) or "ankle".is_subsequence_ofi(bone_name):
-			if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*foot*") or bone_name.matchn("*ankle*"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 				if l_foot_set == false:
 					left_foot_bone = skeleton_node.find_bone(bone_name)
 					print(left_foot_bone)
@@ -589,7 +589,7 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 
 #mini function to check if a bone is a hand bone or really a finger bone since some avatars may use the word "hand" in finger bones as well		
 func check_if_finger_bone(bone):
-	if "index".is_subsequence_ofi(bone) or "pinky".is_subsequence_ofi(bone) or "ring".is_subsequence_ofi(bone) or "thumb".is_subsequence_ofi(bone) or "middle".is_subsequence_ofi(bone):
+	if bone.matchn("*index*") or bone.matchn("*pinky*") or bone.matchn("*ring*") or bone.matchn("*thumb*") or bone.matchn("*middle*"):
 		#print("Possible hand bone detected, but turns out it was a finger")
 		return true
 	else:
