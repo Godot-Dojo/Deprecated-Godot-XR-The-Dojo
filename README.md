@@ -98,7 +98,11 @@ Then you need to set up the AnimationTree child of the avatar as you see in the 
 
 ### Tutorial 04 - Setup ReadyPlayerMe
 
-[<img src="https://i.ytimg.com/vi/lHOygLW2yPI/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=lHOygLW2yPI "Tutorial 01")
+[<img src="https://i.ytimg.com/vi/lHOygLW2yPI/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=lHOygLW2yPI "Tutorial 04")
+
+### Tutorial 05 - Setup Makehuman/LipSync
+
+[<img src="https://i.ytimg.com/vi/pvVQj7vEL9g/maxresdefault.jpg" width="25%">](https://www.youtube.com/watch?v=pvVQj7vEL9g "Tutorial 05")
 
 more Tutorials forthcoming.
 
