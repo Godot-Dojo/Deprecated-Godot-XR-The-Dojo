@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot-xr-avatar/scripts/automated_shadow_parent.gd" type="Script" id=1]
+
+[node name="automated_shadow_player" type="Spatial"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -1.79436 )
+script = ExtResource( 1 )
+player_arvrorigin_path = NodePath("../avatar_player/FPController")
+player_arvrcamera_path = NodePath("../avatar_player/FPController/ARVRCamera")
+player_left_controller_path = NodePath("../avatar_player/FPController/LeftHandController")
+player_right_controller_path = NodePath("../avatar_player/FPController/RightHandController")
+player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
+player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
+player_avatar_body_path = NodePath("")
+
+[node name="FPController" type="Position3D" parent="."]
+
+[node name="ARVRCamera" type="Position3D" parent="FPController"]
+
+[node name="LeftHandController" type="Position3D" parent="FPController"]
+
+[node name="LeftPhysicsHand" type="Position3D" parent="FPController/LeftHandController"]
+
+[node name="RightHandController" type="Position3D" parent="FPController"]
+
+[node name="RightPhysicsHand" type="Position3D" parent="FPController/RightHandController"]

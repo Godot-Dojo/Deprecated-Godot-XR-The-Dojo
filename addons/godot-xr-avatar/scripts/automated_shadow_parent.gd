@@ -1,13 +1,7 @@
 extends Spatial
-#This script helps create a "shadow" or "mirror" avatar relatively automatically.  To use:
-# (1) Create a spatial node, and call it whatever you want, i.e., "player_shadow"
-# (2) Create a position 3D node as a child of "player_shadow" called "FPController"
-# (3) Create position 3D nodes as children of "player_shadow" called "LeftHandController," "RightHandController" and "ARVRCamera"
-# (4) Create a position 3D node "LeftPhysicsHand" as a child of "LeftHandController" and a Position 3D node "RightPhysicsHand" as a child of "RightHandController
-#Basically these nodes will be used to mirror the position of the same nodes on the player character.
-#Then attach your avatar GLB or GLTF file as a child to the "FPController" position 3D node.  Make it local.  If you are using automated animations, then delete the animation player node.
-#Make sure your avatar has the following structure: root node spatial, then child node called "Armature" then node called "Skeleton."  Rename to make those nodes named that way if not.
-#Then attach this script to the "player_shadow" node.
+#This script helps create a "shadow" or "mirror" avatar relatively automatically.  To use, click on the automated_shadow_player.tscn and mark "editable children", then
+#Attach your avatar GLB or GLTF file as a child to the "FPController" position 3D node.  Make it local.  If you are using automated animations, then delete the animation player node.
+#Make sure your avatar has the following structure: root node spatial called "avatar", then child node called "Armature" then node called "Skeleton."  Rename to make those nodes named that way if not.
 #Export variables should appear and you can set the player_XXXX export variables to the node paths of the corresponding nodes in your player scene.  The playeravatar body path is for the root node of your avatar model IN THE PLAYER XR RIG, not the one for the shadow.
 #The same types of other export variables appear as with the player automated avatar script to position the avatar, choose automatic animations, and choose lipsync
 
