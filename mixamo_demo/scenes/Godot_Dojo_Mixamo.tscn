@@ -4,7 +4,7 @@
 [ext_resource path="res://demo/materials/dojo_mat.tres" type="Material" id=2]
 [ext_resource path="res://demo/scenes/managers/SceneManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=4]
-[ext_resource path="res://addons/godot-xr-avatar/scripts/automated_shadow_parent.gd" type="Script" id=5]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/automated_shadow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://mixamo_demo/materials/mixamo_avatar_skin.tres" type="Material" id=6]
 [ext_resource path="res://mixamo_demo/materials/mixamo_avatar_eye.tres" type="Material" id=7]
 [ext_resource path="res://mixamo_demo/materials/mixamo_avatar_mat.tres" type="Material" id=8]
@@ -558,31 +558,11 @@ transform = Transform( -0.999836, -0.0136518, -0.011886, -0.00232534, -0.554329,
 
 [node name="SceneManager" parent="." instance=ExtResource( 3 )]
 
-[node name="automated_shadow_player" type="Spatial" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, -1.79436 )
-script = ExtResource( 5 )
-player_arvrorigin_path = NodePath("../avatar_player/FPController")
-player_arvrcamera_path = NodePath("../avatar_player/FPController/ARVRCamera")
-player_left_controller_path = NodePath("../avatar_player/FPController/LeftHandController")
-player_right_controller_path = NodePath("../avatar_player/FPController/RightHandController")
-player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
-player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
+[node name="automated_shadow_player" parent="." instance=ExtResource( 5 )]
 player_avatar_body_path = NodePath("../avatar_player/FPController/mixamo_avatar")
 auto_anim_choice = 2
 
-[node name="FPController" type="Position3D" parent="automated_shadow_player"]
-
-[node name="ARVRCamera" type="Position3D" parent="automated_shadow_player/FPController"]
-
-[node name="LeftHandController" type="Position3D" parent="automated_shadow_player/FPController"]
-
-[node name="LeftPhysicsHand" type="Position3D" parent="automated_shadow_player/FPController/LeftHandController"]
-
-[node name="RightHandController" type="Position3D" parent="automated_shadow_player/FPController"]
-
-[node name="RightPhysicsHand" type="Position3D" parent="automated_shadow_player/FPController/RightHandController"]
-
-[node name="avatar" type="Spatial" parent="automated_shadow_player/FPController"]
+[node name="avatar" type="Spatial" parent="automated_shadow_player/FPController" index="3"]
 
 [node name="Armature" type="Spatial" parent="automated_shadow_player/FPController/avatar"]
 
@@ -945,3 +925,4 @@ material/0 = ExtResource( 6 )
 
 [editable path="avatar_player"]
 [editable path="avatar_player/FPController"]
+[editable path="automated_shadow_player"]
