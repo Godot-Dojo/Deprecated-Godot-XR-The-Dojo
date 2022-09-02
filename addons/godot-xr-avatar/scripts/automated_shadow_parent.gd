@@ -37,7 +37,7 @@ export (AutomaticAnimation) var auto_anim_choice: int = AutomaticAnimation.NO
 
 #export variables to fine tune avatar movement
 export var height_offset := 0.25
-export var foot_offset := 0.15
+export var foot_offset := 0.10
 export var ik_raycast_height := 2.0
 export var min_max_interpolation := Vector2(0.03, 0.9)
 export var smoothing := 0.8
@@ -374,28 +374,28 @@ func _ready():
 		print("No automated animations selected. You need to have your own animationplayer and animation tree nodes.")
 		
 	elif auto_anim_choice == AutomaticAnimation.MAKEHUMAN:
-		animationplayer = load("res://addons/godot-xr-avatar/animations/AnimationPlayer.tscn").instance()
+		animationplayer = load("res://addons/godot-xr-avatar/animations/make_human_animations/AnimationPlayer.tscn").instance()
 		animationplayer.name = "AnimationPlayer"
 		$FPController/avatar.add_child(animationplayer,true)
-		animationtree = load("res://addons/godot-xr-avatar/animations/AnimationTree-MH-Complete.tscn").instance()
+		animationtree = load("res://addons/godot-xr-avatar/animations/make_human_animations/AnimationTree-MH-Complete.tscn").instance()
 		animationtree.name = "AnimationTree"
 		$FPController/avatar.add_child(animationtree, true)
 		animationtree.active = true
 	
 	elif auto_anim_choice == AutomaticAnimation.MIXAMO:
-		animationplayer = load("res://mixamo_demo/animations/AnimationPlayer.tscn").instance()
+		animationplayer = load("res://addons/godot-xr-avatar/animations/mixamo_animations/AnimationPlayer.tscn").instance()
 		animationplayer.name = "AnimationPlayer"
 		$FPController/avatar.add_child(animationplayer,true)
-		animationtree = load("res://mixamo_demo/animations/AnimationTree-mixamo-complete.tscn").instance()
+		animationtree = load("addons/godot-xr-avatar/animations/mixamo_animations/AnimationTree-mixamo-complete.tscn").instance()
 		animationtree.name = "AnimationTree"
 		$FPController/avatar.add_child(animationtree, true)
 		animationtree.active = true
 		
 	elif auto_anim_choice == AutomaticAnimation.READYPLAYERME:
-		animationplayer = load("res://readyplayerme_demo/animations/AnimationPlayer.tscn").instance()
+		animationplayer = load("res://addons/godot-xr-avatar/animations/ready_player_animations/AnimationPlayer.tscn").instance()
 		animationplayer.name = "AnimationPlayer"
 		$FPController/avatar.add_child(animationplayer,true)
-		animationtree = load("res://readyplayerme_demo/animations/AnimationTree-Readyplayer-Complete.tscn").instance()
+		animationtree = load("res://addons/godot-xr-avatar/animations/ready_player_animations/AnimationTree-Readyplayer-Complete.tscn").instance()
 		animationtree.name = "AnimationTree"
 		$FPController/avatar.add_child(animationtree, true)
 		animationtree.active = true	

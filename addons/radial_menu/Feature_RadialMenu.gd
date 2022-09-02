@@ -48,7 +48,7 @@ func add_entry(entry: String) -> void:
 	if not entry in icons:
 		#icons[entry] = load('res://assets/feathericons/' + entry + '.png')
 		#icons[entry] = load("res://icon.png")
-		icons[entry] = load("res://demo/textures/" + entry + ".png")
+		icons[entry] = load("res://addons/radial_menu/radial_menu_textures/" + entry + ".png")
 		
 	var mesh = $IconTemplate.duplicate()
 	mesh.material_override = mesh.material_override.duplicate(true)
