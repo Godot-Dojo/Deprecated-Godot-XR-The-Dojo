@@ -1,0 +1,8 @@
+[gd_resource type="SpatialMaterial" load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot-xr-avatar/textures/young_caucasian_male_special_suit.png" type="Texture" id=1]
+
+[resource]
+albedo_texture = ExtResource( 1 )
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.0

@@ -10,11 +10,11 @@
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/godot-xr-tools/assets/RightPhysicsHand.tscn" type="PackedScene" id=10]
-[ext_resource path="res://demo/materials/avatar_tongue_mat.tres" type="Material" id=11]
-[ext_resource path="res://demo/materials/avatar_teeth_mat.tres" type="Material" id=12]
+[ext_resource path="res://addons/godot-xr-avatar/materials/avatar_tongue_mat.tres" type="Material" id=11]
+[ext_resource path="res://addons/godot-xr-avatar/materials/avatar_teeth_mat.tres" type="Material" id=12]
 [ext_resource path="res://addons/godot-xr-avatar/scripts/automated_avatar.gd" type="Script" id=13]
-[ext_resource path="res://demo/materials/avatar_skin.tres" type="Material" id=14]
-[ext_resource path="res://demo/materials/avatar_eye.tres" type="Material" id=17]
+[ext_resource path="res://addons/godot-xr-avatar/materials/avatar_skin.tres" type="Material" id=14]
+[ext_resource path="res://addons/godot-xr-avatar/materials/avatar_eye.tres" type="Material" id=17]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "avatar_makehuman_lipsync_male1591001"
@@ -336,28 +336,6 @@ strafe = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
 collision_layer = 655360
 margin = 0.004
-
-[node name="Skeleton" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
-bones/0/bound_children = [  ]
-bones/1/bound_children = [  ]
-bones/2/bound_children = [  ]
-bones/3/bound_children = [  ]
-bones/4/bound_children = [  ]
-bones/5/bound_children = [  ]
-bones/6/bound_children = [  ]
-bones/7/bound_children = [  ]
-bones/8/bound_children = [  ]
-bones/9/bound_children = [  ]
-bones/10/bound_children = [  ]
-bones/11/bound_children = [  ]
-bones/12/bound_children = [  ]
-bones/13/bound_children = [  ]
-bones/14/bound_children = [  ]
-bones/15/bound_children = [  ]
-bones/16/bound_children = [  ]
-bones/17/bound_children = [  ]
-bones/18/bound_children = [  ]
-bones/19/bound_children = [  ]
 
 [node name="BoneRoot" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, -2.50192e-40, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 7.2293e-21, 0.000360775, -0.0235019 )

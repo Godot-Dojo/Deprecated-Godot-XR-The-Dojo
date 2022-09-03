@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://managers/SceneManager.tscn" type="PackedScene" id=1]
+[ext_resource path="res://dojo/SliceableWoodenman.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_female_player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://dojo/DojoWithColliders.tscn" type="PackedScene" id=4]
+
+[sub_resource type="ViewportTexture" id=5]
+viewport_path = NodePath("Viewport")
+
+[node name="Godot Dojo" type="Spatial"]
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1024, 768 )
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( -1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.09935, -3.91639 )
+
+[node name="FrontView" type="Sprite3D" parent="."]
+transform = Transform( 0.265, 0, 0, 0, 0.265, 0, 0, 0, 1, 0, 1.03134, -4.01153 )
+flip_h = true
+flip_v = true
+texture = SubResource( 5 )
+
+[node name="avatar_player" parent="." instance=ExtResource( 3 )]
+
+[node name="SliceableWoodenman" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
+
+[node name="SceneManager" parent="." instance=ExtResource( 1 )]
+
+[node name="Dojo" parent="." instance=ExtResource( 4 )]

@@ -237,7 +237,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot-XR-Avatar"
-run/main_scene="res://demo/scenes/Godot Dojo.tscn"
+run/main_scene="res://make_human_demo/scenes/Godot Dojo.tscn"
 config/icon="res://icon.png"
 
 [audio]

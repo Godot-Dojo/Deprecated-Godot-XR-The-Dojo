@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Midnight in the Green House.mp3-b5f5822fd4f208260dd2e6728857efcc.mp3str"
+
+[deps]
+
+source_file="res://sounds/Midnight in the Green House.mp3"
+dest_files=[ "res://.import/Midnight in the Green House.mp3-b5f5822fd4f208260dd2e6728857efcc.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

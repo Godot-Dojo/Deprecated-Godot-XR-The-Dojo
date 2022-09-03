@@ -1,0 +1,36 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/idle.tres" type="Animation" id=1]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/backwards.tres" type="Animation" id=2]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/left.tres" type="Animation" id=3]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/pose_fiist_w_thumb.tres" type="Animation" id=4]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/forward.tres" type="Animation" id=5]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/pose_fist.tres" type="Animation" id=6]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/pose_hand.tres" type="Animation" id=7]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/sit_car.tres" type="Animation" id=8]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/T-pose.tres" type="Animation" id=9]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/sit_bicycle_idle.tres" type="Animation" id=10]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/right.tres" type="Animation" id=11]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/pose_index.tres" type="Animation" id=12]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/sit_bicycle.tres" type="Animation" id=13]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/sit_chair.tres" type="Animation" id=14]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/sit_bike.tres" type="Animation" id=15]
+[ext_resource path="res://addons/godot-xr-avatar/animations/mixamo_animations/pose_thumb.tres" type="Animation" id=16]
+
+[node name="AnimationPlayer" type="AnimationPlayer"]
+anims/T-pose = ExtResource( 9 )
+anims/backwards = ExtResource( 2 )
+anims/forward = ExtResource( 5 )
+anims/idle = ExtResource( 1 )
+anims/left = ExtResource( 3 )
+anims/pose_fiist_w_thumb = ExtResource( 4 )
+anims/pose_fist = ExtResource( 6 )
+anims/pose_hand = ExtResource( 7 )
+anims/pose_index = ExtResource( 12 )
+anims/pose_thumb = ExtResource( 16 )
+anims/right = ExtResource( 11 )
+anims/sit_bicycle = ExtResource( 13 )
+anims/sit_bicycle_idle = ExtResource( 10 )
+anims/sit_bike = ExtResource( 15 )
+anims/sit_car = ExtResource( 8 )
+anims/sit_chair = ExtResource( 14 )
