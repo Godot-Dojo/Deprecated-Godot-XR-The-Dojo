@@ -109,9 +109,21 @@ var Viseme_Sil : float
 var blinktime : int = 0
 var blink_time_set  := false
 var blink_at : int = 0
+
 #variables used for automatic animation player and tree if selected
 var animationplayer : AnimationPlayer = null
 var animationtree : AnimationTree = null
+
+#variables used for procedural walking animation option
+export var use_procedural_walk := false
+export var step_anim_height := .15
+export var step_anim_time := .60
+var is_walking_legs := false
+var legs_anim_timer := 0.0
+var l_leg_pos : Vector3
+var r_leg_pos : Vector3
+var last_l_leg_pos : Vector3
+var last_r_leg_pos : Vector3
 
 #set all nodes 
 onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
@@ -127,7 +139,7 @@ onready var skeleton : Skeleton = $Armature/Skeleton
 func _ready():
 	#Display warning message if no animation tree or animation player found
 	if (get_node_or_null("AnimationTree") == null or get_node_or_null("AnimationPlayer") == null) and auto_anim_choice == AutomaticAnimation.NO:
-		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, animations will not work.")
+		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, and auto animation not set to procedural, animations will not work.")
 	
 	#turn skeleton by 180 degrees if set by export variable (default) so facing the correct direction
 	if turn_character_180 == true:
@@ -507,13 +519,49 @@ func _physics_process(delta: float) -> void:
 			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(.2,0,1), delta)
 	
 	# Perform player movement animation
-	if get_node_or_null("AnimationTree") != null:
+	if get_node_or_null("AnimationTree") != null and use_procedural_walk == false:
 		$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
 		$AnimationTree.set("parameters/Add2/add_amount", 1)
 	update_ik_anim(left_target,Raycast_L,left_foot,LL_db,ik_raycast_height,foot_offset)
 	update_ik_anim(right_target,Raycast_R,right_foot,RL_dB,ik_raycast_height,foot_offset)
 	SkeletonIKLegL.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
 	SkeletonIKLegR.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
+	
+	if use_procedural_walk == true:
+		l_leg_pos = left_target.global_transform.origin
+		r_leg_pos = right_target.global_transform.origin
+		
+		if abs(move.y) > .1 and is_walking_legs == false:
+			last_l_leg_pos = l_leg_pos
+			last_r_leg_pos = r_leg_pos
+			legs_anim_timer = 0.0
+			is_walking_legs = true
+		
+		
+		if is_walking_legs:
+			var desired_l_leg_pos = left_target.global_transform.origin 
+			var desired_r_leg_pos = right_target.global_transform.origin
+			# half of animation time goes to left leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var l_leg_interpolation_v = legs_anim_timer / step_anim_time * 2.0
+				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
+				# moving left leg up
+				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
+				left_target.global_transform.origin = l_leg_pos
+				last_r_leg_pos = r_leg_pos
+			# half of animation time goes to right leg
+			if legs_anim_timer / step_anim_time >= 0.5:
+				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time - 0.5) * 2.0
+				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
+				# moving right leg up
+				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
+				right_target.global_transform.origin = r_leg_pos
+			# increase timer time
+			legs_anim_timer += delta
+			# if timer time is greater than whole animation time then stop animating
+			if legs_anim_timer >= step_anim_time:
+				is_walking_legs = false
+	
 	prev_move = move
 
 
@@ -639,3 +687,5 @@ func check_if_finger_bone(bone):
 		#print("Possible hand bone detected, checked if it was a finger and it was not")
 		return false
 			
+
+
