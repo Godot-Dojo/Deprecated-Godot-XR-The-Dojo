@@ -118,6 +118,7 @@ var animationtree : AnimationTree = null
 export var use_procedural_walk := false
 export var step_anim_height := .15
 export var step_anim_time := .60
+export var step_distance := .15
 var is_walking_legs := false
 var legs_anim_timer := 0.0
 var l_leg_pos : Vector3
@@ -539,8 +540,8 @@ func _physics_process(delta: float) -> void:
 		
 		
 		if is_walking_legs:
-			var desired_l_leg_pos = left_target.global_transform.origin 
-			var desired_r_leg_pos = right_target.global_transform.origin
+			var desired_l_leg_pos = left_target.global_transform.origin + player_body.velocity.normalized()*step_distance
+			var desired_r_leg_pos = right_target.global_transform.origin + player_body.velocity.normalized()*step_distance
 			# half of animation time goes to left leg
 			if legs_anim_timer / step_anim_time <= 0.5:
 				var l_leg_interpolation_v = legs_anim_timer / step_anim_time * 2.0
