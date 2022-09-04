@@ -528,34 +528,44 @@ func _physics_process(delta: float) -> void:
 	SkeletonIKLegL.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
 	SkeletonIKLegR.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
 	
+	# Perform procedural walk if option selected
 	if use_procedural_walk == true:
+		# get initial foot positions when starting procedural walk
 		l_leg_pos = left_target.global_transform.origin
 		r_leg_pos = right_target.global_transform.origin
 		
-		if abs(move.y) > .1 and is_walking_legs == false:
+		# if player character is moving but the procedural animation has not started yet, start it, and set a timer for animation time
+		if (abs(move.y) > .1 or abs(move.x) > .1) and is_walking_legs == false:
 			last_l_leg_pos = l_leg_pos
 			last_r_leg_pos = r_leg_pos
 			legs_anim_timer = 0.0
 			is_walking_legs = true
 		
-		
+		# the actual walking animation code
 		if is_walking_legs:
+			# set where we want the legs to go, set just a bit in the direction ahead of where the player is going
 			var desired_l_leg_pos = left_target.global_transform.origin + player_body.velocity.normalized()*step_distance
 			var desired_r_leg_pos = right_target.global_transform.origin + player_body.velocity.normalized()*step_distance
+			
 			# half of animation time goes to left leg
 			if legs_anim_timer / step_anim_time <= 0.5:
 				var l_leg_interpolation_v = legs_anim_timer / step_anim_time * 2.0
+				# moving leg in the direction of the player move
 				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
-				# moving left leg up
+				# moving leg up
 				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
+				# move the skeleton leg into the new position
 				left_target.global_transform.origin = l_leg_pos
+				# after this left leg has animated, get the position of where the right leg is before starting right leg anim (otherwise leg is in outdated position to start)
 				last_r_leg_pos = r_leg_pos
 			# half of animation time goes to right leg
 			if legs_anim_timer / step_anim_time >= 0.5:
 				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time - 0.5) * 2.0
+				# moving leg in the direction of the player move
 				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
-				# moving right leg up
+				# moving leg up
 				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
+				# move the skeleton leg into the new position
 				right_target.global_transform.origin = r_leg_pos
 			# increase timer time
 			legs_anim_timer += delta
