@@ -88,6 +88,7 @@ var left_foot_bone = null
 var right_foot_bone = null
 var num_of_skeleton_bones = null
 var substitute_head_bone = false
+
 #variables used for lipsync if activated
 var lipsync_node = null
 var face_mesh : MeshInstance = null
@@ -119,13 +120,17 @@ export var use_procedural_walk := false
 export var step_anim_height := .15
 export var step_anim_time := .60
 export var step_distance := .15
+export var strafe_step_modifier := .5
 var is_walking_legs := false
 var legs_anim_timer := 0.0
 var l_leg_pos : Vector3
 var r_leg_pos : Vector3
 var last_l_leg_pos : Vector3
 var last_r_leg_pos : Vector3
-
+var default_step_distance := 0.0
+var default_step_height := 0.0
+var strafe_step_distance := 0.0
+var strafe_step_height := 0.0
 #set all nodes 
 onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
 onready var arvrcamera := ARVRHelpers.get_arvr_camera(self, arvrcamera_path)
@@ -381,6 +386,11 @@ func _ready():
 		animationtree.name = "AnimationTree"
 		add_child(animationtree, true)
 		animationtree.active = true	
+		
+	default_step_distance = step_distance
+	default_step_height = step_anim_height
+	strafe_step_distance = step_distance*strafe_step_modifier
+	strafe_step_height = step_anim_height*strafe_step_modifier
 			
 func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
 	var forward := (to-from).normalized()
@@ -408,7 +418,7 @@ func get_current_player_height() -> float:
 
 
 #function used for LipSync if activated, set visemes to the corresponding blend shapes in the facial mesh
-func process_visemes(delta):
+func process_visemes(delta:float) -> void:
 	Viseme_Ch = $LipSync.visemes[LipSync.VISEME.VISEME_CH]
 	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
 	Viseme_E = $LipSync.visemes[LipSync.VISEME.VISEME_E]
@@ -459,6 +469,92 @@ func process_visemes(delta):
 		face_mesh.set("blend_shapes/eyeBlinkRight", 0)  # unblink
 		blinktime = 0
 		blink_time_set = false  # set next blink time randomly again
+
+func process_procedural_walk(delta: float, move: Vector2) -> void:
+	var is_strafing = false
+	var desired_l_leg_pos = Vector3.ZERO
+	var desired_r_leg_pos = Vector3.ZERO
+	# get initial foot positions when starting procedural walk
+	l_leg_pos = left_target.global_transform.origin
+	r_leg_pos = right_target.global_transform.origin
+	
+	# if not moving or if flying, stop walk animation
+	if (abs(move.y) <= .1 and abs(move.x) <= .1) or player_body.on_ground == false:
+		is_walking_legs = false
+		
+	# if player character is moving but the procedural animation has not started yet, start it, and set a timer for animation time
+	if (abs(move.y) > .1 or abs(move.x) > .1) and is_walking_legs == false:
+		last_l_leg_pos = l_leg_pos
+		last_r_leg_pos = r_leg_pos
+		legs_anim_timer = 0.0
+		if abs(move.x) > .35:
+			#if mostly strafing, change step height by modifer for strafe and tell walking legs strafing
+			step_anim_height = strafe_step_height
+			is_strafing = true
+		else:
+			#if not mostly strafing, use default step height instead and tell walking legs not strafing
+			step_anim_height = default_step_height
+			is_strafing = false
+		is_walking_legs = true
+	
+	# the actual walking animation code
+	if is_walking_legs:
+		# if timer time is greater than whole animation time then stop animating
+		if legs_anim_timer >= step_anim_time:
+			is_walking_legs = false
+		
+		# set where we want the legs to go, set just a bit in the direction ahead of where the player is going
+		desired_l_leg_pos = left_target.global_transform.origin + player_body.velocity.normalized()*step_distance
+		desired_r_leg_pos = right_target.global_transform.origin + player_body.velocity.normalized()*step_distance
+		
+		if is_strafing == false or (is_strafing == true and move.x > 0):
+			# half of animation time goes to left leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var l_leg_interpolation_v = legs_anim_timer / step_anim_time * 2.0
+				# moving leg in the direction of the player move
+				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
+				# moving leg up
+				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				left_target.global_transform.origin = l_leg_pos
+				# after this left leg has animated, get the position of where the right leg is before starting right leg anim (otherwise leg is in outdated position to start)
+				last_r_leg_pos = r_leg_pos
+			# half of animation time goes to right leg
+			if legs_anim_timer / step_anim_time >= 0.5:
+				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time - 0.5) * 2.0
+				# moving leg in the direction of the player move
+				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
+				# moving leg up
+				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				right_target.global_transform.origin = r_leg_pos
+			# increase timer time
+			legs_anim_timer += delta
+			
+		# if strafing left, move right leg first rather than left
+		elif is_strafing == true and move.x < 0:
+		# half of animation time goes to right leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time) * 2.0
+				# moving leg in the direction of the player move
+				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
+				# moving leg up
+				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				right_target.global_transform.origin = r_leg_pos
+				# after this right leg has animated, get the position of where the left leg is before starting left leg anim (otherwise leg is in outdated position to start)
+				last_l_leg_pos = l_leg_pos
+		# half of animation time goes to left leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var l_leg_interpolation_v = (legs_anim_timer / step_anim_time-0.5) * 2.0
+				# moving leg in the direction of the player move
+				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
+				# moving leg up
+				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				left_target.global_transform.origin = l_leg_pos
+			# increase timer time
+			legs_anim_timer += delta
 
 #This is where the IK movement is actually done
 func _physics_process(delta: float) -> void:
@@ -530,49 +626,8 @@ func _physics_process(delta: float) -> void:
 	
 	# Perform procedural walk if option selected
 	if use_procedural_walk == true:
-		# get initial foot positions when starting procedural walk
-		l_leg_pos = left_target.global_transform.origin
-		r_leg_pos = right_target.global_transform.origin
+		process_procedural_walk(delta, move)
 		
-		# if player character is moving but the procedural animation has not started yet, start it, and set a timer for animation time
-		if (abs(move.y) > .1 or abs(move.x) > .1) and is_walking_legs == false:
-			last_l_leg_pos = l_leg_pos
-			last_r_leg_pos = r_leg_pos
-			legs_anim_timer = 0.0
-			is_walking_legs = true
-		
-		# the actual walking animation code
-		if is_walking_legs:
-			# set where we want the legs to go, set just a bit in the direction ahead of where the player is going
-			var desired_l_leg_pos = left_target.global_transform.origin + player_body.velocity.normalized()*step_distance
-			var desired_r_leg_pos = right_target.global_transform.origin + player_body.velocity.normalized()*step_distance
-			
-			# half of animation time goes to left leg
-			if legs_anim_timer / step_anim_time <= 0.5:
-				var l_leg_interpolation_v = legs_anim_timer / step_anim_time * 2.0
-				# moving leg in the direction of the player move
-				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
-				# moving leg up
-				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
-				# move the skeleton leg into the new position
-				left_target.global_transform.origin = l_leg_pos
-				# after this left leg has animated, get the position of where the right leg is before starting right leg anim (otherwise leg is in outdated position to start)
-				last_r_leg_pos = r_leg_pos
-			# half of animation time goes to right leg
-			if legs_anim_timer / step_anim_time >= 0.5:
-				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time - 0.5) * 2.0
-				# moving leg in the direction of the player move
-				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
-				# moving leg up
-				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
-				# move the skeleton leg into the new position
-				right_target.global_transform.origin = r_leg_pos
-			# increase timer time
-			legs_anim_timer += delta
-			# if timer time is greater than whole animation time then stop animating
-			if legs_anim_timer >= step_anim_time:
-				is_walking_legs = false
-	
 	prev_move = move
 
 
