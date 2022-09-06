@@ -149,7 +149,7 @@ focus_mode = 2
 mouse_filter = 0
 size_flags_vertical = 1
 theme = ExtResource( 2 )
-text = "STANDING/ CROUCHING"
+text = "STANDING/ SITTING"
 align = 1
 __meta__ = {
 "_editor_description_": ""
