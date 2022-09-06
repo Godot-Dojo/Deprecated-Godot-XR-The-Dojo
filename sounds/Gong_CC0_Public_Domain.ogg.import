@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Gong_CC0_Public_Domain.ogg-ca8b71dbcf13894cf6fdfd9f9906a8af.oggstr"
+
+[deps]
+
+source_file="res://sounds/Gong_CC0_Public_Domain.ogg"
+dest_files=[ "res://.import/Gong_CC0_Public_Domain.ogg-ca8b71dbcf13894cf6fdfd9f9906a8af.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

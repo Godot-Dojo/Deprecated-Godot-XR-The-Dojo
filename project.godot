@@ -244,6 +244,11 @@ config/icon="res://icon.png"
 
 enable_audio_input=true
 
+[autoload]
+
+GameSignals="*res://dojo/gamelogic/GameSignals.gd"
+GameState="*res://dojo/gamelogic/GameState.gd"
+
 [display]
 
 window/vsync/use_vsync=false

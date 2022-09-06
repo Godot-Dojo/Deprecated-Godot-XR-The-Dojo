@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/mrminimal_flipbook_particles/assets/fireballs/fireball_04/materials/fireball_04_material.tres" type="Material" id=1]
+
+[sub_resource type="QuadMesh" id=2]
+
+[sub_resource type="Animation" id=17]
+resource_name = "Explode"
+length = 2.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material/0:shader_param/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.999 ]
+}
+
+[node name="Fireball_04" type="MeshInstance"]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Explode"
+playback_speed = 1.2
+anims/Explode = SubResource( 17 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00475669, -0.0936491, 0.0198444 )
+light_color = Color( 1, 0.578667, 0.21, 1 )
+light_energy = 20.0
+light_specular = 0.0
+shadow_enabled = true
+omni_range = 2.0
+omni_attenuation = 2.14355
