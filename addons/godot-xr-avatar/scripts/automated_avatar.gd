@@ -117,10 +117,13 @@ var animationtree : AnimationTree = null
 
 #variables used for procedural walking animation option
 export var use_procedural_walk := false
+export var use_procedural_bounce := false
 export var step_anim_height := .15
 export var step_anim_time := .60
 export var step_distance := .15
 export var strafe_step_modifier := .5
+export var max_legs_spread := .5
+export var bounce_factor := .1
 var is_walking_legs := false
 var legs_anim_timer := 0.0
 var l_leg_pos : Vector3
@@ -241,6 +244,7 @@ func _ready():
 		#if there wasn't a head end bone and not a spatial substitute, use rough math for where the head end bone likely would be
 		else:
 			avatar_height = character_height.transform.origin.y + .25
+	
 	$Armature.scale *= get_current_player_height()/avatar_height
 	armature_scale = $Armature.scale
 	max_height = get_current_player_height()
@@ -392,13 +396,8 @@ func _ready():
 	strafe_step_distance = step_distance*strafe_step_modifier
 	strafe_step_height = step_anim_height*strafe_step_modifier
 			
-func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
-	var forward := (to-from).normalized()
-	var right := up_ref.normalized().cross(forward).normalized()
-	forward = right.cross(up_ref).normalized()
-	return Basis(right, up_ref, forward)
 
-
+#function use to place avatar feet on surfaces procedurally
 func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachment, d_b: Basis, avatar_height: float, hit_offset: float) -> void:
 	var bone_pos = bone_attach.global_transform.origin
 	raycast.global_transform.origin = bone_pos + Vector3.UP*avatar_height
@@ -412,9 +411,6 @@ func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachme
 			target.global_transform.basis = look_at_y(Vector3.ZERO,$Armature.global_transform.basis.z,raycast.get_collision_normal())
 	target.rotation.y = $Armature.rotation.y
 
-
-func get_current_player_height() -> float:
-	 return arvrcamera.transform.origin.y
 
 
 #function used for LipSync if activated, set visemes to the corresponding blend shapes in the facial mesh
@@ -470,6 +466,7 @@ func process_visemes(delta:float) -> void:
 		blinktime = 0
 		blink_time_set = false  # set next blink time randomly again
 
+#function used to generate procedural walk instead of using baked animations
 func process_procedural_walk(delta: float, move: Vector2) -> void:
 	var is_strafing = false
 	var desired_l_leg_pos = Vector3.ZERO
@@ -499,14 +496,12 @@ func process_procedural_walk(delta: float, move: Vector2) -> void:
 	
 	# the actual walking animation code
 	if is_walking_legs:
-		# if timer time is greater than whole animation time then stop animating
-		if legs_anim_timer >= step_anim_time:
-			is_walking_legs = false
 		
 		# set where we want the legs to go, set just a bit in the direction ahead of where the player is going
 		desired_l_leg_pos = left_target.global_transform.origin + player_body.velocity.normalized()*step_distance
 		desired_r_leg_pos = right_target.global_transform.origin + player_body.velocity.normalized()*step_distance
 		
+		#If not strafing or if strafing to the left, move left leg first
 		if is_strafing == false or (is_strafing == true and move.x > 0):
 			# half of animation time goes to left leg
 			if legs_anim_timer / step_anim_time <= 0.5:
@@ -555,6 +550,16 @@ func process_procedural_walk(delta: float, move: Vector2) -> void:
 				left_target.global_transform.origin = l_leg_pos
 			# increase timer time
 			legs_anim_timer += delta
+		
+		
+		#Animate body up and down depending on distance between legs and factor set with variable if option chosen
+		#if use_procedural_bounce == true:
+		#	skeleton.global_transform.origin += (Vector3.DOWN * (get_legs_spread(l_leg_pos, r_leg_pos) / max_legs_spread * bounce_factor))
+			
+		# if timer time is greater than whole animation time then stop animating
+		if legs_anim_timer >= step_anim_time:
+			is_walking_legs = false
+
 
 #This is where the IK movement is actually done
 func _physics_process(delta: float) -> void:
@@ -628,6 +633,11 @@ func _physics_process(delta: float) -> void:
 	if use_procedural_walk == true:
 		process_procedural_walk(delta, move)
 		
+	# Perform procedural body bounce if option selected
+	# Animate body up and down depending on distance between legs and factor set with variable if option chosen
+	if use_procedural_bounce == true:
+		skeleton.global_transform.origin += Vector3.DOWN * ((get_legs_spread(left_target.global_transform.origin, right_target.global_transform.origin) / max_legs_spread) * bounce_factor)
+	
 	prev_move = move
 
 
@@ -753,5 +763,19 @@ func check_if_finger_bone(bone):
 		#print("Possible hand bone detected, checked if it was a finger and it was not")
 		return false
 			
+#Get distance between legs (used with procedural animation code)			
+func get_legs_spread(left_leg_position : Vector3, right_leg_position: Vector3):
+	return Vector2(left_leg_position.x, left_leg_position.z).distance_to(Vector2(right_leg_position.x, right_leg_position.z))
 
+
+#Get current player height
+func get_current_player_height() -> float:
+	 return arvrcamera.transform.origin.y
+
+#Use to set rotation
+func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
+	var forward := (to-from).normalized()
+	var right := up_ref.normalized().cross(forward).normalized()
+	forward = right.cross(up_ref).normalized()
+	return Basis(right, up_ref, forward)
 

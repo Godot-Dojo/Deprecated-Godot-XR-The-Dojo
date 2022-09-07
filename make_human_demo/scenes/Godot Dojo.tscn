@@ -19,28 +19,6 @@
 
 [node name="avatar_player" parent="." instance=ExtResource( 2 )]
 
-[node name="Skeleton" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
-bones/0/bound_children = [  ]
-bones/1/bound_children = [  ]
-bones/2/bound_children = [  ]
-bones/3/bound_children = [  ]
-bones/4/bound_children = [  ]
-bones/5/bound_children = [  ]
-bones/6/bound_children = [  ]
-bones/7/bound_children = [  ]
-bones/8/bound_children = [  ]
-bones/9/bound_children = [  ]
-bones/10/bound_children = [  ]
-bones/11/bound_children = [  ]
-bones/12/bound_children = [  ]
-bones/13/bound_children = [  ]
-bones/14/bound_children = [  ]
-bones/15/bound_children = [  ]
-bones/16/bound_children = [  ]
-bones/17/bound_children = [  ]
-bones/18/bound_children = [  ]
-bones/19/bound_children = [  ]
-
 [node name="BoneRoot" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, -2.50192e-40, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 7.2293e-21, 0.000360775, -0.0235019 )
 
@@ -102,7 +80,7 @@ transform = Transform( 0.740024, -0.658406, -0.137349, -0.308624, -0.150972, -0.
 transform = Transform( 0.463311, -0.822464, -0.329992, -0.51281, 0.0548708, -0.856747, 0.722751, 0.566164, -0.396346, -0.0115324, -0.0446074, 0.108884 )
 
 [node name="avatar" parent="avatar_player/FPController" index="4"]
-use_procedural_walk = true
+use_procedural_bounce = true
 step_anim_time = 0.8
 
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 4 )]
