@@ -416,7 +416,7 @@ left_hand_path = NodePath("../LeftHandController/LeftPhysicsHand")
 right_hand_path = NodePath("../RightHandController/RightPhysicsHand")
 head_mesh_node_paths = [ NodePath("Armature/Skeleton/mesh_Eyes"), NodePath("Armature/Skeleton/mesh_Head") ]
 auto_anim_choice = 1
-use_procedural_walk = true
+use_procedural_bounce = true
 
 [node name="Armature" type="Spatial" parent="FPController/avatar"]
 transform = Transform( 1, 0, 0, 0, 1, 1.62921e-07, 0, -1.62921e-07, 1, 0, 0, 0 )
