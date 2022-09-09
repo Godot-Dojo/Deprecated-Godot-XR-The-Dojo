@@ -34,6 +34,8 @@ func _ready():
 	#pass
 func _on_left_function_pickup_picked_up_object(object):
 	var weapon_to_hold_scene = check_weapon_scene(object)
+	if weapon_to_hold_scene == null:
+		return
 	if object.get_node_or_null("holder") != null:
 		object.get_node("holder").visible = false
 	shadow_group = get_tree().get_nodes_in_group("shadows")
@@ -55,7 +57,9 @@ func _on_left_function_pickup_picked_up_object(object):
 func _on_left_function_pickup_dropped_object():
 #	if item_in_player_hand_left.get_node_or_null("holder") != null:
 #		item_in_player_hand_left.get_node("holder").visible = true
-	
+	if item_in_player_hand_left == null:
+		return
+		
 	shadow_group = get_tree().get_nodes_in_group("shadows")
 	
 	for shadow in shadow_group:
@@ -70,6 +74,8 @@ func _on_left_function_pickup_dropped_object():
 	
 func _on_right_function_pickup_picked_up_object(object):
 	var weapon_to_hold_scene = check_weapon_scene(object)
+	if weapon_to_hold_scene == null:
+		return
 	if object.get_node_or_null("holder") != null:
 		object.get_node("holder").visible = false
 	shadow_group = get_tree().get_nodes_in_group("shadows")
@@ -91,7 +97,9 @@ func _on_right_function_pickup_picked_up_object(object):
 func _on_right_function_pickup_dropped_object():
 #	if item_in_player_hand_right.get_node_or_null("holder") != null:
 #		item_in_player_hand_right.get_node("holder").visible = true
-	
+	if item_in_player_hand_right == null:
+		return
+		
 	shadow_group = get_tree().get_nodes_in_group("shadows")
 	
 	for shadow in shadow_group:
@@ -123,3 +131,4 @@ func check_weapon_scene(object):
 		return shuriken_8star_scene
 	elif object.name.begins_with("Shuriken"):
 		return shuriken_scene
+	return null
