@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://dojo/mat_table_round.tres" type="Material" id=1]
 [ext_resource path="res://dojo/Table_shards.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/destruction/destruction.gd" type="Script" id=3]
 [ext_resource path="res://dojo/DestructableTable.gd" type="Script" id=4]
+[ext_resource path="res://addons/destruction/ShardTemplates/PickableShardTemplate.tscn" type="PackedScene" id=5]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "furniture_table_round_Plane002"
@@ -38,6 +39,7 @@ mesh = SubResource( 1 )
 
 [node name="Destruction" type="Node" parent="BreakableObject"]
 script = ExtResource( 3 )
+shard_template = ExtResource( 5 )
 shard_scene = ExtResource( 2 )
 
 [node name="Area" type="Area" parent="."]

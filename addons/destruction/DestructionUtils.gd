@@ -6,7 +6,7 @@ static func create_shards(object : Spatial, shard_template : PackedScene = prelo
 		if not shard_mesh is MeshInstance:
 			continue
 		reposition_mesh_to_middle(shard_mesh)
-		var new_shard : RigidBody = shard_template.instance()
+		var new_shard = shard_template.instance()
 		new_shard.translation = shard_mesh.translation
 		new_shard.name = new_shard.name.format(
 				{name = object.name, number = shard_num})
