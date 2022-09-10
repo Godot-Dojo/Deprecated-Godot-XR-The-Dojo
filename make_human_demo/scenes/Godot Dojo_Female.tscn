@@ -12,6 +12,7 @@ viewport_path = NodePath("Viewport")
 
 [node name="Viewport" type="Viewport" parent="."]
 size = Vector2( 1024, 768 )
+keep_3d_linear = true
 
 [node name="Camera" type="Camera" parent="Viewport"]
 transform = Transform( -1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 1.09935, -3.91639 )

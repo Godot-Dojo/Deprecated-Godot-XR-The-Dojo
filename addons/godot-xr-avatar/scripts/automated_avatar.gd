@@ -395,8 +395,9 @@ func _ready():
 	default_step_height = step_anim_height
 	strafe_step_distance = step_distance*strafe_step_modifier
 	strafe_step_height = step_anim_height*strafe_step_modifier
-			
-
+	
+	#The following line can be uncommented for further tweaking avatar legs/height (prevent "bowed legs")		
+	#player_body.player_height_offset = height_offset
 #function use to place avatar feet on surfaces procedurally
 func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachment, d_b: Basis, avatar_height: float, hit_offset: float) -> void:
 	var bone_pos = bone_attach.global_transform.origin
