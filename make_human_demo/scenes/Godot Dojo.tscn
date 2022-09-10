@@ -19,6 +19,28 @@
 
 [node name="avatar_player" parent="." instance=ExtResource( 2 )]
 
+[node name="Skeleton" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
+bones/0/bound_children = [  ]
+bones/1/bound_children = [  ]
+bones/2/bound_children = [  ]
+bones/3/bound_children = [  ]
+bones/4/bound_children = [  ]
+bones/5/bound_children = [  ]
+bones/6/bound_children = [  ]
+bones/7/bound_children = [  ]
+bones/8/bound_children = [  ]
+bones/9/bound_children = [  ]
+bones/10/bound_children = [  ]
+bones/11/bound_children = [  ]
+bones/12/bound_children = [  ]
+bones/13/bound_children = [  ]
+bones/14/bound_children = [  ]
+bones/15/bound_children = [  ]
+bones/16/bound_children = [  ]
+bones/17/bound_children = [  ]
+bones/18/bound_children = [  ]
+bones/19/bound_children = [  ]
+
 [node name="BoneRoot" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, -2.50192e-40, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 7.2293e-21, 0.000360775, -0.0235019 )
 
@@ -124,6 +146,7 @@ player_right_controller_path = NodePath("../avatar_player/FPController/RightHand
 player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
 player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
 player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
+height_offset = 0.0
 
 [node name="shadow2" parent="." instance=ExtResource( 14 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.96281, 0, -3.04401 )
@@ -134,6 +157,7 @@ player_right_controller_path = NodePath("../avatar_player/FPController/RightHand
 player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
 player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
 player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
+height_offset = 0.0
 
 [node name="shadow3" parent="." instance=ExtResource( 15 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1.69741, 0, -3.27056 )
@@ -144,6 +168,7 @@ player_right_controller_path = NodePath("../avatar_player/FPController/RightHand
 player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
 player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
 player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
+height_offset = 0.0
 
 [node name="SceneManager" parent="." instance=ExtResource( 9 )]
 
