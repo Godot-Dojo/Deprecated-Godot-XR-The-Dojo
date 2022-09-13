@@ -1,0 +1,219 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=1]
+[ext_resource path="res://dojo/backpack/ring_small.png" type="Texture" id=2]
+[ext_resource path="res://addons/godot-xr-tools/objects/Snap_Zone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://weapons/trailmaterial.tres" type="Material" id=4]
+[ext_resource path="res://dojo/backpack/ring_long.png" type="Texture" id=6]
+
+[sub_resource type="SphereShape" id=16]
+
+[sub_resource type="SphereMesh" id=15]
+radius = 0.075
+height = 0.15
+
+[node name="Backpack" type="RigidBody"]
+collision_mask = 131073
+mode = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="PickupCenter" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.108375, -0.117393 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09374, 0 )
+shape = SubResource( 16 )
+
+[node name="In" type="Spatial" parent="."]
+
+[node name="Snap_Zone" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32799e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, -0.1, 0.25, -0.1 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone2" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32799e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, 0, 0.25, -0.1 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone2"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone2"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone3" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32798e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, 0.1, 0.25, -0.1 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone3"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone3"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone4" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32799e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, -0.1, 0.25, -0.025 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone4"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone4"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone5" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32799e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, 0, 0.25, -0.025 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone5"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone5"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone6" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32798e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, 0.1, 0.25, -0.025 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone6"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone6"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone7" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32799e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, -0.1, 0.25, 0.05 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone7"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone7"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone8" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32799e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, 0, 0.25, 0.05 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone8"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone8"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Snap_Zone9" parent="In" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 0.25, -2.6565e-15, 4.32798e-22, 2.6565e-15, 0.25, -4.07301e-08, 0, 4.07301e-08, 0.25, 0.1, 0.25, 0.05 )
+gravity = 0.0
+linear_damp = 0.0
+angular_damp = 0.0
+snap_exclude = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="In/Snap_Zone9"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="In/Snap_Zone9"]
+transform = Transform( -8.74228e-09, 0.2, -4.37114e-08, 0, -8.74228e-09, -1, -0.2, -8.74228e-09, 1.91069e-15, 0, 0, 0 )
+texture = ExtResource( 2 )
+
+[node name="Out" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00739692, 0 )
+
+[node name="Snap_Zone" parent="Out" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 1, -1.0626e-14, 1.73119e-21, 1.0626e-14, 1, -1.6292e-07, 0, 1.6292e-07, 1, 0.150459, 0.2, 0 )
+snap_require = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="Out/Snap_Zone"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Out/Snap_Zone"]
+transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.0272048, -0.2, 3.25841e-08 )
+texture = ExtResource( 6 )
+
+[node name="Snap_Zone2" parent="Out" groups=["User"] instance=ExtResource( 3 )]
+transform = Transform( 1, -1.0626e-14, 1.73119e-21, 1.0626e-14, 1, -1.6292e-07, 0, 1.6292e-07, 1, -0.165119, 0.2, 0 )
+snap_require = "Heavy"
+
+[node name="MeshInstance" type="MeshInstance" parent="Out/Snap_Zone2"]
+visible = false
+mesh = SubResource( 15 )
+material/0 = ExtResource( 4 )
+
+[node name="Sprite3D" type="Sprite3D" parent="Out/Snap_Zone2"]
+transform = Transform( -4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, -0.027, -0.2, 0 )
+texture = ExtResource( 6 )
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0347078, 0 )
+width = 0.316492
+height = 0.514498
+depth = 0.209
+
+[node name="CSGBox" type="CSGBox" parent="CSGBox"]
+transform = Transform( 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0, 1, -0.0134399, -0.00944411, 0.111488 )
+width = 0.0343187
+height = 0.458297
+depth = 0.0522192
+
+[connection signal="action_pressed" from="." to="." method="_on_Backpack_action_pressed"]
+[connection signal="dropped" from="." to="." method="_on_Backpack_dropped"]
+[connection signal="picked_up" from="." to="." method="_on_Backpack_picked_up"]

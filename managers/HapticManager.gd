@@ -17,12 +17,12 @@ func _ready():
 	left_controller.get_node("Function_Pickup").connect("has_picked_up", self, "haptic_pulse_on_pickup")
 	right_controller.get_node("Function_Pickup").connect("has_picked_up", self, "haptic_pulse_on_pickup")
 
-
-func haptic_pulse_on_pickup(what):
-	#What is passed as a parameter by the has_picked_up signal and is the object pickable, in turn that has a _by_controller property that yield the picked up controller
-	what.by_controller.set_rumble(0.2)
-	yield(get_tree().create_timer(0.2), "timeout")
-	what.by_controller.set_rumble(0.0)# Replace with function body.
+#commented out since it crashes currently with backpack
+#func haptic_pulse_on_pickup(what):
+#	#What is passed as a parameter by the has_picked_up signal and is the object pickable, in turn that has a _by_controller property that yield the picked up controller
+#	what.by_controller.set_rumble(0.2)
+#	yield(get_tree().create_timer(0.2), "timeout")
+#	what.by_controller.set_rumble(0.0)# Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

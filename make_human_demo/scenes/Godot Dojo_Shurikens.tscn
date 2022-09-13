@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://addons/godot-xr-avatar/scenes/sybotshadow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://managers/WeaponManager.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://weapons/Slicing_Katana_M.tscn" type="PackedScene" id=15]
 [ext_resource path="res://dojo/DojoWithColliders.tscn" type="PackedScene" id=16]
 [ext_resource path="res://sounds/Midnight in the Green House.mp3" type="AudioStream" id=17]
+[ext_resource path="res://dojo/backpack/Backpack.tscn" type="PackedScene" id=18]
 
 [node name="Godot Dojo" type="Spatial"]
 
@@ -91,7 +92,7 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.0054
 [node name="WeaponManager" type="Node" parent="."]
 script = ExtResource( 2 )
 
-[node name="Slicing_Katana_Long" parent="WeaponManager" groups=["swords"] instance=ExtResource( 12 )]
+[node name="Slicing_Katana_Long" parent="WeaponManager" groups=["Heavy", "swords"] instance=ExtResource( 12 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.06865, 1.39542, -0.216369 )
 
 [node name="Slicing_Katana_M" parent="WeaponManager" groups=["swords"] instance=ExtResource( 15 )]
@@ -151,6 +152,10 @@ player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
 [node name="SceneManager" parent="." instance=ExtResource( 13 )]
 
 [node name="Dojo" parent="." instance=ExtResource( 16 )]
+
+[node name="Backpack" parent="." instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.184375, 1.11168, -1.41673 )
+mode = 1
 
 [editable path="avatar_player"]
 [editable path="avatar_player/FPController"]
