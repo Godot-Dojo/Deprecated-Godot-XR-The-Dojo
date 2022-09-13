@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://dojo/holster/HolsterHelper.gd" type="Script" id=2]
+[ext_resource path="res://dojo/holster/Holster.tscn" type="PackedScene" id=3]
+
+[node name="HolsterHelper" type="Spatial"]
+script = ExtResource( 2 )
+arvrcamera_path = NodePath("../FPController/ARVRCamera")
+
+[node name="LeftHipHolster" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.3, -0.618493, 0.0465992 )
+snap_exclude = "Heavy"
+
+[node name="RightHipHolster" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.3, -0.618493, 0.0465992 )
+snap_exclude = "Heavy"
+
+[node name="ChestHolster" parent="." instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.218, -0.05 )
+snap_exclude = "Heavy"
+
+[node name="RShoulderHolster" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.15, -0.068, -0.2 )
+snap_require = "Heavy"
+
+[node name="LShoulderHolster" parent="." instance=ExtResource( 3 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.15, -0.068, -0.2 )
+snap_require = "Heavy"
