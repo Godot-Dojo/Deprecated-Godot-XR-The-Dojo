@@ -148,7 +148,7 @@ onready var skeleton : Skeleton = $Armature/Skeleton
 func _ready():
 	#Display warning message if no animation tree or animation player found
 	if (get_node_or_null("AnimationTree") == null or get_node_or_null("AnimationPlayer") == null) and auto_anim_choice == AutomaticAnimation.NO:
-		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, and auto animation not set to procedural, animations will not work.")
+		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, and auto animation set to no, so animations will not work.")
 	
 	#turn skeleton by 180 degrees if set by export variable (default) so facing the correct direction
 	if turn_character_180 == true:

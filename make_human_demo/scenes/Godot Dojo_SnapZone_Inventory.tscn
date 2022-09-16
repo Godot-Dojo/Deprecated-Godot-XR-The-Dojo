@@ -102,3 +102,6 @@ script = null
 
 [node name="Backpack" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.184375, 1.11168, -1.41673 )
+reset_transform_on_pickup = true
+
+[connection signal="dropped" from="Backpack" to="WeaponManager" method="_on_Backpack_dropped"]
