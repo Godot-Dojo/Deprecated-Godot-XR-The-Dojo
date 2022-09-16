@@ -7,7 +7,8 @@ onready var shuriken_scene = load("res://weapons/Throwing_Shuriken.tscn")
 onready var shuriken_4spike_scene = load("res://weapons/Throwing_Shuriken_4Spike.tscn")
 onready var shuriken_4star_scene = load("res://weapons/Throwing_Shuriken_4Star.tscn")
 onready var shuriken_8star_scene = load("res://weapons/Throwing_Shuriken_8Star.tscn")
-
+onready var backpack_scene = load("res://dojo/backpack/Backpack.tscn")
+onready var backpack = get_parent().get_node_or_null("Backpack")
 var shadow_group := []
 var sword_group := []
 var shuriken_group := []
@@ -29,15 +30,42 @@ func _ready():
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone2").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone3").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
+	if backpack != null:
+		var inner_pack = backpack.get_node("In")
+		var outer_pack = backpack.get_node("Out")
+		var inner_snaps = inner_pack.get_children()
+		var outer_snaps = outer_pack.get_children()
+		for snap in inner_snaps:
+			snap.grap_require = "disabled"
+			#snap.grab_distance = .10
+		for snap in outer_snaps:
+			snap.grap_require = "disabled"
+			#snap.grab_distance = .10
+		
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 	#pass
 func _on_left_function_pickup_picked_up_object(object):
 	var weapon_to_hold_scene = check_weapon_scene(object)
+	
 	if weapon_to_hold_scene == null:
 		return
+	
+	if weapon_to_hold_scene == backpack_scene:
+		var inner_pack = object.get_node("In")
+		var outer_pack = object.get_node("Out")
+		var inner_snaps = inner_pack.get_children()
+		var outer_snaps = outer_pack.get_children()
+		for snap in inner_snaps:
+			snap.grap_require = ""
+		for snap in outer_snaps:
+			snap.grap_require = ""
+		return
+		
 	if object.get_node_or_null("holder") != null:
 		object.get_node("holder").visible = false
+	
 	shadow_group = get_tree().get_nodes_in_group("shadows")
 	for shadow in shadow_group:
 		var held_weapon = weapon_to_hold_scene.instance()
@@ -74,10 +102,24 @@ func _on_left_function_pickup_dropped_object():
 	
 func _on_right_function_pickup_picked_up_object(object):
 	var weapon_to_hold_scene = check_weapon_scene(object)
+	
 	if weapon_to_hold_scene == null:
 		return
+	
+	if weapon_to_hold_scene == backpack_scene:
+		var inner_pack = object.get_node("In")
+		var outer_pack = object.get_node("Out")
+		var inner_snaps = inner_pack.get_children()
+		var outer_snaps = outer_pack.get_children()
+		for snap in inner_snaps:
+			snap.grap_require = ""
+		for snap in outer_snaps:
+			snap.grap_require = ""
+		return
+	
 	if object.get_node_or_null("holder") != null:
 		object.get_node("holder").visible = false
+	
 	shadow_group = get_tree().get_nodes_in_group("shadows")
 	for shadow in shadow_group:
 		var held_weapon = weapon_to_hold_scene.instance()
@@ -117,6 +159,8 @@ func _on_snap_zone_picked_up_object(object):
 		object.get_node("holder").visible = true
 
 func check_weapon_scene(object):
+	if object.name.begins_with("Backpack"):
+		return backpack_scene
 	if object.name.begins_with("Slicing_Katana_Long"):
 		return long_sword_scene
 	elif object.name.begins_with("Slicing_Katana_M"):
@@ -132,3 +176,17 @@ func check_weapon_scene(object):
 	elif object.name.begins_with("Shuriken"):
 		return shuriken_scene
 	return null
+
+
+func _on_Backpack_dropped(pickable):
+	var inner_pack = pickable.get_node("In")
+	var outer_pack = pickable.get_node("Out")
+	var inner_snaps = inner_pack.get_children()
+	var outer_snaps = outer_pack.get_children()
+	for snap in inner_snaps:
+		snap.grap_require = "none"
+		
+	for snap in outer_snaps:
+		snap.grap_require = "none"
+	
+

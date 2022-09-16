@@ -5,7 +5,7 @@ var currentPosition;
 var movePosition;
 var targetPosition;
 var distance =  0.02;
-var time_to_move = 0.5;
+
 export (NodePath) var arvrcamera_path = null
 #export var holster_move_speed = 10
 
@@ -25,8 +25,7 @@ func _ready():
 	
 	pass # Replace with function body.
 
-var moving = false;
-var moveTimer = 0.0;
+
 
 func _process(dt):
 	var viewDir = -vrCamera.global_transform.basis.z;
@@ -35,22 +34,10 @@ func _process(dt):
 	
 	var camPos = vrCamera.global_transform.origin;
 
-	#TODO: rotate instead of move
+
 	targetPosition = camPos + viewDir * distance;
-#	var distToTarget = (targetPosition - currentPosition).length();
-#	if moving:
-#		currentPosition = currentPosition + (movePosition - currentPosition) * holster_move_speed * dt;
-#		if (distToTarget < 0.05):
-#			moving = false;
-	currentPosition = targetPosition #trying this to make move instantaneous
+#	
+	currentPosition = targetPosition 
 			
-#	if (distToTarget > 0.5):
-#		moveTimer += dt;
-#	else:
-#		moveTimer = 0.0;
-			
-#	if (moveTimer > time_to_move):
-#		moving = true;
-#		movePosition = targetPosition;
 
 	look_at_from_position(currentPosition, camPos, Vector3(0,1,0));
