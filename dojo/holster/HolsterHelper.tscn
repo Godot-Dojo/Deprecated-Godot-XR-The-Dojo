@@ -19,10 +19,10 @@ snap_exclude = "Heavy"
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.218, -0.05 )
 snap_exclude = "Heavy"
 
-[node name="RShoulderHolster" parent="." instance=ExtResource( 3 )]
+[node name="RShoulderHolster" parent="." groups=["ShoulderHolster"] instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.068, -0.2 )
 snap_require = "Heavy"
 
-[node name="LShoulderHolster" parent="." instance=ExtResource( 3 )]
+[node name="LShoulderHolster" parent="." groups=["ShoulderHolster"] instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.068, -0.2 )
 snap_require = "Heavy"

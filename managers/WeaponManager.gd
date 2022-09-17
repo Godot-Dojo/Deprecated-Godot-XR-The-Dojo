@@ -16,7 +16,7 @@ var item_in_player_hand_left = null
 var item_in_player_hand_right = null
 var left_function_pickup_node = null
 var right_function_pickup_node = null
-
+var throttle_countdown = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -44,8 +44,26 @@ func _ready():
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-	#pass
+func _process(delta):
+	#throttle how often to check for distance of backpack for performance reasons
+	throttle_countdown += 1
+	if throttle_countdown >= 180:
+		
+		#if backpack is too far from player, put automatically on shoulder
+		if backpack != null and backpack.is_picked_up() == false and (backpack.global_transform.origin - get_parent().get_node("avatar_player/FPController/ARVRCamera").global_transform.origin).length() >= 3:
+			var shoulder_holsters = get_tree().get_nodes_in_group("ShoulderHolster")
+			
+			if shoulder_holsters == null:
+				throttle_countdown = 0
+				return
+				
+			for holster in shoulder_holsters:
+				#put on empty shoulder slot if one is available
+				if holster.picked_up_object == null:
+					holster._pick_up_object(backpack)
+					break
+		throttle_countdown = 0	
+
 func _on_left_function_pickup_picked_up_object(object):
 	var weapon_to_hold_scene = check_weapon_scene(object)
 	
@@ -83,8 +101,7 @@ func _on_left_function_pickup_picked_up_object(object):
 	item_in_player_hand_left = object
 	
 func _on_left_function_pickup_dropped_object():
-#	if item_in_player_hand_left.get_node_or_null("holder") != null:
-#		item_in_player_hand_left.get_node("holder").visible = true
+#	
 	if item_in_player_hand_left == null:
 		return
 		
@@ -137,8 +154,7 @@ func _on_right_function_pickup_picked_up_object(object):
 	item_in_player_hand_right = object
 
 func _on_right_function_pickup_dropped_object():
-#	if item_in_player_hand_right.get_node_or_null("holder") != null:
-#		item_in_player_hand_right.get_node("holder").visible = true
+
 	if item_in_player_hand_right == null:
 		return
 		
@@ -154,6 +170,7 @@ func _on_right_function_pickup_dropped_object():
 	
 	item_in_player_hand_right = null
 
+#for weapons with sleeves/covers, put them on when in a snap zone
 func _on_snap_zone_picked_up_object(object):
 	if object.get_node_or_null("holder") != null:
 		object.get_node("holder").visible = true
@@ -177,7 +194,7 @@ func check_weapon_scene(object):
 		return shuriken_scene
 	return null
 
-
+#If backpack dropped, freeze slots so player cannot accidentally grab weapons from slots while picking up backpack
 func _on_Backpack_dropped(pickable):
 	var inner_pack = pickable.get_node("In")
 	var outer_pack = pickable.get_node("Out")
