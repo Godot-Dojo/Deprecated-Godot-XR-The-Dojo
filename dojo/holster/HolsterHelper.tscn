@@ -20,9 +20,9 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.2
 snap_exclude = "Heavy"
 
 [node name="RShoulderHolster" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.15, -0.068, -0.2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15, -0.068, -0.2 )
 snap_require = "Heavy"
 
 [node name="LShoulderHolster" parent="." instance=ExtResource( 3 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.15, -0.068, -0.2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, -0.068, -0.2 )
 snap_require = "Heavy"
