@@ -21,15 +21,20 @@ var throttle_countdown = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#connect left and right hand pickup functions
 	left_function_pickup_node = get_parent().get_node("avatar_player/FPController/LeftHandController/Function_Pickup")
 	right_function_pickup_node = get_parent().get_node("avatar_player/FPController/RightHandController/Function_Pickup")
 	left_function_pickup_node.connect("has_picked_up", self, "_on_left_function_pickup_picked_up_object")
 	left_function_pickup_node.connect("has_dropped", self, "_on_left_function_pickup_dropped_object")
 	right_function_pickup_node.connect("has_picked_up", self, "_on_right_function_pickup_picked_up_object")
 	right_function_pickup_node.connect("has_dropped", self, "_on_right_function_pickup_dropped_object")
+	
+	#connect snap zone pick up functions for sword holder 
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone2").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone3").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
+	
+	#if scene has a backpack, set the weapon snap zones to require a group that does not exist so player can just pick up backpack without triggering snap zones
 	if backpack != null:
 		var inner_pack = backpack.get_node("In")
 		var outer_pack = backpack.get_node("Out")
@@ -37,32 +42,34 @@ func _ready():
 		var outer_snaps = outer_pack.get_children()
 		for snap in inner_snaps:
 			snap.grap_require = "disabled"
-			#snap.grab_distance = .10
+			snap.connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 		for snap in outer_snaps:
 			snap.grap_require = "disabled"
-			#snap.grab_distance = .10
+			snap.connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	#throttle how often to check for distance of backpack for performance reasons
-	throttle_countdown += 1
-	if throttle_countdown >= 180:
-		
-		#if backpack is too far from player, put automatically on shoulder
-		if backpack != null and backpack.is_picked_up() == false and (backpack.global_transform.origin - get_parent().get_node("avatar_player/FPController/ARVRCamera").global_transform.origin).length() >= 3:
-			var shoulder_holsters = get_tree().get_nodes_in_group("ShoulderHolster")
-			
-			if shoulder_holsters == null:
-				throttle_countdown = 0
-				return
-				
-			for holster in shoulder_holsters:
-				#put on empty shoulder slot if one is available
-				if holster.picked_up_object == null:
-					holster._pick_up_object(backpack)
-					break
-		throttle_countdown = 0	
+#func _process(delta):
+	
+	#example code of how to check if object is a given distance, example: 3 units, from player and if so, place back on player character
+	#throttle how often to check for distance of backpack for performance reasons, rather than checking every frame
+#	throttle_countdown += 1
+#	if throttle_countdown >= 180:
+#
+#		#if backpack is too far from player, put automatically on shoulder
+#		if backpack != null and backpack.is_picked_up() == false and (backpack.global_transform.origin - get_parent().get_node("avatar_player/FPController/ARVRCamera").global_transform.origin).length() >= 3:
+#			var shoulder_holsters = get_tree().get_nodes_in_group("ShoulderHolster")
+#
+#			if shoulder_holsters == null:
+#				throttle_countdown = 0
+#				return
+#
+#			for holster in shoulder_holsters:
+#				#put on empty shoulder slot if one is available
+#				if holster.picked_up_object == null:
+#					holster._pick_up_object(backpack)
+#					break
+#		throttle_countdown = 0	
 
 func _on_left_function_pickup_picked_up_object(object):
 	var weapon_to_hold_scene = check_weapon_scene(object)
@@ -175,6 +182,7 @@ func _on_snap_zone_picked_up_object(object):
 	if object.get_node_or_null("holder") != null:
 		object.get_node("holder").visible = true
 
+#compare object to weapon .tscns used in game to determine which it is
 func check_weapon_scene(object):
 	if object.name.begins_with("Backpack"):
 		return backpack_scene
@@ -206,4 +214,14 @@ func _on_Backpack_dropped(pickable):
 	for snap in outer_snaps:
 		snap.grap_require = "none"
 	
+	#example code to automatically return backpack to player holster when dropped
+	if pickable.picked_up_by == null and pickable.is_picked_up() == false:
+		var shoulder_holsters = get_tree().get_nodes_in_group("ShoulderHolster")
 
+		if shoulder_holsters == null:				
+			return
+
+		for holster in shoulder_holsters:
+		#put on empty shoulder slot if one is available
+			if holster.picked_up_object == null:
+				holster._pick_up_object(backpack)
