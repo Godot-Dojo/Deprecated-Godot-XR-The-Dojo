@@ -22,10 +22,16 @@ func _ready():
 	
 	look_at_from_position(currentPosition, camPos, Vector3(0,1,0));
 	
+	var holsters = get_children()
+	for holster in holsters:
+		holster.connect("has_picked_up", self, "_on_holster_picked_up_object")
 	
-	pass # Replace with function body.
-
-
+#if object in holster has a cover called "holder" apply it when holster snap zone picks up object
+func _on_holster_picked_up_object(object):
+	if object.get_node_or_null("holder") != null:
+		object.get_node("holder").visible = true
+		
+		#Here you could put other code that is specific to certain weapons or items that might be in the holsters, e.g., to position them
 
 func _process(dt):
 	var viewDir = -vrCamera.global_transform.basis.z;
