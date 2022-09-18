@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://managers/WeaponManager.gd" type="Script" id=1]
 [ext_resource path="res://managers/HapticManager.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://dojo/DojoWithColliders.tscn" type="PackedScene" id=15]
 [ext_resource path="res://weapons/Throwing_Shuriken_4Star.tscn" type="PackedScene" id=16]
 [ext_resource path="res://sounds/Midnight in the Green House.mp3" type="AudioStream" id=17]
+[ext_resource path="res://dojo/acc_Ronin_Gasa.tscn" type="PackedScene" id=18]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")
@@ -101,5 +102,8 @@ script = null
 [node name="Dojo" parent="." instance=ExtResource( 15 )]
 
 [node name="Backpack" parent="." instance=ExtResource( 11 )]
+
+[node name="acc_Ronin_Gasa" parent="." instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0458185, 0.471323, 2.5742 )
 
 [connection signal="dropped" from="Backpack" to="WeaponManager" method="_on_Backpack_dropped"]
