@@ -21,7 +21,7 @@ func _on_SlicingArea_body_exited(body):
 		body.cut_object(cut_plane)
 		entered_mesh = false
 
-#create cutting plane on enter instead of exit to better meet user's expecatations of how slice will happen
+#create cutting plane on enter instead of exit to better meet user's expectations of how slice will happen
 func _on_SlicingArea_body_entered(body):
 	if body is sliceable:
 		if entered_mesh == false:

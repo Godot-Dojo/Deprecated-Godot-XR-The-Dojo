@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://demo/models/Material.material" type="Material" id=1]
+[ext_resource path="res://demo/materials/Material.material" type="Material" id=1]
 
 [sub_resource type="ArrayMesh" id=2]
 resource_name = "destructable_cube_Cube_cell008"

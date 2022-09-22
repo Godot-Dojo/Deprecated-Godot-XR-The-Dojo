@@ -75,7 +75,7 @@ script = ExtResource( 3 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.188857, 0, 0 )
 shape = SubResource( 4 )
 
-[node name="mesh" type="MeshInstance" parent="SlicingArea"]
+[node name="mesh" type="Spatial" parent="SlicingArea"]
 
 [node name="A" type="Position3D" parent="SlicingArea/mesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.36, 0.03, 0 )

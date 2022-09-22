@@ -2,12 +2,12 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/bow_set.glb-37af8a65934102e1f7e7e4f8fbede33b.scn"
+path="res://.import/bow_set.glb-46442648b2632e7f045ed94316a50f57.scn"
 
 [deps]
 
-source_file="res://assets/weapons/bow_set.glb"
-dest_files=[ "res://.import/bow_set.glb-37af8a65934102e1f7e7e4f8fbede33b.scn" ]
+source_file="res://demo/models/bow_set.glb"
+dest_files=[ "res://.import/bow_set.glb-46442648b2632e7f045ed94316a50f57.scn" ]
 
 [params]
 
@@ -20,6 +20,7 @@ nodes/use_legacy_names=false
 materials/location=1
 materials/storage=1
 materials/keep_on_reimport=true
+meshes/octahedral_compression=true
 meshes/compress=true
 meshes/ensure_tangents=true
 meshes/storage=0
