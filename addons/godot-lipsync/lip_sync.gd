@@ -92,12 +92,16 @@ const REFERENCES = {
 	],
 	
 	# Can't detect stop sound at this point
-	#VISEME.VISEME_DD: [
+	VISEME.VISEME_DD: [
 	#	# /t/ (Take, haT)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#	# /d/ (Day, haD)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#],
+	# changed to TH - for the time being as it produces more accurate results
+		# /th/ (THink, THat)
+		[2.110933, 2.316846, 2.515543, 2.492, 2.550038, 1.938401, 1.603606, 1.257377, 0.957248, 0.498176, 0.269357, 0.213727, 0.167422, 0.125585, 0.13604, 0.206383, 0.228375, 0.160131, 0.131596, 0.121217],
+	],
 
 	VISEME.VISEME_E: [
 		# /e/ (Ever, bEd)
@@ -158,12 +162,16 @@ const REFERENCES = {
 	],
 	
 	# Can't detect stop sound at this point
-	#VISEME.VISEME_KK: [
+	VISEME.VISEME_KK: [
 	#	# /k/ (Call, weeK)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#	# /g/ (Gas, aGo)
 	#	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	#],
+	# changed to AA - for the time being as it produces more accurate results
+		# /A:/ (cAr, Art)
+		[1.340902, 0.968838, 0.824241, 0.972814, 0.856258, 0.736672, 0.740674, 1.191061, 1.678072, 1.782172, 1.389946, 1.680797, 2.374798, 2.006197, 0.750535, 0.311128, 0.173483, 0.091624, 0.068027, 0.061763],
+	],
 	
 	VISEME.VISEME_NN: [
 		# /n/ (Not, aNd)
@@ -188,8 +196,20 @@ const VISEMES_DEF = [
 ## Audio bus name
 export var audio_bus_name := "Mic"
 
-# Audio-Match precision
+## Add microphone to bus
+export var add_microphone := true
+
+## Mute the audio
+export var mute_audio := true
+
+## Audio-Match precision
 export var precision := 0.1
+
+## Slew rate
+export var slew := 30.0
+
+## Silence threshold
+export var silence := 0.15
 
 
 # Raw energy for each band (0..1)
@@ -223,26 +243,28 @@ func _ready() -> void:
 
 	# Get and configure the audio bus
 	var bus := _get_or_create_audio_bus(audio_bus_name)
-	AudioServer.set_bus_mute(bus, true)
+	if mute_audio:
+		AudioServer.set_bus_mute(bus, true)
 
 	# Get and configure the spectrum analyzer
 	var idx := _get_or_create_spectrum_analyzer(bus)
 	var spectrum_cfg := AudioServer.get_bus_effect(bus, idx) as AudioEffectSpectrumAnalyzer
-	spectrum_cfg.buffer_length = AudioServer.get_mix_rate() / 512.0
+	spectrum_cfg.buffer_length = 512.0 / AudioServer.get_mix_rate()
 	spectrum_cfg.fft_size = AudioEffectSpectrumAnalyzer.FFT_SIZE_512
 
 	# Get the spectrum analyzer instance
 	_effect = AudioServer.get_bus_effect_instance(bus, idx)
 
 	# Create the audio stream player
-	_player = AudioStreamPlayer.new()
-	_player.set_name("LipSyncInput")
-	_player.stream = AudioStreamMicrophone.new()
-	_player.bus = audio_bus_name
-	add_child(_player)
+	if add_microphone:
+		_player = AudioStreamPlayer.new()
+		_player.set_name("LipSyncInput")
+		_player.stream = AudioStreamMicrophone.new()
+		_player.bus = audio_bus_name
+		add_child(_player)
 	
-	# Start playing the microphone into the audio bus
-	_player.play()
+		# Start playing the microphone into the audio bus
+		_player.play()
 
 
 # Process the lip-sync audio
@@ -260,7 +282,7 @@ func _process(_delta: float) -> void:
 
 	# Calculate fingerprint
 	var energy_avg := energy_sum / BANDS_COUNT
-	var energy_scale := 0.0 if energy_avg <= 0.05 else 1.0 / energy_avg
+	var energy_scale := 0.0 if energy_avg <= silence else 1.0 / energy_avg
 	for i in BANDS_COUNT:
 		fingerprint[i] = energy[i] * energy_scale
 
@@ -280,10 +302,11 @@ func _process(_delta: float) -> void:
 
 	# Update viseme scores
 	var score_scale := 1.0 / score_sum
+	var slew_scale = slew * _delta
 	for i in VISEME.COUNT:
 		var old_weight: float = visemes[i]
 		var new_weight: float = scores[i] * score_scale
-		visemes[i] = lerp(old_weight, new_weight, 0.2)
+		visemes[i] = lerp(old_weight, new_weight, slew_scale)
 
 
 # Get or create an audio bus with the specified name
@@ -298,7 +321,6 @@ static func _get_or_create_audio_bus(name: String) -> int:
 	bus = AudioServer.bus_count
 	AudioServer.add_bus()
 	AudioServer.set_bus_name(bus, name)
-	AudioServer.set_bus_mute(bus, true)
 
 	# Return bus
 	print("LipSync: Created new audio bus ", bus, " (", name, ")")

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://addons/mrminimal_flipbook_particles/assets/smokes/smoke_02/materials/smoke_02_material.tres" type="Material" id=1]
+
+[sub_resource type="QuadMesh" id=2]
+
+[sub_resource type="Animation" id=19]
+resource_name = "Explode"
+length = 3.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:material/0:shader_param/progress")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.999 ]
+}
+
+[node name="Smoke_02" type="MeshInstance"]
+mesh = SubResource( 2 )
+material/0 = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Explode"
+playback_speed = 1.2
+anims/Explode = SubResource( 19 )

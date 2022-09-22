@@ -4,8 +4,8 @@ extends Spatial
 
 #This code is NOT fully automated.  It does require some actions in the editor to work with the creation of some nodes.  
 #It needs an AnimationTree node with proper animation blends set as a child of avatar and pointing to the character AnimationPlayer
-#You also need toset the export variables to correspond with nodes in your XR Rig and choose whetehr you want to use LipSync.
-
+#You also need to set the export variables to correspond with nodes in your XR Rig and choose whether you want to use LipSync.
+#Detailed information on use will be in the readme of the Godot-XR-Avatar readme.
 
 #set export variables to key elements of XR Rig necessary for avatar movement
 export (NodePath) var arvrorigin_path = null
@@ -40,7 +40,7 @@ export (AutomaticAnimation) var auto_anim_choice: int = AutomaticAnimation.NO
 
 #export variables to fine tune avatar movement
 export var height_offset := 0.25
-export var foot_offset := 0.15
+export var foot_offset := 0.10
 export var ik_raycast_height := 2.0
 export var min_max_interpolation := Vector2(0.03, 0.9)
 export var smoothing := 0.8
@@ -87,6 +87,7 @@ var right_upper_leg_bone = null
 var left_foot_bone = null
 var right_foot_bone = null
 var num_of_skeleton_bones = null
+var substitute_head_bone = false
 
 #variables used for lipsync if activated
 var lipsync_node = null
@@ -106,11 +107,33 @@ var Viseme_AA : float
 var Viseme_Kk : float
 var Viseme_Nn : float
 var Viseme_Sil : float
+var blinktime : int = 0
+var blink_time_set  := false
+var blink_at : int = 0
 
 #variables used for automatic animation player and tree if selected
 var animationplayer : AnimationPlayer = null
 var animationtree : AnimationTree = null
 
+#variables used for procedural walking animation option
+export var use_procedural_walk := false
+export var use_procedural_bounce := false
+export var step_anim_height := .15
+export var step_anim_time := .60
+export var step_distance := .15
+export var strafe_step_modifier := .5
+export var max_legs_spread := .5
+export var bounce_factor := .1
+var is_walking_legs := false
+var legs_anim_timer := 0.0
+var l_leg_pos : Vector3
+var r_leg_pos : Vector3
+var last_l_leg_pos : Vector3
+var last_r_leg_pos : Vector3
+var default_step_distance := 0.0
+var default_step_height := 0.0
+var strafe_step_distance := 0.0
+var strafe_step_height := 0.0
 #set all nodes 
 onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
 onready var arvrcamera := ARVRHelpers.get_arvr_camera(self, arvrcamera_path)
@@ -123,9 +146,13 @@ onready var skeleton : Skeleton = $Armature/Skeleton
 
 #In the ready function we automatically create most of the nodes used for the IK and set them to the right values
 func _ready():
+	#Display warning message if no animation tree or animation player found
+	if (get_node_or_null("AnimationTree") == null or get_node_or_null("AnimationPlayer") == null) and auto_anim_choice == AutomaticAnimation.NO:
+		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, and auto animation set to no, so animations will not work.")
 	
 	#turn skeleton by 180 degrees if set by export variable (default) so facing the correct direction
-	skeleton.rotation_degrees.y = 180.0
+	if turn_character_180 == true:
+		skeleton.rotation_degrees.y = 180.0
 	
 	#set skeleton offset to desired value by player (usually skeletons have to be moved back some so player can see the body when looking down)
 	skeleton.translation.z = avatar_z_offset
@@ -133,6 +160,9 @@ func _ready():
 	#find the bones needed to set Skeleton IK nodes (head, head top, left upper arm and hand, right upper arm and hand, left upper leg and foot, right upper leg and foot)
 	set_key_skeleton_nodes_for_IK(skeleton)
 	
+	if head_top_bone == null:
+		head_top_bone = head_bone
+		substitute_head_bone = true
 	#create bone attachment nodes and direct them to left and right foot bones
 	left_foot = BoneAttachment.new()
 	left_foot.name = "left_foot"
@@ -161,7 +191,10 @@ func _ready():
 	SkeletonIKL.set_root_bone(skeleton.get_bone_name(left_upper_arm_bone))
 	SkeletonIKL.set_tip_bone(skeleton.get_bone_name(left_hand_bone))
 	SkeletonIKL.use_magnet = true
-	SkeletonIKL.set_magnet_position(Vector3(3,-5,-10))
+	if turn_character_180 == true:
+		SkeletonIKL.set_magnet_position(Vector3(3,-5,-10))
+	else:
+		SkeletonIKL.set_magnet_position(Vector3(-3, -5, -10))
 	
 	
 	#create SkeletonIK node called SkeletonIKR and set it to use the upper arm and hand bones with a magnet for IK
@@ -171,7 +204,10 @@ func _ready():
 	SkeletonIKR.set_root_bone(skeleton.get_bone_name(right_upper_arm_bone))
 	SkeletonIKR.set_tip_bone(skeleton.get_bone_name(right_hand_bone))
 	SkeletonIKR.use_magnet = true
-	SkeletonIKR.set_magnet_position(Vector3(-3,-5,-10))
+	if turn_character_180 == true:
+		SkeletonIKR.set_magnet_position(Vector3(-3,-5,-10))
+	else:
+		SkeletonIKR.set_magnet_position(Vector3(3, -5, -10))
 	
 	#create SkeletonIK node called SkeletonIKLegL and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegL = SkeletonIK.new()
@@ -180,7 +216,10 @@ func _ready():
 	SkeletonIKLegL.set_root_bone(skeleton.get_bone_name(left_upper_leg_bone))
 	SkeletonIKLegL.set_tip_bone(skeleton.get_bone_name(left_foot_bone))
 	SkeletonIKLegL.use_magnet = true
-	SkeletonIKLegL.set_magnet_position(Vector3(0.2,0,1))
+	if turn_character_180 == true:
+		SkeletonIKLegL.set_magnet_position(Vector3(.2,0,1))
+	else:
+		SkeletonIKLegL.set_magnet_position(Vector3(-.2,0,1))
 	
 	#create SkeletonIK node called SkeletonIKLegR and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegR = SkeletonIK.new()
@@ -189,10 +228,23 @@ func _ready():
 	SkeletonIKLegR.set_root_bone(skeleton.get_bone_name(right_upper_leg_bone))
 	SkeletonIKLegR.set_tip_bone(skeleton.get_bone_name(right_foot_bone))
 	SkeletonIKLegR.use_magnet = true
-	SkeletonIKLegR.set_magnet_position(Vector3(-0.2,0,1))
+	if turn_character_180 == true:
+		SkeletonIKLegR.set_magnet_position(Vector3(-.2,0,1))
+	else:
+		SkeletonIKLegR.set_magnet_position(Vector3(.2,0,1))
 	
 	#set avatar height to player
-	avatar_height = character_height.transform.origin.y
+	if substitute_head_bone == false:
+		avatar_height = character_height.transform.origin.y
+	#if we didn't originally find a head end bone in the skeleton, look for alternatives
+	else:
+		#check for spatial that could be set by dev called "HeadEndBone", if exists, use that instead
+		if get_node_or_null("Armature/Skeleton/HeadEndBone") != null:
+			avatar_height = get_node("Armature/Skeleton/HeadEndBone").transform.origin.y
+		#if there wasn't a head end bone and not a spatial substitute, use rough math for where the head end bone likely would be
+		else:
+			avatar_height = character_height.transform.origin.y + .25
+	
 	$Armature.scale *= get_current_player_height()/avatar_height
 	armature_scale = $Armature.scale
 	max_height = get_current_player_height()
@@ -206,12 +258,19 @@ func _ready():
 	left_hand_target.rotation_degrees.y = 90
 	left_hand_target.rotation_degrees.z = -90
 	
+	#VRM values
+	#left_hand_target.rotation_degrees.y = -90
+	#left_hand_target.rotation_degrees.x = 90
+	
 	right_hand_target = Position3D.new()
 	right_hand_target.name = "right_target"
 	right_hand.add_child(right_hand_target, true)
 	right_hand_target.rotation_degrees.y = -90
 	right_hand_target.rotation_degrees.z = 90
 	
+	#VRM values
+	#right_hand_target.rotation_degrees.y = 90
+	#right_hand_target.rotation_degrees.x = 90
 	
 	#Automatically generate other helper target nodes used in the IK for the foot IK calculations, LL_c, LL_t, RR_c, Rl_t)
 	left_target = Position3D.new()
@@ -306,39 +365,40 @@ func _ready():
 		print("No automated animations selected. You need to have your own animationplayer and animation tree nodes.")
 		
 	elif auto_anim_choice == AutomaticAnimation.MAKEHUMAN:
-		animationplayer = load("res://addons/godot-xr-avatar/animations/AnimationPlayer.tscn").instance()
+		animationplayer = load("res://addons/godot-xr-avatar/animations/make_human_animations/AnimationPlayer.tscn").instance()
 		animationplayer.name = "AnimationPlayer"
 		add_child(animationplayer,true)
-		animationtree = load("res://addons/godot-xr-avatar/animations/AnimationTree-MH-Complete.tscn").instance()
+		animationtree = load("res://addons/godot-xr-avatar/animations/make_human_animations/AnimationTree-MH-Complete.tscn").instance()
 		animationtree.name = "AnimationTree"
 		add_child(animationtree, true)
 		animationtree.active = true
 	
 	elif auto_anim_choice == AutomaticAnimation.MIXAMO:
-		animationplayer = load("res://mixamo_demo/animations/AnimationPlayer.tscn").instance()
+		animationplayer = load("res://addons/godot-xr-avatar/animations/mixamo_animations/AnimationPlayer.tscn").instance()
 		animationplayer.name = "AnimationPlayer"
 		add_child(animationplayer,true)
-		animationtree = load("res://mixamo_demo/animations/AnimationTree-mixamo-complete.tscn").instance()
+		animationtree = load("res://addons/godot-xr-avatar/animations/mixamo_animations/AnimationTree-mixamo-complete.tscn").instance()
 		animationtree.name = "AnimationTree"
 		add_child(animationtree, true)
 		animationtree.active = true
 		
 	elif auto_anim_choice == AutomaticAnimation.READYPLAYERME:
-		animationplayer = load("res://readyplayerme_demo/animations/AnimationPlayer.tscn").instance()
+		animationplayer = load("res://addons/godot-xr-avatar/animations/ready_player_animations/AnimationPlayer.tscn").instance()
 		animationplayer.name = "AnimationPlayer"
 		add_child(animationplayer,true)
-		animationtree = load("res://readyplayerme_demo/animations/AnimationTree-Readyplayer-Complete.tscn").instance()
+		animationtree = load("res://addons/godot-xr-avatar/animations/ready_player_animations/AnimationTree-Readyplayer-Complete.tscn").instance()
 		animationtree.name = "AnimationTree"
 		add_child(animationtree, true)
 		animationtree.active = true	
-			
-func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
-	var forward := (to-from).normalized()
-	var right := up_ref.normalized().cross(forward).normalized()
-	forward = right.cross(up_ref).normalized()
-	return Basis(right, up_ref, forward)
-
-
+		
+	default_step_distance = step_distance
+	default_step_height = step_anim_height
+	strafe_step_distance = step_distance*strafe_step_modifier
+	strafe_step_height = step_anim_height*strafe_step_modifier
+	
+	#The following line can be uncommented for further tweaking avatar legs/height (prevent "bowed legs")		
+	#player_body.player_height_offset = height_offset
+#function use to place avatar feet on surfaces procedurally
 func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachment, d_b: Basis, avatar_height: float, hit_offset: float) -> void:
 	var bone_pos = bone_attach.global_transform.origin
 	raycast.global_transform.origin = bone_pos + Vector3.UP*avatar_height
@@ -353,48 +413,153 @@ func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachme
 	target.rotation.y = $Armature.rotation.y
 
 
-func get_current_player_height() -> float:
-	 return arvrcamera.transform.origin.y
-
 
 #function used for LipSync if activated, set visemes to the corresponding blend shapes in the facial mesh
-func process_visemes(delta):
+func process_visemes(delta:float) -> void:
 	Viseme_Ch = $LipSync.visemes[LipSync.VISEME.VISEME_CH]
-#	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
+	Viseme_Dd = $LipSync.visemes[LipSync.VISEME.VISEME_DD]
 	Viseme_E = $LipSync.visemes[LipSync.VISEME.VISEME_E]
 	Viseme_Ff = $LipSync.visemes[LipSync.VISEME.VISEME_FF]
 	Viseme_I = $LipSync.visemes[LipSync.VISEME.VISEME_I]
 	Viseme_O = $LipSync.visemes[LipSync.VISEME.VISEME_O]
-	Viseme_Pp = $LipSync.visemes[LipSync.VISEME.VISEME_PP]
+#	Viseme_Pp = $LipSync.visemes[LipSync.VISEME.VISEME_PP]
 	Viseme_Rr = $LipSync.visemes[LipSync.VISEME.VISEME_RR]
 	Viseme_Ss = $LipSync.visemes[LipSync.VISEME.VISEME_SS]
 	Viseme_Th = $LipSync.visemes[LipSync.VISEME.VISEME_TH]
 	Viseme_U = $LipSync.visemes[LipSync.VISEME.VISEME_U]
 	Viseme_AA = $LipSync.visemes[LipSync.VISEME.VISEME_AA]
-#	Viseme_Kk = $LipSync.visemes[LipSync.VISEME.VISEME_KK]
+	Viseme_Kk = $LipSync.visemes[LipSync.VISEME.VISEME_KK]
 	Viseme_Nn = $LipSync.visemes[LipSync.VISEME.VISEME_NN]
 	Viseme_Sil = $LipSync.visemes[LipSync.VISEME.VISEME_SILENT]
 	
 	face_mesh.set("blend_shapes/viseme_CH", Viseme_Ch)
-#	face_mesh.set("blend_shapes/viseme_DD", Viseme_Dd)
+	face_mesh.set("blend_shapes/viseme_DD", Viseme_Dd)
 	face_mesh.set("blend_shapes/viseme_E", Viseme_E)
 	face_mesh.set("blend_shapes/viseme_FF", Viseme_Ff)
 	face_mesh.set("blend_shapes/viseme_I", Viseme_I)
 	face_mesh.set("blend_shapes/viseme_O", Viseme_O)
-	face_mesh.set("blend_shapes/viseme_PP", Viseme_Pp)
+#	face_mesh.set("blend_shapes/viseme_PP", Viseme_Pp)
 	face_mesh.set("blend_shapes/viseme_RR", Viseme_Rr)
 	face_mesh.set("blend_shapes/viseme_SS", Viseme_Ss)
 	face_mesh.set("blend_shapes/viseme_TH", Viseme_Th)
 	face_mesh.set("blend_shapes/viseme_U", Viseme_U)
 	face_mesh.set("blend_shapes/viseme_aa", Viseme_AA)
-#	face_mesh.set("blend_shapes/viseme_kk", Viseme_Kk)
+	face_mesh.set("blend_shapes/viseme_kk", Viseme_Kk)
 	face_mesh.set("blend_shapes/viseme_nn", Viseme_Nn)
 #	face_mesh.set("blend_shapes/viseme_sil", Viseme_Sil)
 	
 	#lerping the silent value to try for smoother transitions
 	face_mesh.set("blend_shapes/viseme_sil", lerp(face_mesh.get("blend_shapes/viseme_sil"), Viseme_Sil, delta))
 	
+	#Create random blinking effect
+	if blink_time_set == false:
+		var random = RandomNumberGenerator.new()
+		random.randomize()
+		blink_at = random.randi_range(200, 400) # set random blink time, ~every 5 or so seconds, sometimes more, sometimes less
+		blink_time_set = true
+	blinktime+=1
+	if blinktime >= blink_at:
+		face_mesh.set("blend_shapes/eyeBlinkLeft", 1)   # blink
+		face_mesh.set("blend_shapes/eyeBlinkRight", 1)
+		yield(get_tree().create_timer(.33), "timeout")  # average blink time is 1/3 of a second
+		face_mesh.set("blend_shapes/eyeBlinkLeft", 0)
+		face_mesh.set("blend_shapes/eyeBlinkRight", 0)  # unblink
+		blinktime = 0
+		blink_time_set = false  # set next blink time randomly again
 
+#function used to generate procedural walk instead of using baked animations
+func process_procedural_walk(delta: float, move: Vector2) -> void:
+	var is_strafing = false
+	var desired_l_leg_pos = Vector3.ZERO
+	var desired_r_leg_pos = Vector3.ZERO
+	# get initial foot positions when starting procedural walk
+	l_leg_pos = left_target.global_transform.origin
+	r_leg_pos = right_target.global_transform.origin
+	
+	# if not moving or if flying, stop walk animation
+	if (abs(move.y) <= .1 and abs(move.x) <= .1) or player_body.on_ground == false:
+		is_walking_legs = false
+		
+	# if player character is moving but the procedural animation has not started yet, start it, and set a timer for animation time
+	if (abs(move.y) > .1 or abs(move.x) > .1) and is_walking_legs == false:
+		last_l_leg_pos = l_leg_pos
+		last_r_leg_pos = r_leg_pos
+		legs_anim_timer = 0.0
+		if abs(move.x) > .35:
+			#if mostly strafing, change step height by modifer for strafe and tell walking legs strafing
+			step_anim_height = strafe_step_height
+			is_strafing = true
+		else:
+			#if not mostly strafing, use default step height instead and tell walking legs not strafing
+			step_anim_height = default_step_height
+			is_strafing = false
+		is_walking_legs = true
+	
+	# the actual walking animation code
+	if is_walking_legs:
+		
+		# set where we want the legs to go, set just a bit in the direction ahead of where the player is going
+		desired_l_leg_pos = left_target.global_transform.origin + player_body.velocity.normalized()*step_distance
+		desired_r_leg_pos = right_target.global_transform.origin + player_body.velocity.normalized()*step_distance
+		
+		#If not strafing or if strafing to the left, move left leg first
+		if is_strafing == false or (is_strafing == true and move.x > 0):
+			# half of animation time goes to left leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var l_leg_interpolation_v = legs_anim_timer / step_anim_time * 2.0
+				# moving leg in the direction of the player move
+				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
+				# moving leg up
+				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				left_target.global_transform.origin = l_leg_pos
+				# after this left leg has animated, get the position of where the right leg is before starting right leg anim (otherwise leg is in outdated position to start)
+				last_r_leg_pos = r_leg_pos
+			# half of animation time goes to right leg
+			if legs_anim_timer / step_anim_time >= 0.5:
+				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time - 0.5) * 2.0
+				# moving leg in the direction of the player move
+				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
+				# moving leg up
+				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				right_target.global_transform.origin = r_leg_pos
+			# increase timer time
+			legs_anim_timer += delta
+			
+		# if strafing left, move right leg first rather than left
+		elif is_strafing == true and move.x < 0:
+		# half of animation time goes to right leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var r_leg_interpolation_v = (legs_anim_timer / step_anim_time) * 2.0
+				# moving leg in the direction of the player move
+				r_leg_pos = last_r_leg_pos.linear_interpolate(desired_r_leg_pos, r_leg_interpolation_v)
+				# moving leg up
+				r_leg_pos = r_leg_pos + Vector3.UP * step_anim_height * sin(PI * r_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				right_target.global_transform.origin = r_leg_pos
+				# after this right leg has animated, get the position of where the left leg is before starting left leg anim (otherwise leg is in outdated position to start)
+				last_l_leg_pos = l_leg_pos
+		# half of animation time goes to left leg
+			if legs_anim_timer / step_anim_time <= 0.5:
+				var l_leg_interpolation_v = (legs_anim_timer / step_anim_time-0.5) * 2.0
+				# moving leg in the direction of the player move
+				l_leg_pos = last_l_leg_pos.linear_interpolate(desired_l_leg_pos, l_leg_interpolation_v)
+				# moving leg up
+				l_leg_pos = l_leg_pos + Vector3.UP * step_anim_height * sin(PI * l_leg_interpolation_v)
+				# move the skeleton leg into the new position
+				left_target.global_transform.origin = l_leg_pos
+			# increase timer time
+			legs_anim_timer += delta
+		
+		
+		#Animate body up and down depending on distance between legs and factor set with variable if option chosen
+		#if use_procedural_bounce == true:
+		#	skeleton.global_transform.origin += (Vector3.DOWN * (get_legs_spread(l_leg_pos, r_leg_pos) / max_legs_spread * bounce_factor))
+			
+		# if timer time is greater than whole animation time then stop animating
+		if legs_anim_timer >= step_anim_time:
+			is_walking_legs = false
 
 
 #This is where the IK movement is actually done
@@ -424,13 +589,12 @@ func _physics_process(delta: float) -> void:
 
 
 	#perform hand grip animations using AnimationTree by adding grip and trigger hand poses to IK animation
-	if left_controller_path != null and right_controller_path != null:
+	if left_controller_path != null and right_controller_path != null and get_node_or_null("AnimationTree") != null:
 		$AnimationTree.set("parameters/lefthandpose/blend_amount", left_controller.get_joystick_axis(JOY_VR_ANALOG_GRIP))
 		$AnimationTree.set("parameters/righthandpose/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_GRIP))
 		$AnimationTree.set("parameters/lefthandposetrig/blend_amount", left_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
 		$AnimationTree.set("parameters/righthandposetrig/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
-	else:
-		print("Can't find left or right controller path so cannot set hand animation blends")
+	
 		
 
 	# Calculate foot movement based on players actual ground-movement velocity
@@ -438,24 +602,43 @@ func _physics_process(delta: float) -> void:
 	#player_velocity = $Armature.global_transform.basis.xform_inv(player_velocity)
 	#var move := Vector2(player_velocity.x, player_velocity.z)
 	
-	# Calculate foot movement based on player'ss requested ground-movement velocity
+	# Calculate foot movement based on player's requested ground-movement velocity
 	var move = player_body.ground_control_velocity
 
 	#switch to squat move pose if moving while in a crouch
 	if abs(move.y) > .25 and get_current_player_height() < (.9 * max_height):
-		$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(1,3,3), delta)
-		$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-1,3,3), delta)
+		if turn_character_180 == true:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(1,3,3), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-1,3,3), delta)
+		else:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(-1,3,3), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(1,3,3), delta)
 	else:
-		$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(.2,0,1), delta)
-		$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-.2,0,1), delta)
+		if turn_character_180 == true:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(.2,0,1), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(-.2,0,1), delta)
+		else:
+			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(-.2,0,1), delta)
+			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(.2,0,1), delta)
 	
 	# Perform player movement animation
-	$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
-	$AnimationTree.set("parameters/Add2/add_amount", 1)
+	if get_node_or_null("AnimationTree") != null and use_procedural_walk == false:
+		$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
+		$AnimationTree.set("parameters/Add2/add_amount", 1)
 	update_ik_anim(left_target,Raycast_L,left_foot,LL_db,ik_raycast_height,foot_offset)
 	update_ik_anim(right_target,Raycast_R,right_foot,RL_dB,ik_raycast_height,foot_offset)
 	SkeletonIKLegL.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
 	SkeletonIKLegR.interpolation = clamp(1,min_max_interpolation.x,min_max_interpolation.y)
+	
+	# Perform procedural walk if option selected
+	if use_procedural_walk == true:
+		process_procedural_walk(delta, move)
+		
+	# Perform procedural body bounce if option selected
+	# Animate body up and down depending on distance between legs and factor set with variable if option chosen
+	if use_procedural_bounce == true:
+		skeleton.global_transform.origin += Vector3.DOWN * ((get_legs_spread(left_target.global_transform.origin, right_target.global_transform.origin) / max_legs_spread) * bounce_factor)
+	
 	prev_move = move
 
 
@@ -486,8 +669,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 			print("done looking at bones")
 			return
 		
-		if "head".is_subsequence_ofi(bone_name):
-			if !"top".is_subsequence_ofi(bone_name) and !"end".is_subsequence_ofi(bone_name):
+		if bone_name.matchn("*head*"):
+			if !(bone_name.matchn("*top*")) and !(bone_name.matchn("*end*")):
 				if head_set == false:
 					head_bone = skeleton_node.find_bone(bone_name)
 					print(head_bone)
@@ -504,9 +687,9 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					head_top_set = true
 				
 		
-		elif "bicep".is_subsequence_ofi(bone_name) or "arm".is_subsequence_ofi(bone_name):
-			if !"fore".is_subsequence_ofi(bone_name) and !"lower".is_subsequence_ofi(bone_name):
-				if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*bicep*" ) or bone_name.matchn("*arm*"):
+			if !(bone_name.matchn("*fore*")) and !(bone_name.matchn("*lower*")):
+				if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 					if l_upperarm_set == false:
 						left_upper_arm_bone = skeleton_node.find_bone(bone_name)
 						print(left_upper_arm_bone)
@@ -522,8 +705,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 						print(skeleton_node.get_bone_name(i))
 						r_upperarm_set = true
 				
-		elif "upperleg".is_subsequence_ofi(bone_name) or "upper leg".is_subsequence_ofi(bone_name) or "upleg".is_subsequence_ofi(bone_name) or "thigh".is_subsequence_ofi(bone_name):
-			if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*upperleg*") or bone_name.matchn("*upper leg*") or bone_name.matchn("*upleg*") or bone_name.matchn("*thigh*"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 				if l_upperleg_set == false:
 					left_upper_leg_bone = skeleton_node.find_bone(bone_name)
 					print(left_upper_leg_bone)
@@ -539,8 +722,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					print(skeleton_node.get_bone_name(i))
 					r_upperleg_set = true
 		
-		elif "hand".is_subsequence_ofi(bone_name) and check_if_finger_bone(bone_name) == false:
-			if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*hand*") and check_if_finger_bone(bone_name) == false:
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 				if l_hand_set == false:
 					left_hand_bone = skeleton_node.find_bone(bone_name)
 					print(left_hand_bone)
@@ -555,8 +738,8 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					print(skeleton_node.get_bone_name(i))
 					r_hand_set = true
 				
-		elif "foot".is_subsequence_ofi(bone_name) or "ankle".is_subsequence_ofi(bone_name):
-			if "left".is_subsequence_ofi(bone_name) or "l_".is_subsequence_ofi(bone_name) or bone_name.ends_with("_l"):
+		elif bone_name.matchn("*foot*") or bone_name.matchn("*ankle*"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
 				if l_foot_set == false:
 					left_foot_bone = skeleton_node.find_bone(bone_name)
 					print(left_foot_bone)
@@ -574,10 +757,26 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 
 #mini function to check if a bone is a hand bone or really a finger bone since some avatars may use the word "hand" in finger bones as well		
 func check_if_finger_bone(bone):
-	if "index".is_subsequence_ofi(bone) or "pinky".is_subsequence_ofi(bone) or "ring".is_subsequence_ofi(bone) or "thumb".is_subsequence_ofi(bone) or "middle".is_subsequence_ofi(bone):
+	if bone.matchn("*index*") or bone.matchn("*pinky*") or bone.matchn("*ring*") or bone.matchn("*thumb*") or bone.matchn("*middle*"):
 		#print("Possible hand bone detected, but turns out it was a finger")
 		return true
 	else:
 		#print("Possible hand bone detected, checked if it was a finger and it was not")
 		return false
 			
+#Get distance between legs (used with procedural animation code)			
+func get_legs_spread(left_leg_position : Vector3, right_leg_position: Vector3):
+	return Vector2(left_leg_position.x, left_leg_position.z).distance_to(Vector2(right_leg_position.x, right_leg_position.z))
+
+
+#Get current player height
+func get_current_player_height() -> float:
+	 return arvrcamera.transform.origin.y
+
+#Use to set rotation
+func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
+	var forward := (to-from).normalized()
+	var right := up_ref.normalized().cross(forward).normalized()
+	forward = right.cross(up_ref).normalized()
+	return Basis(right, up_ref, forward)
+

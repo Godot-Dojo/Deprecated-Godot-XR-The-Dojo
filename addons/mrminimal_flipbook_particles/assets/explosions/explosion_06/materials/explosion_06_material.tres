@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[ext_resource path="res://addons/mrminimal_flipbook_particles/assets/flipbook.shader" type="Shader" id=1]
+[ext_resource path="res://addons/mrminimal_flipbook_particles/assets/explosions/explosion_06/textures/explosion_06.tga" type="Texture" id=2]
+
+[resource]
+shader = ExtResource( 1 )
+shader_param/progress = 0.0
+shader_param/frames_per_second = 25.0
+shader_param/rows = 5
+shader_param/columns = 5
+shader_param/flipbook = ExtResource( 2 )

@@ -1,0 +1,163 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://addons/godot-xr-avatar/scenes/sybotshadow.tscn" type="PackedScene" id=1]
+[ext_resource path="res://managers/WeaponManager.gd" type="Script" id=2]
+[ext_resource path="res://dojo/DestructableTable.tscn" type="PackedScene" id=3]
+[ext_resource path="res://managers/HapticManager.gd" type="Script" id=4]
+[ext_resource path="res://weapons/Throwing_Shuriken.tscn" type="PackedScene" id=5]
+[ext_resource path="res://weapons/Throwing_Shuriken_4Spike.tscn" type="PackedScene" id=6]
+[ext_resource path="res://weapons/Throwing_Shuriken_4Star.tscn" type="PackedScene" id=7]
+[ext_resource path="res://weapons/Throwing_Shuriken_8Star.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://dojo/SliceableWoodenman.tscn" type="PackedScene" id=10]
+[ext_resource path="res://dojo/HolderForPickableSwords.tscn" type="PackedScene" id=11]
+[ext_resource path="res://weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=12]
+[ext_resource path="res://managers/SceneManager.tscn" type="PackedScene" id=13]
+[ext_resource path="res://weapons/Slicing_Katana_S.tscn" type="PackedScene" id=14]
+[ext_resource path="res://weapons/Slicing_Katana_M.tscn" type="PackedScene" id=15]
+[ext_resource path="res://dojo/DojoWithColliders.tscn" type="PackedScene" id=16]
+[ext_resource path="res://sounds/Midnight in the Green House.mp3" type="AudioStream" id=17]
+[ext_resource path="res://dojo/backpack/Backpack.tscn" type="PackedScene" id=18]
+
+[node name="Godot Dojo" type="Spatial"]
+
+[node name="avatar_player" parent="." instance=ExtResource( 9 )]
+
+[node name="BoneRoot" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
+transform = Transform( 1, -2.50192e-40, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 7.2293e-21, 0.000360775, -0.0235019 )
+
+[node name="BoneThumbMetacarpal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="2"]
+transform = Transform( 0.858407, -0.510964, 0.0453197, 0.393499, 0.599231, -0.697195, 0.329085, 0.61631, 0.715447, 1.44628e-08, -0.000522292, 0.0105753 )
+
+[node name="BoneThumbProximal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="3"]
+transform = Transform( 0.653204, -0.575626, 0.491913, 0.637544, 0.0676378, -0.767439, 0.408486, 0.814911, 0.411168, -0.0307404, 0.0355286, 0.0476535 )
+
+[node name="BoneThumbDistal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="4"]
+transform = Transform( 0.641228, -0.57023, 0.513483, 0.627228, 0.00400403, -0.778826, 0.442053, 0.821475, 0.360232, -0.0537614, 0.0382334, 0.0802443 )
+
+[node name="BoneIndexMetacarpal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="5"]
+transform = Transform( 0.999276, 0.0112952, -0.0363351, -0.0380494, 0.303049, -0.952215, 0.000255822, 0.952908, 0.303259, -1.17901e-10, -0.000522291, 0.0105752 )
+
+[node name="BoneIndexProximal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="6"]
+transform = Transform( 0.993643, 0.108167, -0.0311928, -0.0593467, 0.26786, -0.961629, -0.0956611, 0.957367, 0.272577, 0.00100868, 0.0265468, 0.0956918 )
+
+[node name="BoneIndexMiddle" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="7"]
+transform = Transform( 0.984049, -0.177367, -0.0137285, -0.020051, -0.0339034, -0.999224, 0.176764, 0.983561, -0.0369191, 0.00468414, 0.0356487, 0.128223 )
+
+[node name="BoneIndexDistal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="8"]
+transform = Transform( 0.927501, -0.373365, 0.0184361, -0.00490146, -0.0614605, -0.998098, 0.373788, 0.925646, -0.0588348, -0.000317366, 0.0346926, 0.155956 )
+
+[node name="BoneMiddleMetacarpal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="9"]
+transform = Transform( 0.996581, 0.0825, 0.00438378, -0.00516692, 0.115197, -0.993329, -0.0824547, 0.98991, 0.11523, -2.08602e-09, -0.000522293, 0.0105753 )
+
+[node name="BoneMiddleProximal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="10"]
+transform = Transform( 0.999226, 0.0393314, 0.00018736, 0.00211799, -0.0490505, -0.998794, -0.0392748, 0.998021, -0.0490958, 0.00712923, 0.00943249, 0.0961184 )
+
+[node name="BoneMiddleMiddle" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="11"]
+transform = Transform( 0.90112, -0.432901, 0.0240869, -0.0456923, -0.150064, -0.98762, 0.431156, 0.888863, -0.155006, 0.00830444, 0.00796703, 0.125936 )
+
+[node name="BoneMiddleDistal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="12"]
+transform = Transform( 0.723534, -0.690285, 0.00243967, -0.172605, -0.184338, -0.967588, 0.668361, 0.699661, -0.252521, -0.00511784, 0.0033142, 0.153496 )
+
+[node name="BoneRingMetacarpal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="13"]
+transform = Transform( 0.999009, 0.0444944, -0.000672045, 0.00788389, -0.191836, -0.981395, -0.0437955, 0.980418, -0.191997, -3.14338e-09, -0.000522293, 0.0105753 )
+
+[node name="BoneRingProximal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="14"]
+transform = Transform( 0.993169, 0.116494, -0.00670008, 0.0117931, -0.157336, -0.987475, -0.116089, 0.98065, -0.157635, 0.00351231, -0.015666, 0.0879703 )
+
+[node name="BoneRingMiddle" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="15"]
+transform = Transform( 0.865561, -0.498619, -0.0467217, -0.166109, -0.19783, -0.96606, 0.472453, 0.843944, -0.254059, 0.00682499, -0.0201401, 0.115857 )
+
+[node name="BoneRingDistal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="16"]
+transform = Transform( 0.475025, -0.861852, -0.17766, -0.499622, -0.0979557, -0.860687, 0.724381, 0.497611, -0.477131, -0.00622966, -0.0253195, 0.137952 )
+
+[node name="BonePinkyMetacarpal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="17"]
+transform = Transform( 0.999813, 0.0166299, 0.00978245, 0.016408, -0.466135, -0.884562, -0.0101502, 0.884557, -0.466321, 3.16697e-10, -0.000522297, 0.0105754 )
+
+[node name="BonePinkyProximal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="18"]
+transform = Transform( 0.98895, -0.147942, -0.00946361, -0.0522291, -0.287969, -0.956215, 0.138739, 0.946143, -0.292514, 0.00128954, -0.0366702, 0.0791712 )
+
+[node name="BonePinkyMiddle" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="19"]
+transform = Transform( 0.740024, -0.658406, -0.137349, -0.308624, -0.150972, -0.939127, 0.597591, 0.737366, -0.314923, -0.00162087, -0.0423355, 0.0977853 )
+
+[node name="BonePinkyDistal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="20"]
+transform = Transform( 0.463311, -0.822464, -0.329992, -0.51281, 0.0548708, -0.856747, 0.722751, 0.566164, -0.396346, -0.0115324, -0.0446074, 0.108884 )
+
+[node name="SliceableWoodenman" parent="." instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
+
+[node name="HolderForPickableSwords" parent="." instance=ExtResource( 11 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.00541, -0.00499028, -0.0572867 )
+
+[node name="WeaponManager" type="Node" parent="."]
+script = ExtResource( 2 )
+
+[node name="Slicing_Katana_Long" parent="WeaponManager" groups=["Heavy", "swords"] instance=ExtResource( 12 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -2.06865, 1.39542, -0.216369 )
+
+[node name="Slicing_Katana_M" parent="WeaponManager" groups=["swords"] instance=ExtResource( 15 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.97589, 0.964123, -0.159193 )
+
+[node name="Slicing_Katana_S" parent="WeaponManager" groups=["swords"] instance=ExtResource( 14 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.93966, 0.527654, -0.125481 )
+
+[node name="Shuriken" parent="WeaponManager" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.415947, 0.496635, 1.81264 )
+
+[node name="Shuriken_4Spike" parent="WeaponManager" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.519831, 1.72902 )
+
+[node name="Shuriken_4Spike2" parent="WeaponManager" instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.273852, 0.519831, 1.77692 )
+
+[node name="Shuriken_4Star" parent="WeaponManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.02869, 0.494653, 2.60889 )
+
+[node name="Shuriken_4Star2" parent="WeaponManager" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.90217, 0.494653, 2.31462 )
+
+[node name="Shuriken_8Star" parent="WeaponManager" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.907704, 0.510162, 2.3161 )
+
+[node name="Shuriken_8Star2" parent="WeaponManager" instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.720192, 0.510162, 1.97163 )
+
+[node name="SoundManager" type="Node" parent="."]
+
+[node name="Music - Midnight in the Green House by Kevin MacLeod" type="AudioStreamPlayer3D" parent="SoundManager"]
+stream = ExtResource( 17 )
+attenuation_model = 2
+unit_db = -30.0
+unit_size = 5.0
+max_db = -15.0
+autoplay = true
+max_distance = 50.0
+
+[node name="HapticManager" type="Node" parent="."]
+script = ExtResource( 4 )
+
+[node name="DestructableTable" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.78659 )
+
+[node name="shadow" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -2.41005 )
+player_arvrorigin_path = NodePath("../avatar_player/FPController")
+player_arvrcamera_path = NodePath("../avatar_player/FPController/ARVRCamera")
+player_left_controller_path = NodePath("../avatar_player/FPController/LeftHandController")
+player_right_controller_path = NodePath("../avatar_player/FPController/RightHandController")
+player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
+player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
+player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
+
+[node name="SceneManager" parent="." instance=ExtResource( 13 )]
+
+[node name="Dojo" parent="." instance=ExtResource( 16 )]
+
+[node name="Backpack" parent="." instance=ExtResource( 18 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.184375, 1.11168, -1.41673 )
+mode = 1
+
+[editable path="avatar_player"]
+[editable path="avatar_player/FPController"]
+[editable path="avatar_player/FPController/LeftHandController/LeftPhysicsHand"]
+[editable path="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand"]
