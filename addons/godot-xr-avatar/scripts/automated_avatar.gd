@@ -689,7 +689,7 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 		
 		elif bone_name.matchn("*bicep*" ) or bone_name.matchn("*arm*"):
 			if !(bone_name.matchn("*fore*")) and !(bone_name.matchn("*lower*")):
-				if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
+				if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
 					if l_upperarm_set == false:
 						left_upper_arm_bone = skeleton_node.find_bone(bone_name)
 						print(left_upper_arm_bone)
@@ -705,25 +705,43 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 						print(skeleton_node.get_bone_name(i))
 						r_upperarm_set = true
 				
-		elif bone_name.matchn("*upperleg*") or bone_name.matchn("*upper leg*") or bone_name.matchn("*upleg*") or bone_name.matchn("*thigh*"):
-			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
-				if l_upperleg_set == false:
-					left_upper_leg_bone = skeleton_node.find_bone(bone_name)
-					print(left_upper_leg_bone)
-					print("Left upper leg bone name is:")
-					print(skeleton_node.get_bone_name(i))
-					l_upperleg_set = true
+		elif bone_name.matchn("*leg*") or bone_name.matchn("*thigh*"):
+			if bone_name.matchn("*upper*") or bone_name.matchn("*up*") or bone_name.matchn("*thigh*"):
+				if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
+					if l_upperleg_set == false:
+						left_upper_leg_bone = skeleton_node.find_bone(bone_name)
+						print(left_upper_leg_bone)
+						print("Left upper leg bone name is:")
+						print(skeleton_node.get_bone_name(i))
+						l_upperleg_set = true
 				
-			else:
-				if r_upperleg_set == false:
-					right_upper_leg_bone = skeleton_node.find_bone(bone_name)
-					print(right_upper_leg_bone)
-					print("Right upper leg bone name is:")
-					print(skeleton_node.get_bone_name(i))
-					r_upperleg_set = true
+				else:
+					if r_upperleg_set == false:
+						right_upper_leg_bone = skeleton_node.find_bone(bone_name)
+						print(right_upper_leg_bone)
+						print("Right upper leg bone name is:")
+						print(skeleton_node.get_bone_name(i))
+						r_upperleg_set = true
 		
 		elif bone_name.matchn("*hand*") and check_if_finger_bone(bone_name) == false:
-			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
+				if l_hand_set == false:
+					left_hand_bone = skeleton_node.find_bone(bone_name)
+					print(left_hand_bone)
+					print("Left hand bone name is:")
+					print(skeleton_node.get_bone_name(i))
+					l_hand_set = true
+			else:
+				if r_hand_set == false:
+					right_hand_bone = skeleton_node.find_bone(bone_name)	
+					print(right_hand_bone)
+					print("Right hand bone is")
+					print(skeleton_node.get_bone_name(i))
+					r_hand_set = true
+		
+		#fall back to wrist bone if no matching hand bones
+		elif bone_name.matchn("*wrist*") and check_if_finger_bone(bone_name) == false:
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
 				if l_hand_set == false:
 					left_hand_bone = skeleton_node.find_bone(bone_name)
 					print(left_hand_bone)
@@ -739,7 +757,7 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					r_hand_set = true
 				
 		elif bone_name.matchn("*foot*") or bone_name.matchn("*ankle*"):
-			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l"):
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
 				if l_foot_set == false:
 					left_foot_bone = skeleton_node.find_bone(bone_name)
 					print(left_foot_bone)
