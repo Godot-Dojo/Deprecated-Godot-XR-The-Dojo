@@ -10,6 +10,7 @@ var casing = null
 export var bullets : int;
 export var bullet_speed = 10.0
 export var max_bullets : int;
+export var is_ShotGun = false
 export var is_Bolt_Action = false
 export var is_FlareGun = false
 

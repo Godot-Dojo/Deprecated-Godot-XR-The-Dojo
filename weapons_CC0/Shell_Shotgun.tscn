@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=1]
+[ext_resource path="res://weapons_CC0/ammo/ammo.gd" type="Script" id=2]
+
+[sub_resource type="CylinderShape" id=4]
+
+[sub_resource type="SpatialMaterial" id=3]
+resource_local_to_scene = true
+albedo_color = Color( 0.721569, 0, 0, 1 )
+
+[node name="Shell_Shotgun" type="RigidBody" groups=["Shell_Shotgun", "shurikens"]]
+collision_mask = 131073
+mode = 3
+sleeping = true
+script = ExtResource( 1 )
+
+[node name="PickupCenter" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, 0.025 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.01, 0, 0, 0, 0.035, 0, 0, 0, 0.01, 0, 0, 0 )
+shape = SubResource( 4 )
+
+[node name="Ammo" type="Spatial" parent="."]
+script = ExtResource( 2 )
+ammo = 1
+is_Shell = true
+
+[node name="BulletDummy" type="CSGCylinder" parent="Ammo"]
+transform = Transform( 1, 0, 0, 0, 2.90818, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.015
+height = 0.03
+material = SubResource( 3 )
+
+[node name="BulletDummy" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, 2.90818, 0, 0, 0, 1, 0, 0, 0 )
+radius = 0.015
+height = 0.03
+material = SubResource( 3 )
