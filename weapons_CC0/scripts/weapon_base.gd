@@ -10,6 +10,8 @@ var casing = null
 export var bullets : int;
 export var bullet_speed = 10.0
 export var max_bullets : int;
+export var is_Bolt_Action = false
+export var is_FlareGun = false
 
 func action():
 	emit_signal("action_pressed", self)
@@ -25,10 +27,13 @@ func action():
 		get_owner().add_child(bullet)
 		bullet.global_transform = $BulletSpawnPoint.global_transform
 		bullet.linear_velocity = -bullet.global_transform.basis.z * bullet_speed
-		casing = casing_scene.instance()
-		get_owner().add_child(casing)
-		casing.global_transform = $CasingSpawnPoint.global_transform
-		casing.apply_impulse(Vector3.DOWN, casing.global_transform.basis.y *.15)
+
+		if is_Bolt_Action and is_FlareGun == false:
+			casing = casing_scene.instance()
+			get_owner().add_child(casing)
+			casing.global_transform = $CasingSpawnPoint.global_transform
+			casing.apply_impulse(Vector3.DOWN, casing.global_transform.basis.y *.15)
+
 		can_shoot = false
 		$ShotTimer.start()
 
