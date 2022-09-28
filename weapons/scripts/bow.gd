@@ -13,7 +13,7 @@ var arrow_loaded = false
 var arrow 
 var dir 
 var _placeholder_rigidbody: RigidBody = null
-#var new_arrow = preload("res://scenes/objects/arrow.tscn")
+var new_arrow = preload("res://scenes/objects/arrow.tscn")
 func oq_can_area_object_grab(controller):
 	return !isGrabbed;
 
@@ -113,10 +113,8 @@ func reparent_from_rigidbody():
 	new_parent.add_child(self)
 	set_owner(new_parent)
 
-
 func create_arrow():
-	#arrow = new_arrow.instance()
-	arrow = null
+	arrow = new_arrow.instance()
 	var main_scene = get_tree().get_current_scene().get_node("main_scene")
 	main_scene.add_child(arrow)
 	arrow.global_transform = bow_string.global_transform

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://demo/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
-[ext_resource path="res://demo/scripts/arrow.gd" type="Script" id=2]
+[ext_resource path="res://weapons/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
+[ext_resource path="res://weapons/scripts/arrow.gd" type="Script" id=2]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "arrow"
@@ -29,6 +29,9 @@ height = 9.232
 
 [node name="arrow" type="Spatial"]
 script = ExtResource( 2 )
+gravity_vec = null
+gravity = null
+mass = null
 
 [node name="Arrow_body" type="Area" parent="."]
 

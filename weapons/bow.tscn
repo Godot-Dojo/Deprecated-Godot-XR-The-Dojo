@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://demo/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
-[ext_resource path="res://demo/scripts/bow.gd" type="Script" id=2]
-[ext_resource path="res://demo/scripts/bow_string.gd" type="Script" id=3]
+[ext_resource path="res://weapons/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
+[ext_resource path="res://weapons/scripts/bow.gd" type="Script" id=2]
+[ext_resource path="res://weapons/scripts/bow_string.gd" type="Script" id=3]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "bow"

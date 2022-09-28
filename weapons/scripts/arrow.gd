@@ -15,6 +15,7 @@ var _placeholder_rigidbody: RigidBody = null
 var dir 
 var velocity
 var hand
+
 func oq_can_area_object_grab(controller):
 	return true;
 
@@ -29,14 +30,17 @@ func oq_area_object_grab_ended(controller):
 		reparent_to_rigidbody(
 				controller.get_linear_velocity(),
 				controller.get_angular_velocity())
+				
 func load_arrow(bow_end,bow_begin):
 	arrow_state = states.LOADED
 	_bow_end = bow_end
 	_bow_begin = bow_begin
+	
 func unload_arrow():
 	arrow_state = states.IDLE
 	_bow_end = null
 	_bow_begin = null
+	
 func release_arrow():
 	arrow_state = states.RELEASED
 	dir = _bow_begin.global_transform.origin-_bow_end.global_transform.origin
@@ -50,8 +54,10 @@ func _controller_set(id):
 		hand = vr.leftController
 	elif id == vr.rightController.controller_id:
 		hand = vr.rightController
+		
 func _on_disappear_timeout():
 	queue_free()
+	
 func _physics_process(delta):
 	match arrow_state:
 		states.IDLE:
