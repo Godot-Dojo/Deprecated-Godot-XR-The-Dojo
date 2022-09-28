@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/344142__brokenphono__gunshot-002.wav-8d8fbc3c9149a499e00a4cbd18ff0e5f.sample"
+
+[deps]
+
+source_file="res://weapons_CC0/sfx/freesound.org/344142__brokenphono__gunshot-002.wav"
+dest_files=[ "res://.import/344142__brokenphono__gunshot-002.wav-8d8fbc3c9149a499e00a4cbd18ff0e5f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

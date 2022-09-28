@@ -129,6 +129,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/keyboard/VirtualKeyboard_2D.gd"
 }, {
+"base": "XRToolsPickable",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://weapons_CC0/scripts/weapon_base.gd"
+}, {
 "base": "Area",
 "class": "WindArea",
 "language": "GDScript",
@@ -224,6 +229,7 @@ _global_script_class_icons={
 "VelocityAverager": "",
 "VelocityAveragerLinear": "",
 "VirtualKeyboard2D": "",
+"Weapon": "",
 "WindArea": "",
 "XRTHighlightMaterial": "",
 "XRTHighlightRing": "",

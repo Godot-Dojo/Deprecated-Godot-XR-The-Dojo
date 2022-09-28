@@ -1,0 +1,20 @@
+[gd_resource type="SpatialMaterial" load_steps=5 format=2]
+
+[ext_resource path="res://weapons_CC0/textures/Glock-17/Glock17_Emissive_Color.png" type="Texture" id=1]
+[ext_resource path="res://weapons_CC0/textures/Glock-17/Glock17_Base_Color.png" type="Texture" id=2]
+[ext_resource path="res://weapons_CC0/textures/Glock-17/Glock17_Normal.png" type="Texture" id=3]
+[ext_resource path="res://weapons_CC0/textures/Glock-17/Glock17_Roughness.png" type="Texture" id=4]
+
+[resource]
+albedo_texture = ExtResource( 2 )
+roughness_texture = ExtResource( 4 )
+roughness_texture_channel = 4
+emission_enabled = true
+emission = Color( 0, 0, 0, 1 )
+emission_energy = 8.0
+emission_operator = 0
+emission_on_uv2 = false
+emission_texture = ExtResource( 1 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 3 )
