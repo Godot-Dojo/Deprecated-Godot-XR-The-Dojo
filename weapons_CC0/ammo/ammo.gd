@@ -1,6 +1,6 @@
 extends Node
 
-export var ammo : int;
+export var ammo : int
 export var is_Shell = false
 
 func _physics_process(delta):

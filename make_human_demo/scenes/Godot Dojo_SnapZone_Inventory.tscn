@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://managers/WeaponManager.gd" type="Script" id=1]
 [ext_resource path="res://managers/HapticManager.gd" type="Script" id=2]
@@ -18,6 +18,9 @@
 [ext_resource path="res://weapons/Throwing_Shuriken_4Star.tscn" type="PackedScene" id=16]
 [ext_resource path="res://sounds/Midnight in the Green House.mp3" type="AudioStream" id=17]
 [ext_resource path="res://dojo/acc_Ronin_Gasa.tscn" type="PackedScene" id=18]
+[ext_resource path="res://weapons_CC0/Scope_Sniper.tscn" type="PackedScene" id=19]
+[ext_resource path="res://weapons_CC0/Gun_Sniper.tscn" type="PackedScene" id=20]
+[ext_resource path="res://weapons_CC0/Mag_Sniper.tscn" type="PackedScene" id=21]
 
 [sub_resource type="ViewportTexture" id=1]
 viewport_path = NodePath("Viewport")
@@ -105,5 +108,14 @@ script = null
 
 [node name="acc_Ronin_Gasa" parent="." instance=ExtResource( 18 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0458185, 0.471323, 2.5742 )
+
+[node name="Scope_Sniper" parent="." instance=ExtResource( 19 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.630262, 1.90735e-06, -2.9669 )
+
+[node name="Pickable_Gun_Sniper" parent="." instance=ExtResource( 20 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.29776, 2.14577e-06, -2.31212 )
+
+[node name="Mag_Sniper" parent="." instance=ExtResource( 21 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00694, 1.90735e-06, -2.12887 )
 
 [connection signal="dropped" from="Backpack" to="WeaponManager" method="_on_Backpack_dropped"]
