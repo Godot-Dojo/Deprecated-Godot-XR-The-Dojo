@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/overrides/GroundPhysicsSettings.gd"
 }, {
+"base": "XRToolsPickable",
+"class": "Gun",
+"language": "GDScript",
+"path": "res://weapons_CC0/scripts/weapon_base.gd"
+}, {
 "base": "Node",
 "class": "LipSync",
 "language": "GDScript",
@@ -123,11 +128,6 @@ _global_script_classes=[ {
 "class": "VirtualKeyboard2D",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/keyboard/VirtualKeyboard_2D.gd"
-}, {
-"base": "XRToolsPickable",
-"class": "Weapon",
-"language": "GDScript",
-"path": "res://weapons_CC0/scripts/weapon_base.gd"
 }, {
 "base": "Area",
 "class": "WindArea",
@@ -215,6 +215,7 @@ _global_script_class_icons={
 "Function_WindMovement": "",
 "GroundPhysics": "",
 "GroundPhysicsSettings": "",
+"Gun": "",
 "LipSync": "",
 "Locomotion_WalkInPlace": "",
 "MovementProvider": "res://addons/godot-xr-tools/editor/icons/XRToolsMovementProvider.svg",
@@ -223,7 +224,6 @@ _global_script_class_icons={
 "VelocityAverager": "",
 "VelocityAveragerLinear": "",
 "VirtualKeyboard2D": "",
-"Weapon": "",
 "WindArea": "",
 "XRTHighlightMaterial": "",
 "XRTHighlightRing": "",

@@ -1,4 +1,4 @@
-class_name Weapon
+class_name Gun
 extends XRToolsPickable
 
 export var group_name : String
@@ -14,6 +14,7 @@ export var is_Bolt_Action : bool = false
 export var is_FlareGun : bool = false
 export var is_full_automatic : bool = false
 
+onready var mag_zone = $Mag_Zone
 var can_shoot : bool = true
 var bullet = null
 var casing = null
@@ -32,7 +33,7 @@ func action():
 		if magazine_ammo >= 1:
 			magazine_ammo-= 1
 			current_ammo = magazine_ammo
-			var magazine = $Mag_Zone.picked_up_object
+			var magazine = mag_zone.picked_up_object
 			if magazine != null:
 				magazine.get_node("Ammo").ammo = magazine_ammo
 		# If magazine doesn't have bullet, that means there must be "one in the chamber" so use up that bullet instead
@@ -73,10 +74,18 @@ func _on_Mag_Zone_has_dropped():
 	magazine_ammo = 0
 
 func _process(delta):
-	if !is_full_automatic:
-		return
-	
+	if !is_picked_up():
+		mag_zone.grap_require = "none"
+		if get_node_or_null("Scope_Zone") != null:
+			$Scope_Zone.grap_require = "none"
+		
+	if is_picked_up():
+		mag_zone.grap_require = ""
+		if get_node_or_null("Scope_Zone") != null:
+			$Scope_Zone.grap_require = ""
+		
 	if is_full_automatic:
 		if picked_up_by != null and by_controller != null:
 			if by_controller.is_button_pressed(by_controller.get_node("Function_Pickup").action_button_id):
 				action()
+	

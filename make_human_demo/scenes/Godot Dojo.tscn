@@ -156,7 +156,6 @@ height_offset = 0.15
 
 [node name="Pickable_AutoGun" parent="." instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07708, 0.362213, 1.11114 )
-is_full_automatic = true
 
 [node name="Mag_Automatic" parent="." instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.829093, 0.339269, 1.88582 )
