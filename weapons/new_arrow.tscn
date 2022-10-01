@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://weapons/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=2]
 [ext_resource path="res://weapons/scripts/new_arrow.gd" type="Script" id=3]
+[ext_resource path="res://weapons/scripts/stab_logic.gd" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=4]
 resource_name = "arrow"
@@ -19,13 +20,16 @@ surfaces/0 = {
 "vertex_count": 2209
 }
 
-[sub_resource type="CapsuleShape" id=3]
-margin = 0.1
-radius = 0.0842549
-height = 10.8955
+[sub_resource type="CylinderShape" id=5]
+margin = 0.02
+radius = 0.06
+height = 11.2
 
 [node name="arrow" type="RigidBody"]
 script = ExtResource( 2 )
+
+[node name="stab_logic" type="Node" parent="."]
+script = ExtResource( 4 )
 
 [node name="logic" type="Spatial" parent="."]
 script = ExtResource( 3 )
@@ -37,11 +41,11 @@ skeleton = NodePath("")
 material/0 = null
 
 [node name="arrow_body" type="CollisionShape" parent="."]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -0.559961 )
-shape = SubResource( 3 )
+transform = Transform( 0.1, 0, 0, 0, -4.37114e-09, -0.1, 0, 0.1, -4.37114e-09, 0, 0, -0.498341 )
+shape = SubResource( 5 )
 
 [node name="PickupCenter" type="Spatial" parent="."]
-transform = Transform( 1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, -3.59989e-21, -4.37114e-08, 1, -4.37114e-08, 0, -0.000617545, 0.016255 )
+transform = Transform( 1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, -3.59989e-21, -4.37114e-08, 1, -4.37114e-08, 0, -0.000617545, -0.585391 )
 
 [node name="tip" type="RayCast" parent="."]
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -1 )

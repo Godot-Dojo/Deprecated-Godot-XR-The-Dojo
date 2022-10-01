@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://weapons/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=2]
@@ -26,6 +26,8 @@ radius = 0.569052
 [sub_resource type="SphereMesh" id=14]
 radius = 0.1
 height = 0.2
+
+[sub_resource type="ShaderMaterial" id=15]
 
 [sub_resource type="ArrayMesh" id=11]
 surfaces/0 = {
@@ -84,6 +86,7 @@ points = PoolVector3Array( -0.787379, 0.103867, 0.00364029, -0.787379, 0.115142,
 
 [node name="bow" type="RigidBody"]
 script = ExtResource( 2 )
+ranged_grab_method = 0
 
 [node name="PickupCenter" type="Spatial" parent="."]
 transform = Transform( 1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, -3.59989e-21, -4.37114e-08, 1, -4.37114e-08, 0, -0.000617545, 0.016255 )
@@ -102,10 +105,9 @@ transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0.23792 )
 script = ExtResource( 3 )
 
 [node name="string_grab" type="RigidBody" parent="bow_string"]
-mode = 3
+mode = 1
 script = ExtResource( 2 )
 reset_transform_on_pickup = false
-ranged_grab_method = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="bow_string/string_grab"]
 shape = SubResource( 13 )
@@ -114,9 +116,9 @@ shape = SubResource( 13 )
 transform = Transform( 1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, -3.59989e-21, -4.37114e-08, 1, -4.37114e-08, 0, -0.000617545, 0.016255 )
 
 [node name="MeshInstance" type="MeshInstance" parent="bow_string"]
-visible = false
+transform = Transform( 5.65782, 0, 0, 0, 5.65782, 0, 0, 0, 5.65782, 0, 0, 0 )
 mesh = SubResource( 14 )
-material/0 = null
+material/0 = SubResource( 15 )
 
 [node name="Top" type="Position3D" parent="."]
 transform = Transform( -1.19209e-07, 0.999973, 0.00731836, -0.00304442, -0.0073181, 1, 0.999995, -2.22027e-05, 0.00304443, 0.005, 0.683, 0.24 )

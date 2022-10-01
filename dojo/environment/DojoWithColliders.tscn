@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://dojo/environment/materials/dojo_mat.tres" type="Material" id=1]
+[ext_resource path="res://dojo/environment/textures/dojo.png" type="Texture" id=2]
 
 [sub_resource type="ArrayMesh" id=6]
 resource_name = "Dojo_mesh_Dojo"
@@ -15,6 +16,21 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 6475
 }
+
+[sub_resource type="SpatialMaterial" id=15]
+params_cull_mode = 2
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 0.01, 0.01, 0.01 )
+uv1_offset = Vector3( 0.013, -0.079, 0.026 )
+uv1_triplanar = true
+
+[sub_resource type="CubeMesh" id=16]
+material = SubResource( 15 )
+size = Vector3( 1.4, 1, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=17]
+margin = 0.05
+points = PoolVector3Array( -0.711111, -0.511111, -0.511111, 0.696, 0.495, 0.5, 0.695652, -0.5, 0.5, 0.711111, -0.511111, -0.511111, 0.696, 0.495, -0.5, -0.696, 0.495, 0.5, -0.695652, -0.5, 0.5, -0.696, 0.495, -0.5 )
 
 [sub_resource type="BoxShape" id=7]
 extents = Vector3( 6.3, 0.5, 7.9 )
@@ -41,11 +57,21 @@ transform = Transform( 1.5, 0, 0, 0, -1.78814e-07, -1.5, 0, 1.5, -1.78814e-07, 0
 mesh = SubResource( 6 )
 material/0 = ExtResource( 1 )
 
+[node name="table" type="MeshInstance" parent="."]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.488974, -5.22274 )
+mesh = SubResource( 16 )
+material/0 = null
+
 [node name="Colliders" type="Spatial" parent="."]
-visible = false
 
 [node name="Walls" type="Spatial" parent="Colliders"]
-visible = false
+
+[node name="table" type="StaticBody" parent="Colliders/Walls"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Colliders/Walls/table"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.988974, -5.22274 )
+shape = SubResource( 17 )
 
 [node name="Floor" type="StaticBody" parent="Colliders/Walls"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
