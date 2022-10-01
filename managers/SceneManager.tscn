@@ -8,6 +8,6 @@ script = ExtResource( 2 )
 
 [node name="Feature_RadialMenu" parent="." instance=ExtResource( 3 )]
 radial_controller_path = NodePath("../../avatar_player/FPController/LeftHandController")
-menu_entries = [ "three_shadows", "female_avatar", "sybot", "mixamo", "ready_player", "seated_or_standing" ]
+menu_entries = [ "three_shadows", "female_avatar", "weapons", "mixamo", "ready_player", "seated_or_standing" ]
 
 [connection signal="entry_selected" from="Feature_RadialMenu" to="." method="_on_Feature_RadialMenu_entry_selected"]
