@@ -249,4 +249,5 @@ transform = Transform( 0.01, 0, 0, 0, -1.19209e-09, -0.01, 0, 0.01, -1.19209e-09
 shape = SubResource( 30 )
 
 [connection signal="timeout" from="ShotTimer" to="." method="_on_ShotTimer_timeout"]
-[connection signal="body_entered" from="Mag_Zone" to="." method="_on_Mag_Zone_body_entered"]
+[connection signal="has_dropped" from="Mag_Zone" to="." method="_on_Mag_Zone_has_dropped"]
+[connection signal="has_picked_up" from="Mag_Zone" to="." method="_on_Mag_Zone_has_picked_up"]
