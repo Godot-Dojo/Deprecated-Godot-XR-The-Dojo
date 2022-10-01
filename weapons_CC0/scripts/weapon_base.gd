@@ -20,10 +20,14 @@ var bullet = null
 var casing = null
 var magazine_ammo : int = 0
 
+# initial transform when grabbed -> used for recoil recovery
 var grabbed_transform = Transform(Basis.IDENTITY, Vector3.ZERO)
+# recoil recover speed 
 export(float, 0, 1) var recoil_recover_speed = 0.2
-export var recoil_rotation_offset: Vector3 = Vector3(1, 0, 0)
-export var recoil_position_offset: Vector3 = Vector3(0, 0, 0)
+# rotation offset to be applied to recoil -> best between 0-1
+export var recoil_rotation_offset: Vector3 = Vector3(0.3, 0, 0)
+# position offset to be applied to recoil -> best between 0-1
+export var recoil_position_offset: Vector3 = Vector3(0, 0, 0.1)
 
 func _ready(): 
 	connect("picked_up", self, "picked_up")
@@ -73,8 +77,6 @@ func recoil():
 		HoldMethod.REMOTE_TRANSFORM: 
 			# apply recoil offsets 
 			_remote_transform.transform.basis *= Basis(recoil_rotation_offset)
-			
-			# multiply by 0.01 for finer control over translation 
 			_remote_transform.transform.origin = (_remote_transform.transform.basis.z.normalized() * recoil_position_offset)
 			
 		HoldMethod.REPARENT:
