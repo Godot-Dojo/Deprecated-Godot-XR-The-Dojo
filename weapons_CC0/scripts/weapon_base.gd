@@ -21,7 +21,7 @@ var casing = null
 var magazine_ammo : int = 0
 
 # initial transform when grabbed -> used for recoil recovery
-var grabbed_transform = Transform(Basis.IDENTITY, Vector3.ZERO)
+var grabbed_transform: Transform = Transform(Basis.IDENTITY, Vector3.ZERO)
 # recoil recover speed 
 export(float, 0, 1) var recoil_recover_speed = 0.2
 # rotation offset to be applied to recoil -> best between 0-1
@@ -82,7 +82,7 @@ func recoil():
 		HoldMethod.REPARENT:
 			pass
 			
-func recoil_recover(speed): 
+func recoil_recover(): 
 	# grab method check 
 	match hold_method: 
 		HoldMethod.REMOTE_TRANSFORM: 
@@ -91,16 +91,17 @@ func recoil_recover(speed):
 			var quat = Quat(basis)
 			var quat_slerped = quat.slerp(
 				Quat(grabbed_transform.basis), 
-				speed
+				recoil_recover_speed
 			)
+			
 			# update basis 
 			_remote_transform.transform.basis = Basis(quat_slerped)
 			
-			# update origin 
+			# lerp origin to initial position 
 			_remote_transform.transform.origin = lerp(
 				_remote_transform.transform.origin, 
 				grabbed_transform.origin, 
-				speed
+				recoil_recover_speed
 			)
 
 		HoldMethod.REPARENT: 
@@ -128,10 +129,9 @@ func _process(delta):
 		mag_zone.grap_require = "none"
 		if get_node_or_null("Scope_Zone") != null:
 			$Scope_Zone.grap_require = "none"
-	else: 
-		recoil_recover(recoil_recover_speed)
-		
+
 	if is_picked_up():
+		recoil_recover()
 		mag_zone.grap_require = ""
 		if get_node_or_null("Scope_Zone") != null:
 			$Scope_Zone.grap_require = ""
