@@ -260,6 +260,7 @@ enable_audio_input=true
 
 GameSignals="*res://dojo/gamelogic/GameSignals.gd"
 GameState="*res://dojo/gamelogic/GameState.gd"
+Draw3d="*res://utility/Draw3d.gd"
 
 [display]
 

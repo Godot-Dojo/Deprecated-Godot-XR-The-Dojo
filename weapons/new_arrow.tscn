@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://weapons/materials/10490_bow_quiver_arrow_v1_diffuse.material" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=2]
-[ext_resource path="res://weapons/scripts/new_arrow.gd" type="Script" id=3]
 [ext_resource path="res://weapons/scripts/stab_logic.gd" type="Script" id=4]
 
 [sub_resource type="ArrayMesh" id=4]
@@ -30,9 +29,7 @@ script = ExtResource( 2 )
 
 [node name="stab_logic" type="Node" parent="."]
 script = ExtResource( 4 )
-
-[node name="logic" type="Spatial" parent="."]
-script = ExtResource( 3 )
+velocity_threshold = 5.0
 
 [node name="arrow" type="MeshInstance" parent="."]
 transform = Transform( -6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 0, 0, -0.473351 )
@@ -47,13 +44,14 @@ shape = SubResource( 5 )
 [node name="PickupCenter" type="Spatial" parent="."]
 transform = Transform( 1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, -3.59989e-21, -4.37114e-08, 1, -4.37114e-08, 0, -0.000617545, -0.585391 )
 
-[node name="tip" type="RayCast" parent="."]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, -1 )
+[node name="base" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.192574 )
+
+[node name="ray" type="RayCast" parent="base"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0.000962466 )
 enabled = true
-cast_to = Vector3( 0, 0, -5 )
+cast_to = Vector3( 0, 0, -10 )
 
-[node name="disappear" type="Timer" parent="."]
-wait_time = 20.0
-
-[connection signal="dropped" from="." to="logic" method="_on_arrow_dropped"]
-[connection signal="picked_up" from="." to="logic" method="_on_arrow_picked_up"]
+[node name="tip" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.11263 )
+visible = false
