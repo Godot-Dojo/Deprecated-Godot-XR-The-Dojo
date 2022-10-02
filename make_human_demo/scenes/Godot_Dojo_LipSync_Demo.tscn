@@ -4,13 +4,13 @@
 [ext_resource path="res://managers/WeaponManager.gd" type="Script" id=2]
 [ext_resource path="res://sounds/Midnight in the Green House.mp3" type="AudioStream" id=3]
 [ext_resource path="res://managers/SceneManager.tscn" type="PackedScene" id=4]
-[ext_resource path="res://dojo/SliceableWoodenman.tscn" type="PackedScene" id=5]
+[ext_resource path="res://dojo/environment/SliceableWoodenman.tscn" type="PackedScene" id=5]
 [ext_resource path="res://weapons/Slicing_Katana_S.tscn" type="PackedScene" id=6]
 [ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_lipsync_player.tscn" type="PackedScene" id=7]
 [ext_resource path="res://weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=8]
-[ext_resource path="res://dojo/HolderForPickableSwords.tscn" type="PackedScene" id=9]
+[ext_resource path="res://dojo/environment/HolderForPickableSwords.tscn" type="PackedScene" id=9]
 [ext_resource path="res://weapons/Slicing_Katana_M.tscn" type="PackedScene" id=10]
-[ext_resource path="res://dojo/DojoWithColliders.tscn" type="PackedScene" id=11]
+[ext_resource path="res://dojo/environment/DojoWithColliders.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ViewportTexture" id=5]
 viewport_path = NodePath("Viewport")

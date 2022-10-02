@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://dojo/environment/materials/woodenman_mat.tres" type="Material" id=1]
+
+[node name="Woodenman"]
+
+[node name="Woodenman" parent="." index="0"]
+material/0 = ExtResource( 1 )

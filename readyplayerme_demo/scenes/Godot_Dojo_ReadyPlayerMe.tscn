@@ -1,10 +1,10 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://readyplayerme_demo/scenes/avatar_player_readyplayerme.tscn" type="PackedScene" id=1]
-[ext_resource path="res://dojo/DojoWithColliders.tscn" type="PackedScene" id=2]
+[ext_resource path="res://dojo/environment/DojoWithColliders.tscn" type="PackedScene" id=2]
 [ext_resource path="res://weapons/Slicing_Katana_S.tscn" type="PackedScene" id=3]
-[ext_resource path="res://dojo/SliceableWoodenman.tscn" type="PackedScene" id=4]
-[ext_resource path="res://dojo/HolderForPickableSwords.tscn" type="PackedScene" id=5]
+[ext_resource path="res://dojo/environment/SliceableWoodenman.tscn" type="PackedScene" id=4]
+[ext_resource path="res://dojo/environment/HolderForPickableSwords.tscn" type="PackedScene" id=5]
 [ext_resource path="res://weapons/Slicing_Katana_M.tscn" type="PackedScene" id=6]
 [ext_resource path="res://weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=7]
 [ext_resource path="res://managers/HapticManager.gd" type="Script" id=8]
