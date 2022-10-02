@@ -1,10 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://addons/godot-xr-tools/objects/Object_pickable.gd" type="Script" id=1]
+[ext_resource path="res://weapons/scripts/spear.gd" type="Script" id=1]
 [ext_resource path="res://addons/slicer/slicer.gd" type="Script" id=2]
 
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.0160819, 0.10266, 0.024808 )
+
 [sub_resource type="ConvexPolygonShape" id=2]
-points = PoolVector3Array( 0.0089548, -0.934802, -0.0171615, 0.0089548, -0.677696, 0.0263759, -0.0128088, -0.677696, 0.0263759, -0.0215194, 0.967977, -0.0128037, 0.0176602, 0.967977, 0.0176654, 0.0220181, 0.967977, -0.00845098, -0.0128088, -0.6951, -0.0258772, 0.0263759, -0.703803, 0.0089548, -0.00846121, 0.967977, 0.0220181, -0.0258772, -0.6951, 0.0133075, 0.0133075, -0.6951, -0.0258772, -0.00410337, -1.03033, 0.0089548, -0.0258772, -0.677696, -0.0128037, 0.0263759, -0.677696, -0.0128037, -0.00410337, -0.904345, -0.0258772, 0.00460208, -0.899796, 0.0263759, -0.0258772, -0.812776, 0.00460208, 0.0220181, -0.817127, -0.0128037, -0.0128088, -0.817127, 0.0220181, 0.00842352, -0.949784, 0.000249352, 0.0133075, -0.812776, 0.0220181, 0.0263759, -0.677696, 0.0089548, -0.0171667, -0.73426, -0.0215194, 0.0263759, -0.729909, -0.00409826, 0.000249354, -1.00145, 0.00870041, -0.0171667, -0.721207, 0.0220181, 0.0089548, -0.703803, 0.0263759 )
+points = PoolVector3Array( 0.009, -0.91, -0.017, 0.009, -0.91, 0.026, -0.013, -0.91, 0.026, -0.003, 0.96, -0.021, 0.013, 0.96, 0.017, 0.022, 0.96, -0.008, -0.013, -0.91, -0.026, 0.026, -0.91, 0.009, -0.008, -0.91, 0.022, -0.026, -0.91, 0.013, 0.013, -0.91, -0.026, -0.004, -0.91, 0.009, -0.026, -0.91, -0.013, 0.026, -0.91, -0.013, -0.004, -0.91, -0.026, 0.005, -0.91, 0.026, -0.026, -0.91, 0.005, 0.022, -0.91, -0.013, -0.013, -0.91, 0.022, 0.008, -0.91, 0, 0.013, -0.91, 0.022, 0.026, -0.91, 0.009, -0.017, -0.91, -0.022, 0.026, -0.91, -0.004, 0, -0.91, 0.009, -0.017, -0.91, 0.022, 0.009, -0.91, 0.026, -0.009, 0.968, 0.017, -0.022, 0.96, -0.001 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.345098, 0.235294, 0, 1 )
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "spear_Mesh"
@@ -15,27 +21,34 @@ surfaces/0 = {
 "blend_shape_data": [  ],
 "format": 2194711,
 "index_count": 2112,
+"material": SubResource( 4 ),
 "primitive": 4,
 "skeleton_aabb": [  ],
 "vertex_count": 685
 }
 
 [node name="Stabber_Spear" type="RigidBody"]
-collision_mask = 131073
 script = ExtResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
 ranged_grab_method = 2
+enabled = true
+path_base = NodePath("blade_base")
+path_tip = NodePath("SlicingArea/mesh/A")
+velocity_threshold = 0.2
+angle_threshold = 45.0
 
 [node name="PickupCenter" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.05 )
+transform = Transform( 1.03699, 0, 0, 0, 1.03699, 0, 0, 0, 1.03699, -0.00135594, 0.105013, 0.0509246 )
 
 [node name="SlicingArea" type="Area" parent="."]
+transform = Transform( 1.03699, 0, 0, 0, 1.03699, 0, 0, 0, 1.03699, -0.00135594, 0.0141983, -0.000924617 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="SlicingArea"]
-shape = SubResource( 2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.941518, 0 )
+shape = SubResource( 3 )
 
 [node name="mesh" type="MeshInstance" parent="SlicingArea"]
 
@@ -49,18 +62,33 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.89, 0.023 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.89, -0.023 )
 
 [node name="SpearKinematic" type="KinematicBody" parent="."]
+transform = Transform( 1.03699, 0, 0, 0, 1.03699, 0, 0, 0, 1.03699, -0.00135594, 0.0141983, -0.000924617 )
 collision_layer = 0
 collision_mask = 131072
 
 [node name="CollisionShape" type="CollisionShape" parent="SpearKinematic"]
+transform = Transform( 1, 0, 0, 0, 0.950568, 0, 0, 0, 1, 0, 0.0438235, 0 )
 shape = SubResource( 2 )
 
 [node name="Spear" type="MeshInstance" parent="."]
+transform = Transform( 1.03699, 0, 0, 0, 1.03699, 0, 0, 0, 1.03699, -0.00665224, 0.00893697, 0.00152038 )
 mesh = SubResource( 1 )
 skeleton = NodePath("")
+material/0 = null
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1.03699, 0, 0, 0, 0.988536, 0, 0, 0, 1.03699, -0.00135594, 0.0588951, -0.000924617 )
 shape = SubResource( 2 )
+
+[node name="spear_base" type="Position3D" parent="."]
+transform = Transform( 1.07534, 0, 0, 0, 1.07534, 0, 0, 0, 1.07534, -0.00276204, 0.622701, -0.00188343 )
+
+[node name="blade_base" type="Position3D" parent="."]
+transform = Transform( 1.03699, 0, 0, 0, 1.03699, 0, 0, 0, 1.03699, -0.00135594, -0.85511, -0.000924617 )
+
+[node name="RayCast" type="RayCast" parent="blade_base"]
+enabled = true
+cast_to = Vector3( 0, -0.2, 0 )
 
 [connection signal="body_entered" from="SlicingArea" to="SlicingArea" method="_on_SlicingArea_body_entered"]
 [connection signal="body_exited" from="SlicingArea" to="SlicingArea" method="_on_SlicingArea_body_exited"]
