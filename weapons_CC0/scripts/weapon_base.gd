@@ -141,7 +141,7 @@ func _process(delta):
 			if by_controller.is_button_pressed(by_controller.get_node("Function_Pickup").action_button_id):
 				action()
 	
-func picked_up(): 
+func picked_up(s): 
 	match hold_method: 
 		HoldMethod.REMOTE_TRANSFORM:
 			grabbed_transform = _remote_transform.transform
