@@ -14,7 +14,7 @@ radius = 0.05
 height = 0.05
 
 [node name="Bullet" type="RigidBody" groups=["bullets"]]
-collision_layer = 6
+collision_layer = 1030
 collision_mask = 6
 input_ray_pickable = false
 continuous_cd = true
