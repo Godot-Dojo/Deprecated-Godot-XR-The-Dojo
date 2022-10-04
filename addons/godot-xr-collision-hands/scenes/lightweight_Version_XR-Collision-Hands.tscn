@@ -1,0 +1,96 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends KinematicBody
+
+export (NodePath) var controller_path = null
+export (NodePath) var physics_hand_path = null
+export (NodePath) var pickup_path = null
+
+export var max_distance : float = 0.2
+export var slide_speed : float = 10.0
+
+onready var controller = get_node(controller_path)
+onready var physics_hand = get_node(physics_hand_path)
+onready var pickup = get_node(pickup_path)
+onready var hand_shape : CollisionShape = $CollisionShape
+onready var hr_transform : RemoteTransform = $HandRemoteTransform
+onready var pr_transform : RemoteTransform = $PickupRemoteTransform
+
+
+var collider_list : Array = []
+const controller_offset : float = 0.03
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	hr_transform.set_transform(physics_hand.get_transform())
+	hr_transform.set_remote_node(\"../\" + physics_hand_path)
+	pr_transform.set_transform(pickup.get_transform())
+	pr_transform.set_remote_node(\"../\" + pickup_path)
+	pickup.connect(\"has_picked_up\", self, \"create_colliders\")
+	pickup.connect(\"has_dropped\", self, \"remove_colliders\")
+	
+	if controller.controller_id == 1:
+		controller.translate(Vector3(-controller_offset, 0, 0))
+	elif controller.controller_id == 2:
+		controller.translate(Vector3(controller_offset, 0, 0))
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	move_to(controller)
+	check_for_drop()
+
+func move_to(target):
+	var t_pos = target.global_transform.origin
+	var s_pos = self.global_transform.origin
+	var dir = t_pos - s_pos
+	if test_move(controller.global_transform, t_pos):
+		move_and_slide(dir * (slide_speed/max(1, dir.length())))
+		self.rotation = controller.rotation
+	else:
+		self.transform = controller.transform
+
+func check_for_drop():
+	var c_pos = controller.global_transform.origin
+	var s_pos = self.global_transform.origin
+	var face_pos = self.get_parent().global_transform.origin
+	var s_dist = s_pos.distance_to(face_pos)
+	var c_dist = c_pos.distance_to(face_pos)
+	if s_dist > c_dist + max_distance:
+		pickup.drop_object()
+		remove_colliders()
+		self.transform = controller.transform
+
+func create_colliders(node):
+	if is_instance_valid(node) and node.has_method(\"get_collider_dict\"):
+		var col_dict : Dictionary = node.get_collider_dict()
+		for key in col_dict.keys():
+			var dupe_col = key.duplicate()
+			dupe_col.transform = col_dict[key]
+			collider_list.append(dupe_col)
+			self.add_child(dupe_col)
+	else:
+		print_debug(\"Object \", node, \" not available for hand collisions\")
+
+func remove_colliders():
+	for col in collider_list:
+		col.queue_free()
+	collider_list = []
+"
+
+[sub_resource type="CylinderShape" id=1]
+height = 0.2
+radius = 0.04
+
+[node name="xr_collision_hands" type="KinematicBody"]
+collision_layer = 1024
+collision_mask = 1025
+script = SubResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.05, 0.07 )
+shape = SubResource( 1 )
+
+[node name="HandRemoteTransform" type="RemoteTransform" parent="."]
+
+[node name="PickupRemoteTransform" type="RemoteTransform" parent="."]
