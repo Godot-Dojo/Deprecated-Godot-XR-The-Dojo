@@ -92,6 +92,7 @@ bullet_scene = ExtResource( 4 )
 casing_scene = ExtResource( 5 )
 max_bullets = 2
 is_ShotGun = true
+triggerPath = NodePath("doublebarrelshotgun/Trigger2/Trigger")
 
 [node name="PickupCenter" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.893888, -0.44829, 0, 0.44829, 0.893888, 0, 0, 0 )

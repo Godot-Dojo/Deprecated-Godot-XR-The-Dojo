@@ -89,6 +89,7 @@ group_name = "9mm"
 bullet_scene = ExtResource( 3 )
 casing_scene = ExtResource( 4 )
 max_bullets = 15
+triggerPath = NodePath("glock/Trigger")
 
 [node name="FirearmSlide" type="RigidBody" parent="."]
 script = ExtResource( 8 )
