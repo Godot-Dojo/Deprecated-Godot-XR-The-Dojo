@@ -30,6 +30,7 @@ export var recoil_rotation_offset: Vector3 = Vector3(0.3, 0, 0)
 export var recoil_position_offset: Vector3 = Vector3(0, 0, 0.1)
 
 func _ready(): 
+	hold_method = HoldMethod.REMOTE_TRANSFORM
 	connect("picked_up", self, "picked_up")
 
 func action():
@@ -72,41 +73,18 @@ func action():
 		recoil()
 
 func recoil(): 
-	# grab method check 
-	match hold_method: 
-		HoldMethod.REMOTE_TRANSFORM: 
-			# apply recoil offsets 
-			_remote_transform.transform.basis *= Basis(recoil_rotation_offset)
-			_remote_transform.transform.origin = (_remote_transform.transform.basis.z.normalized() * recoil_position_offset)
-			
-		HoldMethod.REPARENT:
-			pass
-			
-func recoil_recover(): 
-	# grab method check 
-	match hold_method: 
-		HoldMethod.REMOTE_TRANSFORM: 
-			# slerp rotation to initial rotation 
-			var basis = _remote_transform.transform.basis
-			var quat = Quat(basis)
-			var quat_slerped = quat.slerp(
-				Quat(grabbed_transform.basis), 
-				recoil_recover_speed
-			)
-			
-			# update basis 
-			_remote_transform.transform.basis = Basis(quat_slerped)
-			
-			# lerp origin to initial position 
-			_remote_transform.transform.origin = lerp(
-				_remote_transform.transform.origin, 
-				grabbed_transform.origin, 
-				recoil_recover_speed
-			)
+	# apply recoil transform 
+	_remote_transform.transform = Transform(
+		_remote_transform.transform.basis * Basis(recoil_rotation_offset),
+		(_remote_transform.transform.basis.z.normalized() * recoil_position_offset)
+	)
 
-		HoldMethod.REPARENT: 
-			pass
-			
+func recoil_recover(): 
+	# lerp transform to grabbed transform 
+	_remote_transform.transform = _remote_transform.transform.interpolate_with(
+		grabbed_transform, recoil_recover_speed
+	)
+
 #When shot timer expires, allow shot again
 func _on_ShotTimer_timeout():
 	can_shoot = true
@@ -131,7 +109,10 @@ func _process(delta):
 			$Scope_Zone.grap_require = "none"
 
 	if is_picked_up():
-		recoil_recover()
+		# recover transform from recoil if not at grabbed transform
+		if !_remote_transform.transform.is_equal_approx(grabbed_transform): 
+			recoil_recover()
+			
 		mag_zone.grap_require = ""
 		if get_node_or_null("Scope_Zone") != null:
 			$Scope_Zone.grap_require = ""
@@ -142,8 +123,4 @@ func _process(delta):
 				action()
 	
 func picked_up(s): 
-	match hold_method: 
-		HoldMethod.REMOTE_TRANSFORM:
-			grabbed_transform = _remote_transform.transform
-		HoldMethod.REPARENT: 
-			grabbed_transform = transform
+	grabbed_transform = _remote_transform.transform
