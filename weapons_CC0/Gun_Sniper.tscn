@@ -4,13 +4,14 @@
 [ext_resource path="res://dojo/backpack/ring_small.png" type="Texture" id=2]
 [ext_resource path="res://addons/godot-xr-tools/objects/Snap_Zone.tscn" type="PackedScene" id=3]
 [ext_resource path="res://weapons_CC0/ammo/Casing.tscn" type="PackedScene" id=4]
-[ext_resource path="res://weapons/trailmaterial.tres" type="Material" id=5]
+[ext_resource path="res://weapons/materials/trailmaterial.tres" type="Material" id=5]
 [ext_resource path="res://weapons_CC0/textures/Sniper/SniperScope.png" type="Texture" id=6]
 [ext_resource path="res://weapons_CC0/ammo/Bullet.tscn" type="PackedScene" id=7]
 [ext_resource path="res://weapons_CC0/materials/gun_sniper_mat.tres" type="Material" id=8]
 [ext_resource path="res://default_env.tres" type="Environment" id=9]
 [ext_resource path="res://dojo/backpack/ring_long.png" type="Texture" id=10]
 [ext_resource path="res://weapons_CC0/sfx/freesound.org/514228__superphat__sniper-rifle.wav" type="AudioStream" id=11]
+
 
 [sub_resource type="ConvexPolygonShape" id=9]
 points = PoolVector3Array( 0.797502, 47.7257, 8.12896, 1.01978, 50.3947, 5.46343, -1.64629, 45.0567, -1.20039, -0.979472, -30.037, -0.535033, -0.757197, 47.7257, 8.12896, 1.01978, -25.3604, -0.756819, 1.46432, 45.7181, -0.0904372, 0.321873, 43.4348, -1.94687, 0.353259, -30.037, 0.132372, -0.979472, -26.4705, -1.20039, -1.20175, 49.4972, -0.0904372, -0.757197, 43.2774, 8.12896, 1.46432, 27.5076, -1.20039, 0.797502, 43.2774, 8.12896, -1.64629, 45.9385, -0.0904372, 0.764596, 48.041, -1.47635, 1.01978, -17.5739, -1.20039, 1.46432, 27.5076, -0.0904372, -1.42402, 46.159, -1.64499, -0.979472, 50.3947, 5.46343, 1.24205, 49.4972, -0.0904372, -0.501091, 43.1907, -1.91123, 0.7308, -27.0178, -1.09802, 1.01978, 50.3947, 3.2425, -0.519771, 48.1291, -1.70063, 1.01978, -24.0298, -0.535033, 1.14834, 43.2196, -1.32489, 0.797502, 48.8358, 7.46258, -0.31265, 50.3947, 3.2425, 0.321873, 42.6148, -1.94687, -0.757197, 48.8358, 7.46258, 1.16636, 47.2647, -0.967108, -0.712456, -27.3362, -1.13231, -1.64629, 45.0567, -0.312224, 1.31856, 42.3873, -0.815328 )

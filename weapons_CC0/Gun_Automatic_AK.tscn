@@ -2,12 +2,13 @@
 
 [ext_resource path="res://weapons_CC0/materials/gun_ak_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Snap_Zone.tscn" type="PackedScene" id=2]
-[ext_resource path="res://weapons/trailmaterial.tres" type="Material" id=3]
+[ext_resource path="res://weapons/materials/trailmaterial.tres" type="Material" id=3]
 [ext_resource path="res://dojo/backpack/ring_long.png" type="Texture" id=4]
 [ext_resource path="res://weapons_CC0/ammo/Bullet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://weapons_CC0/ammo/Casing.tscn" type="PackedScene" id=6]
 [ext_resource path="res://weapons_CC0/sfx/freesound.org/514228__superphat__sniper-rifle.wav" type="AudioStream" id=7]
 [ext_resource path="res://weapons_CC0/scripts/weapon_base.gd" type="Script" id=10]
+
 
 [sub_resource type="SphereMesh" id=4]
 radius = 0.075
