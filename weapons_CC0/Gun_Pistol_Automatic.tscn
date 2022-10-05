@@ -104,7 +104,7 @@ forward_impulse_strength = 100.0
 [node name="FirearmTriggerRotator" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0233897, 0.00243038 )
 script = ExtResource( 9 )
-end_rotation_degrees = Vector3( -23, 0, 0 )
+end_rotation_degrees = Vector3( -25, 0, 0 )
 
 [node name="Trigger" type="MeshInstance" parent="FirearmTriggerRotator"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0233897, -0.00243038 )
@@ -113,6 +113,7 @@ skeleton = NodePath("../../glock")
 material/0 = ExtResource( 1 )
 
 [node name="FirearmSlide" type="RigidBody" parent="."]
+collision_mask = 131073
 script = ExtResource( 8 )
 slide_recover_speed = 0.2
 

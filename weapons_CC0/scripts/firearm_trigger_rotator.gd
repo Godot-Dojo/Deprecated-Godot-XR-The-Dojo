@@ -1,4 +1,4 @@
-class_name FirearmTrigger
+class_name FirearmTriggerRotator
 extends Spatial
 
 export var enabled: bool = true 
