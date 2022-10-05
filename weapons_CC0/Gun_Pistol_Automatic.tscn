@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://weapons_CC0/materials/gun_pistol_automatic_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Snap_Zone.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://dojo/backpack/ring_long.png" type="Texture" id=7]
 [ext_resource path="res://weapons_CC0/scripts/firearm_slide.gd" type="Script" id=8]
 [ext_resource path="res://weapons_CC0/scripts/firearm_trigger_rotator.gd" type="Script" id=9]
+[ext_resource path="res://weapons_CC0/particles/MuzzleParticles.tscn" type="PackedScene" id=10]
+[ext_resource path="res://weapons_CC0/particles/SmokeParticles.tscn" type="PackedScene" id=11]
 [ext_resource path="res://weapons/materials/trailmaterial.tres" type="Material" id=15]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -94,6 +96,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0119917, -0.132071 )
 script = ExtResource( 4 )
 scene = ExtResource( 3 )
 forward_impulse_strength = 2000.0
+
+[node name="MuzzleParticles" parent="FirearmProjectileSpawner" instance=ExtResource( 10 )]
+
+[node name="SmokeParticles" parent="FirearmProjectileSpawner" instance=ExtResource( 11 )]
 
 [node name="FirearmEjector" type="Spatial" parent="."]
 transform = Transform( -0.0575123, -0.694886, -0.716816, 0.00323204, 0.717871, -0.696168, 0.99834, -0.042355, -0.0390405, 0.0257245, 0.0286001, -0.0103258 )

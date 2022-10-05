@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=2]
+
+[sub_resource type="Gradient" id=101]
+offsets = PoolRealArray( 0, 0.309645, 0.594595, 0.915916 )
+colors = PoolColorArray( 1, 0, 0, 1, 1, 0.503907, 0, 1, 1, 0.858398, 0, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=102]
+gradient = SubResource( 101 )
+
+[sub_resource type="Curve" id=103]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.531818, 0.630682 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.221591 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=104]
+curve = SubResource( 103 )
+
+[sub_resource type="ParticlesMaterial" id=105]
+direction = Vector3( 0, 0, 1 )
+spread = 35.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 1.0
+scale = 0.5
+scale_curve = SubResource( 104 )
+color_ramp = SubResource( 102 )
+
+[sub_resource type="SpatialMaterial" id=106]
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id=107]
+material = SubResource( 106 )
+size = Vector2( 0.08, 0.08 )
+
+[node name="MuzzleParticles" type="Particles"]
+cast_shadow = 0
+emitting = false
+amount = 24
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB( -0.0972793, -0.106429, -0.153022, 0.194559, 0.212857, 0.306044 )
+process_material = SubResource( 105 )
+draw_pass_1 = SubResource( 107 )

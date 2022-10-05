@@ -12,6 +12,8 @@ export var is_full_automatic : bool = false
 export(NodePath) var triggerPath # set in the inspector once
 onready var trigger = get_node(triggerPath)
 onready var mag_zone = $Mag_Zone
+onready var _muzzleflash: Particles = $FirearmProjectileSpawner/MuzzleParticles
+onready var _smoke: Particles = $FirearmProjectileSpawner/SmokeParticles
 var can_shoot : bool = true
 var magazine_ammo : int = 0
 
@@ -38,7 +40,7 @@ func action():
 		var audio = owner.get_node("{}/audio".format([name], "{}"));
 		# Get effects node
 		var effect = owner.get_node("{}/effect".format([name], "{}"));
-		
+
 		# If shot timer has expired, and either magazine clip has bullets or gun has "one in the chamber", allow shooting
 		if magazine_ammo >= 1 or current_ammo >= 1:
 			# First check if magazine has the ammo, and if so, subtract bullet from magazine ammo count and from actual magazine
@@ -51,6 +53,8 @@ func action():
 			# If magazine doesn't have bullet, that means there must be "one in the chamber" so use up that bullet instead
 			else:
 				current_ammo -= 1
+			_muzzleflash.restart()
+			_smoke.restart()
 			$GunSound.play(.4)
 			recoil()
 			emit_signal("shoot")
