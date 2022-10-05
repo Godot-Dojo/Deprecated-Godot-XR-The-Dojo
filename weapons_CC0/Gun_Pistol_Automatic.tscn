@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://weapons_CC0/materials/gun_pistol_automatic_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Snap_Zone.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://weapons_CC0/scripts/firearm_trigger_rotator.gd" type="Script" id=9]
 [ext_resource path="res://weapons_CC0/particles/MuzzleParticles.tscn" type="PackedScene" id=10]
 [ext_resource path="res://weapons_CC0/particles/SmokeParticles.tscn" type="PackedScene" id=11]
+[ext_resource path="res://weapons_CC0/sfx/opengameart/click.ogg" type="AudioStream" id=12]
 [ext_resource path="res://weapons/materials/trailmaterial.tres" type="Material" id=15]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -147,6 +148,10 @@ wait_time = 0.25
 [node name="GunSound" type="AudioStreamPlayer3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0873425, 0.057828 )
 stream = ExtResource( 6 )
+
+[node name="ClickSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0873425, 0.057828 )
+stream = ExtResource( 12 )
 
 [node name="Mag_Zone" parent="." instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00731404, 0.00701837 )

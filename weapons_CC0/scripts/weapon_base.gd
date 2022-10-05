@@ -34,8 +34,8 @@ func _ready():
 	connect("picked_up", self, "picked_up")
 
 func action():
-	emit_signal("action_pressed", self)
 	if can_shoot:
+		emit_signal("action_pressed", self)
 		# Get audio node
 		var audio = owner.get_node("{}/audio".format([name], "{}"));
 		# Get effects node
@@ -59,15 +59,15 @@ func action():
 			recoil()
 			emit_signal("shoot")
 			
-			if current_ammo <= 0: 
+			if current_ammo <= 0:
 				emit_signal("ammo_depleted")
-		
+				$ClickSound.play()
+		if current_ammo <= 0:
+			$ClickSound.play()	
 		# Make player wait until time designated for gun to allow next shot
 		can_shoot = false
 		$ShotTimer.wait_time = shot_timer_time
 		$ShotTimer.start()
-		
-
 func recoil(): 
 	# apply recoil transform 
 	_remote_transform.transform = Transform(
@@ -83,6 +83,8 @@ func recoil_recover():
 
 #When shot timer expires, allow shot again
 func _on_ShotTimer_timeout():
+	if current_ammo <= 0:
+		$ClickSound.stop()
 	can_shoot = true
 	
 func _on_Mag_Zone_has_picked_up(what):
@@ -115,7 +117,7 @@ func _process(delta):
 			if get_fire_input() > 0.5:
 				action()
 				
-func get_fire_input(): 
+func get_fire_input():
 	return by_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER)
 	
 func picked_up(s): 
