@@ -11,7 +11,7 @@ onready var start_translation: Vector3 = translation
 onready var firearm: Gun = get_parent()
 
 var grabbed_offset: Vector3 = Vector3.ZERO
-
+var slide_stopped: bool = false 
 signal on_slide_back 
 
 
@@ -21,9 +21,11 @@ func _ready():
 	reset_transform_on_pickup = false 
 	mode = RigidBody.MODE_STATIC
 	hold_method = HoldMethod.REMOTE_TRANSFORM
-
 	connect("picked_up", self, "picked_up")
 	
+	if is_instance_valid(firearm):
+		firearm.connect("shoot", self, "_shoot")
+		firearm.connect("ammo_depleted", self, "_ammo_depleted")
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
@@ -39,9 +41,10 @@ func _process(delta):
 		translation.z = get_parent().to_local(by_controller.global_transform.origin + grabbed_offset).z
 		translation.z = clamp(translation.z, start_translation.z, z_end_translation)
 		
-	else: 
+	else:
+		var slide_enabled = !slide_stopped and auto_slide_back 
 		# return slide to init translation 
-		if !translation.is_equal_approx(start_translation) and auto_slide_back:
+		if !translation.is_equal_approx(start_translation) and slide_enabled:
 			slide_return()
 	
 func slide_return(): 
@@ -62,3 +65,11 @@ func is_back() -> bool:
 
 func picked_up(s): 
 	grabbed_offset = global_transform.origin - by_controller.global_transform.origin
+	slide_stopped = false 
+	
+func _shoot(): 
+	set_slide_back()
+
+func _ammo_depleted(): 
+	slide_stopped = true
+	set_slide_back()
