@@ -9,7 +9,8 @@ export var auto_slide_back: bool = true
 
 onready var start_translation: Vector3 = translation
 onready var firearm: Gun = get_parent()
-
+export(NodePath) var sfxPath # set in the inspector once
+onready var slideSFX = get_node(sfxPath)
 var grabbed_offset: Vector3 = Vector3.ZERO
 var slide_stopped: bool = false 
 signal on_slide_back 
@@ -40,21 +41,23 @@ func _process(delta):
 		_remote_transform.remote_path = NodePath()
 		translation.z = get_parent().to_local(by_controller.global_transform.origin + grabbed_offset).z
 		translation.z = clamp(translation.z, start_translation.z, z_end_translation)
-		
+		slideSFX.play()
+		yield(get_tree().create_timer(0.65), "timeout")
+		slideSFX.stop()
 	else:
-		var slide_enabled = !slide_stopped and auto_slide_back 
+		var slide_enabled = !slide_stopped and auto_slide_back
 		# return slide to init translation 
 		if !translation.is_equal_approx(start_translation) and slide_enabled:
 			slide_return()
 	
-func slide_return(): 
+func slide_return():
 	# lerp to start translation 
 	translation = lerp(translation, start_translation, slide_recover_speed)
-
-func set_slide_back(): 
+	
+func set_slide_back():
 	# set slide to back position
 	translation.z = z_end_translation
-	
+
 func is_back() -> bool: 
 	# is slide in back position 
 	return translation.is_equal_approx(Vector3(
@@ -62,6 +65,9 @@ func is_back() -> bool:
 		start_translation.y, 
 		z_end_translation
 	))
+	slideSFX.play()
+	yield(get_tree().create_timer(0.65), "timeout")
+	slideSFX.stop()
 
 func picked_up(s): 
 	grabbed_offset = global_transform.origin - by_controller.global_transform.origin

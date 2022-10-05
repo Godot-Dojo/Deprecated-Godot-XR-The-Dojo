@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/slide.ogg-6efbe8864bbce0d30730485394d55dcd.oggstr"
+
+[deps]
+
+source_file="res://weapons_CC0/sfx/opengameart/slide.ogg"
+dest_files=[ "res://.import/slide.ogg-6efbe8864bbce0d30730485394d55dcd.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
