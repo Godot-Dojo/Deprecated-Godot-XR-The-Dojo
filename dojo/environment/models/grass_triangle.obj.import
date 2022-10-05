@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/grass_triangle.obj-283f73b5ccf02ffba9075ebacbec693a.mesh"
+
+[deps]
+
+files=[ "res://.import/grass_triangle.obj-283f73b5ccf02ffba9075ebacbec693a.mesh" ]
+
+source_file="res://dojo/environment/models/grass_triangle.obj"
+dest_files=[ "res://.import/grass_triangle.obj-283f73b5ccf02ffba9075ebacbec693a.mesh", "res://.import/grass_triangle.obj-283f73b5ccf02ffba9075ebacbec693a.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 0.1, 0.1, 0.1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=191

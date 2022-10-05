@@ -14,6 +14,21 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/misc/ARVR_Helpers.gd"
 }, {
+"base": "Spatial",
+"class": "FirearmProjectileSpawner",
+"language": "GDScript",
+"path": "res://weapons_CC0/scripts/firearm_projectile_spawner.gd"
+}, {
+"base": "XRToolsPickable",
+"class": "FirearmSlide",
+"language": "GDScript",
+"path": "res://weapons_CC0/scripts/firearm_slide.gd"
+}, {
+"base": "Spatial",
+"class": "FirearmTriggerRotator",
+"language": "GDScript",
+"path": "res://weapons_CC0/scripts/firearm_trigger_rotator.gd"
+}, {
 "base": "MovementProvider",
 "class": "Function_ClimbMovement",
 "language": "GDScript",
@@ -160,6 +175,36 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/objects/highlight/highlight_visible.gd"
 }, {
 "base": "Area",
+"class": "XRTInteractableAreaButton",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/interactables/xrt_interactable_area_button.gd"
+}, {
+"base": "XRToolsPickable",
+"class": "XRTInteractableHandle",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/interactables/xrt_interactable_handle.gd"
+}, {
+"base": "Spatial",
+"class": "XRTInteractableHandleDriven",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/interactables/xrt_interactable_handle_driven.gd"
+}, {
+"base": "XRTInteractableHandleDriven",
+"class": "XRTInteractableHinge",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/interactables/xrt_interactable_hinge.gd"
+}, {
+"base": "XRTInteractableHandleDriven",
+"class": "XRTInteractableJoystick",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/interactables/xrt_interactable_joystick.gd"
+}, {
+"base": "XRTInteractableHandleDriven",
+"class": "XRTInteractableSlider",
+"language": "GDScript",
+"path": "res://addons/godot-xr-tools/interactables/xrt_interactable_slider.gd"
+}, {
+"base": "Area",
 "class": "XRTSnapZone",
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/objects/Snap_Zone.gd"
@@ -211,6 +256,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "ARVRHelpers": "",
+"FirearmProjectileSpawner": "",
+"FirearmSlide": "",
+"FirearmTriggerRotator": "",
 "Function_ClimbMovement": "",
 "Function_CrouchMovement": "",
 "Function_DirectMovement": "",
@@ -240,6 +288,12 @@ _global_script_class_icons={
 "XRTHighlightMaterial": "",
 "XRTHighlightRing": "",
 "XRTHighlightVisible": "",
+"XRTInteractableAreaButton": "",
+"XRTInteractableHandle": "",
+"XRTInteractableHandleDriven": "",
+"XRTInteractableHinge": "",
+"XRTInteractableJoystick": "",
+"XRTInteractableSlider": "",
 "XRTSnapZone": "",
 "XRToolsHand": "res://addons/godot-xr-tools/editor/icons/XRToolsHand.svg",
 "XRToolsHandPhysicsBone": "",
@@ -274,7 +328,7 @@ window/vsync/use_vsync=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/ActiveRGR/plugin.cfg", "res://addons/destruction/plugin.cfg", "res://addons/godot-openxr/plugin.cfg", "res://addons/godot-xr-tools/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/destruction/plugin.cfg", "res://addons/godot-openxr/plugin.cfg", "res://addons/godot-xr-tools/plugin.cfg" )
 
 [gdnative]
 

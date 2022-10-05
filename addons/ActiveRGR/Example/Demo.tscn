@@ -4898,6 +4898,8 @@ bones/44/bound_children = [  ]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
 material/0 = SubResource( 80 )
+material/1 = null
+material/2 = null
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ANIMATED_MODEL"]
 autoplay = "run"

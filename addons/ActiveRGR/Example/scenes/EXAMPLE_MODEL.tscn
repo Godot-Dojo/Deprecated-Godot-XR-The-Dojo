@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://addons/ActiveRGR/Scripts/CreateRagdoll.gd" type="Script" id=1]
 [ext_resource path="res://addons/ActiveRGR/Scripts/RagdollBone.gd" type="Script" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://addons/ActiveRGR/Example/assets/Negro.material" type="Material" id=4]
 [ext_resource path="res://addons/ActiveRGR/Example/assets/Blanco.material" type="Material" id=5]
 [ext_resource path="res://addons/ActiveRGR/Example/assets/Azul.material" type="Material" id=6]
+
+[sub_resource type="CapsuleShape" id=80]
+radius = 0.472255
+height = 0.741075
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "mannequiny-0_bony_body002"
@@ -4728,7 +4732,31 @@ tracks/44/imported = false
 tracks/44/enabled = true
 tracks/44/keys = PoolRealArray( 0, 1, -0.00342865, 0.0226125, 0.00176127, -0.0255406, -0.199865, -0.014573, 0.979382, 1, 1, 1, 0.0416667, 1, -0.00342865, 0.0226125, 0.00176127, -0.0255406, -0.199865, -0.014573, 0.979382, 1, 1, 1 )
 
-[node name="EXAMPLE_MODEL" type="Spatial"]
+[sub_resource type="AnimationNodeAnimation" id=81]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=82]
+animation = "run"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=83]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=84]
+
+[sub_resource type="AnimationNodeStateMachine" id=85]
+states/idle/node = SubResource( 81 )
+states/idle/position = Vector2( -244.135, 79.5325 )
+states/run/node = SubResource( 82 )
+states/run/position = Vector2( -39.135, 79.5325 )
+transitions = [ "idle", "run", SubResource( 83 ), "run", "idle", SubResource( 84 ) ]
+graph_offset = Vector2( -324.135, -65.4675 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=86]
+
+[node name="EXAMPLE_MODEL" type="KinematicBody"]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.856405, -0.00732607 )
+shape = SubResource( 80 )
 
 [node name="root" type="Spatial" parent="."]
 
@@ -4964,6 +4992,9 @@ bone_whitelist = "0-16,29-32"
 [node name="body001" type="MeshInstance" parent="root/Skeleton"]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
+material/0 = null
+material/1 = null
+material/2 = null
 
 [node name="pelvis" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.998983, -0.0374975, -0.0250276, 0.0312499, 0.976096, -0.215083, 0.0324944, 0.214082, 0.976275, 0.00424036, 0.820861, 0.288183 )
@@ -5439,3 +5470,9 @@ anims/run_1 = SubResource( 48 )
 anims/run_2 = SubResource( 49 )
 anims/run_3 = SubResource( 50 )
 anims/run_4 = SubResource( 51 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 85 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 86 )
