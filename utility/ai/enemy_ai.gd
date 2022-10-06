@@ -88,7 +88,7 @@ func behaviour(delta):
 				move_type = MOVE_TYPE.WALK
 				state_machine.travel("walk")
 			else:
-				move_type = MOVE_TYPE.WALK
+				move_type = MOVE_TYPE.RUN
 				state_machine.travel("run")
 			action_state = ACTION.PURSUE
 		ACTION.PURSUE:
@@ -97,7 +97,6 @@ func behaviour(delta):
 			if dist_from_player > pursue_radius:
 				action_state = ACTION.IDLE
 				state_machine.travel("idle")
-			print(move_type)
 			match move_type:
 				MOVE_TYPE.RUN:
 					if dist_from_player < walk_radius:
