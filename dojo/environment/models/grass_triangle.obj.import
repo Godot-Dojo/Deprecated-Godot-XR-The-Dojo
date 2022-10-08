@@ -14,7 +14,7 @@ dest_files=[ "res://.import/grass_triangle.obj-283f73b5ccf02ffba9075ebacbec693a.
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 0.1, 0.1, 0.1 )
+scale_mesh=Vector3( 0.2, 0.1, 0.2 )
 offset_mesh=Vector3( 0, 0, 0 )
 octahedral_compression=true
 optimize_mesh_flags=191

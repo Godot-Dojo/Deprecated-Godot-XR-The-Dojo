@@ -16,7 +16,8 @@ export var turn_interpolation:float = .3
 export var pursue_radius:float = 50
 export var walk_radius:float = 20
 export var attack_radius:float = 1.5
-export var skeleton_path:NodePath
+export (NodePath) var skeleton_path
+export (NodePath) var arvrcamera_path = null
 signal dead
 var zero_basis = Basis(Vector3.ZERO,Vector3.ZERO,Vector3.ZERO)
 
@@ -76,7 +77,8 @@ func attack():
 
 
 func behaviour(delta):
-	var target = Vector3.ZERO #vr.vrCamera.global_transform.origin
+	var target = ARVRHelpers.get_arvr_camera(self,arvrcamera_path).global_transform.origin
+	#vr.vrCamera.global_transform.origin
 	target.y = 0 
 	var dist_from_player = global_transform.origin.distance_to(target)
 	match action_state:
