@@ -23,28 +23,6 @@
 [node name="ARVRCamera" parent="avatar_player/FPController" index="1"]
 current = true
 
-[node name="Skeleton" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
-bones/0/bound_children = [ NodePath("BoneRoot") ]
-bones/1/bound_children = [ NodePath("BoneThumbMetacarpal") ]
-bones/2/bound_children = [ NodePath("BoneThumbProximal") ]
-bones/3/bound_children = [ NodePath("BoneThumbDistal") ]
-bones/4/bound_children = [ NodePath("BoneIndexMetacarpal") ]
-bones/5/bound_children = [ NodePath("BoneIndexProximal") ]
-bones/6/bound_children = [ NodePath("BoneIndexMiddle") ]
-bones/7/bound_children = [ NodePath("BoneIndexDistal") ]
-bones/8/bound_children = [ NodePath("BoneMiddleMetacarpal") ]
-bones/9/bound_children = [ NodePath("BoneMiddleProximal") ]
-bones/10/bound_children = [ NodePath("BoneMiddleMiddle") ]
-bones/11/bound_children = [ NodePath("BoneMiddleDistal") ]
-bones/12/bound_children = [ NodePath("BoneRingMetacarpal") ]
-bones/13/bound_children = [ NodePath("BoneRingProximal") ]
-bones/14/bound_children = [ NodePath("BoneRingMiddle") ]
-bones/15/bound_children = [ NodePath("BoneRingDistal") ]
-bones/16/bound_children = [ NodePath("BonePinkyMetacarpal") ]
-bones/17/bound_children = [ NodePath("BonePinkyProximal") ]
-bones/18/bound_children = [ NodePath("BonePinkyMiddle") ]
-bones/19/bound_children = [ NodePath("BonePinkyDistal") ]
-
 [node name="BoneRoot" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, 0, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 0, 0.000360775, -0.0235019 )
 

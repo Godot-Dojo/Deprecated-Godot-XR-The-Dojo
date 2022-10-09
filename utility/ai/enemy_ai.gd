@@ -1,6 +1,6 @@
 extends KinematicBody
 onready var skeleton = $root/Skeleton
-onready var anim_tree = $AnimationTree
+onready var anim_tree = $root/AnimationTree
 onready var state_machine = anim_tree.get("parameters/playback")
 var action_state = null
 onready var nav = get_parent()
@@ -8,6 +8,7 @@ var path=[]
 var path_node=0
 var del = 0
 
+export (bool) var enabled = true
 export var speed:float = 0
 export var max_walk_speed:float = 3
 export var max_run_speed:float = 5
@@ -17,10 +18,10 @@ export var pursue_radius:float = 50
 export var walk_radius:float = 20
 export var attack_radius:float = 1.5
 export (NodePath) var skeleton_path
-export (NodePath) var arvrcamera_path = null
 signal dead
 var zero_basis = Basis(Vector3.ZERO,Vector3.ZERO,Vector3.ZERO)
-
+var target 
+var target_transform 
 enum ACTION{
 	IDLE,
 	PURSUE,
@@ -33,6 +34,9 @@ enum MOVE_TYPE{
 var move_type
 func _ready():
 	#physical_bones_setup()
+	target = get_tree().get_root().get_camera()
+	print(target)
+	print(target.name)
 	action_state = ACTION.IDLE
 
 func pathfinding(delta):
@@ -75,12 +79,11 @@ func attack():
 	else:
 		state_machine.travel("attack_down")
 
-
 func behaviour(delta):
-	var target = ARVRHelpers.get_arvr_camera(self,arvrcamera_path).global_transform.origin
+	target_transform = target.global_transform.origin
 	#vr.vrCamera.global_transform.origin
-	target.y = 0 
-	var dist_from_player = global_transform.origin.distance_to(target)
+	target_transform.y = 0 
+	var dist_from_player = global_transform.origin.distance_to(target_transform)
 	match action_state:
 		ACTION.IDLE:
 			if dist_from_player > pursue_radius:
@@ -108,9 +111,9 @@ func behaviour(delta):
 					if dist_from_player < attack_radius:
 						action_state = ACTION.ATTACKING
 					state_machine.travel("walk")
-			if del>1:
+			if del>3:
 				del = 0
-				move_to(target)
+				move_to(target_transform)
 		ACTION.ATTACKING:
 			if dist_from_player > attack_radius:
 				action_state = ACTION.PURSUE
@@ -121,9 +124,11 @@ func behaviour(delta):
 			set_physics_process(false) # start rigid body simulation i guess
 
 func _physics_process(delta):
+	if not enabled:
+		return
 	del+=delta
 	behaviour(delta)
-	
+
 var bone_offsets = {
 	"Hips":Transform(Vector3(1,0,0),Vector3(0,1,-.1),Vector3(0,.1,1),Vector3(0,5,-.5)*.01),
 	"Spine":Transform(Basis(),Vector3(0,6,0)*.01),

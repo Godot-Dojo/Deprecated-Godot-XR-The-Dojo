@@ -189,82 +189,89 @@ bind/44/name = "index_03.l"
 bind/44/bone = -1
 bind/44/pose = Transform( 0.229599, 0.630512, 0.741444, 0.973276, -0.145428, -0.17772, -0.00422835, 0.762434, -0.647053, -0.737912, -0.61675, -1.06658 )
 
-[sub_resource type="BoxShape" id=73]
-extents = Vector3( 0.129749, 0.1, 0.1 )
+[sub_resource type="CapsuleShape" id=87]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=54]
-radius = 0.059213
-height = 0.277893
+[sub_resource type="CapsuleShape" id=88]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=55]
-radius = 0.0465793
-height = 0.337707
+[sub_resource type="CapsuleShape" id=89]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=56]
-radius = 0.0516365
-height = 0.0708836
+[sub_resource type="CapsuleShape" id=90]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="BoxShape" id=74]
-extents = Vector3( 0.0488022, 0.0297627, 0.050734 )
+[sub_resource type="CapsuleShape" id=91]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=58]
-radius = 0.0784979
-height = 0.319586
+[sub_resource type="CapsuleShape" id=92]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=59]
-radius = 0.051138
-height = 0.373964
+[sub_resource type="CapsuleShape" id=93]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=60]
-radius = 0.074804
-height = 0.0414587
+[sub_resource type="CapsuleShape" id=94]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="BoxShape" id=75]
-extents = Vector3( 0.0708172, 0.0314845, 0.0733415 )
+[sub_resource type="CapsuleShape" id=95]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="BoxShape" id=76]
-extents = Vector3( 0.1, 0.1, 0.1 )
+[sub_resource type="CapsuleShape" id=96]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="BoxShape" id=77]
-extents = Vector3( 0.136989, 0.1, 0.131418 )
+[sub_resource type="CapsuleShape" id=97]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=64]
-radius = 0.0441477
-height = 0.0746791
+[sub_resource type="CapsuleShape" id=98]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=65]
-radius = 0.109345
-height = 0.0827482
+[sub_resource type="CapsuleShape" id=99]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=66]
-radius = 0.0462818
-height = 0.064459
+[sub_resource type="CapsuleShape" id=100]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=67]
-radius = 0.0502989
-height = 0.188151
+[sub_resource type="CapsuleShape" id=101]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=68]
-radius = 0.0371937
-height = 0.164405
+[sub_resource type="CapsuleShape" id=102]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="BoxShape" id=78]
-extents = Vector3( 0.0563223, 0.0288551, 0.0757601 )
+[sub_resource type="CapsuleShape" id=103]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=70]
-radius = 0.0507494
-height = 0.079006
+[sub_resource type="CapsuleShape" id=104]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=71]
-radius = 0.0467565
-height = 0.200598
+[sub_resource type="CapsuleShape" id=105]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="CapsuleShape" id=72]
-radius = 0.0361576
-height = 0.164288
+[sub_resource type="CapsuleShape" id=106]
+radius = 0.1
+height = 0.1
 
-[sub_resource type="BoxShape" id=79]
-extents = Vector3( 0.0628128, 0.0285024, 0.0615638 )
+[sub_resource type="CapsuleShape" id=107]
+radius = 0.1
+height = 0.1
 
 [sub_resource type="Animation" id=38]
 resource_name = "air_jump"
@@ -4998,462 +5005,352 @@ material/2 = null
 
 [node name="pelvis" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.998983, -0.0374975, -0.0250276, 0.0312499, 0.976096, -0.215083, 0.0324944, 0.214082, 0.976275, 0.00424036, 0.820861, 0.288183 )
-collision_layer = 2
-collision_mask = 1035
-mass = 1.39388
-axis_lock_linear_x = true
-axis_lock_linear_y = true
-axis_lock_linear_z = true
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
 script = ExtResource( 2 )
 bone_name = "pelvis"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/pelvis"]
-transform = Transform( 1, -2.23517e-08, 4.65661e-10, -4.65661e-10, -4.47035e-08, -1, -2.23517e-08, 1, -1.19209e-07, -0.0128864, 0.0521965, -0.0160881 )
-shape = SubResource( 73 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 87 )
 
 [node name="thigh_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.195641, -0.0192035, 0.980492, 0.673725, -0.723843, -0.148612, 0.712611, 0.689615, -0.128683, 0.106927, 0.797619, 0.290623 )
-collision_layer = 2
-collision_mask = 1035
-mass = 1.02041
 script = ExtResource( 2 )
 bone_name = "thigh.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/thigh_l"]
-transform = Transform( 1, -7.45058e-09, 2.98023e-08, -5.96046e-08, -2.98023e-08, -1, -1.49012e-08, 1, -6.70552e-08, 1.19209e-07, 0.204809, -7.07805e-08 )
-shape = SubResource( 54 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 88 )
 
 [node name="calf_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.0750088, -0.181694, 0.980494, -0.322385, -0.934826, -0.148584, 0.943651, -0.304975, -0.128699, 0.0994495, 0.515789, 0.55913 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.484694
 script = ExtResource( 2 )
 bone_name = "calf.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/calf_l"]
-transform = Transform( 1, -7.45058e-09, 0, 0, -7.45058e-08, -1, 0, 1, -5.21541e-08, 9.68575e-06, 0.216883, -2.98023e-08 )
-shape = SubResource( 55 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 89 )
 
 [node name="foot_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.992095, 0.10754, 0.0640495, -0.0307903, -0.705709, 0.707834, 0.121307, 0.700273, 0.703592, 0.0216948, 0.115738, 0.428618 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.145918
 script = ExtResource( 2 )
 bone_name = "foot.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/foot_l"]
-transform = Transform( 1, 3.07336e-08, 2.98023e-08, 4.47035e-08, -0.615799, -0.787903, -6.70552e-08, 0.787903, -0.615799, 9.16421e-07, 0.0634058, -0.00833341 )
-shape = SubResource( 56 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 90 )
 
 [node name="ball_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.999104, 0.0392585, -0.0130022, -0.00762964, -0.134261, -0.990882, -0.0406271, 0.990257, -0.133948, 0.0354528, 0.0256365, 0.518013 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.0510204
 script = ExtResource( 2 )
 bone_name = "ball.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/ball_l"]
-transform = Transform( 0.999999, 4.5402e-09, -3.72529e-09, 3.72529e-09, 0.0904756, -0.995899, -6.51926e-09, 0.995898, 0.0904757, -9.55537e-07, 0.0692461, -0.0137339 )
-shape = SubResource( 74 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 91 )
 
 [node name="thigh_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.147535, 0.00379142, -0.989044, 0.101376, -0.994778, 0.0113087, -0.983847, -0.101933, -0.147149, -0.0967015, 0.791207, 0.284058 )
-collision_layer = 2
-collision_mask = 1035
-mass = 1.02041
 script = ExtResource( 2 )
 bone_name = "thigh.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/thigh_r"]
-transform = Transform( 1, 7.45058e-08, 0, 1.49012e-08, -3.91155e-08, -1, 0, 1, -5.12227e-08, 5.96046e-08, 0.182117, 5.96046e-08 )
-shape = SubResource( 58 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 92 )
 
 [node name="calf_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.0596486, 0.134978, -0.989044, 0.881369, 0.472225, 0.0113065, 0.468637, -0.870945, -0.147151, -0.0952237, 0.403885, 0.244371 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.484694
 script = ExtResource( 2 )
 bone_name = "calf.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/calf_r"]
-transform = Transform( 1, -2.23517e-08, -2.98023e-08, 2.98023e-08, -2.98023e-08, -1, 1.49012e-08, 1, -4.47035e-08, 9.83477e-07, 0.232324, -1.2666e-07 )
-shape = SubResource( 59 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 93 )
 
 [node name="foot_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.983965, -0.130458, -0.121233, 0.121188, 0.00834256, -0.992586, 0.13046, -0.991422, 0.00750148, -0.0374611, 0.60597, -0.128343 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.145918
 script = ExtResource( 2 )
 bone_name = "foot.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/foot_r"]
-transform = Transform( 1, 4.47035e-08, -9.68575e-08, -4.47035e-08, -0.642734, -0.766091, -9.72068e-08, 0.76609, -0.642735, -3.40492e-06, 0.0723035, -0.0385014 )
-shape = SubResource( 60 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 94 )
 
 [node name="ball_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.99466, -0.0931393, 0.0435277, -0.0911566, -0.603233, 0.792314, -0.0474888, -0.792229, -0.608392, -0.0542163, 0.607071, -0.254904 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.0510204
 script = ExtResource( 2 )
 bone_name = "ball.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/ball_r"]
-transform = Transform( 1, 0, 5.21541e-08, 1.49012e-08, 0.0826857, -0.996576, 5.58794e-09, 0.996576, 0.0826859, 1.27405e-06, 0.0598594, -0.0163248 )
-shape = SubResource( 75 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 95 )
 
 [node name="spine_01" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.999593, 0.00521549, -0.0280636, -0.011946, 0.969361, -0.245351, 0.0259242, 0.245586, 0.969028, -0.000273946, 0.938372, 0.313956 )
-collision_layer = 2
-collision_mask = 1035
-mass = 1.32653
 script = ExtResource( 2 )
 bone_name = "spine_01"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/spine_01"]
-transform = Transform( 1, -1.86265e-09, -9.31323e-10, 1.86265e-09, -4.47035e-08, -1, 0, 1, -1.49012e-08, 3.72529e-09, 0.085743, 4.47035e-08 )
-shape = SubResource( 76 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 96 )
 
 [node name="spine_02" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.999969, 0.00612253, 0.00484624, -0.00223399, 0.819013, -0.573769, -0.00748205, 0.573741, 0.819, 0.000691567, 1.11782, 0.359418 )
-collision_layer = 2
-collision_mask = 1035
-mass = 2.04082
 script = ExtResource( 2 )
 bone_name = "spine_02"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/spine_02"]
-transform = Transform( 1, -1.86265e-09, 4.65661e-10, 3.72529e-09, -2.68221e-07, -1, 4.65661e-10, 1, -8.9407e-08, 1.25729e-08, 0.124732, -2.98023e-08 )
-shape = SubResource( 77 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 97 )
 
 [node name="neck_01" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.999851, 0.00758561, 0.0153034, 0.00937504, 0.505201, -0.862949, -0.0142773, 0.862967, 0.505055, 0.00219776, 1.3193, 0.500561 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.408163
 script = ExtResource( 2 )
 bone_name = "neck_01"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/neck_01"]
-transform = Transform( 1, -8.3819e-09, 3.72529e-09, 4.65661e-09, -4.47035e-07, -1, -7.45058e-09, 1, -2.68221e-07, 4.65661e-10, 0.0391921, 0 )
-shape = SubResource( 64 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 98 )
 
 [node name="head" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.999543, 0.00442179, -0.0299232, -0.0127584, 0.958585, -0.284521, 0.0274258, 0.284774, 0.958204, 0.00282728, 1.36123, 0.57218 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.842857
 script = ExtResource( 2 )
 bone_name = "head"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/head"]
-transform = Transform( 1, -1.86265e-09, 4.65661e-10, -4.65661e-10, 0.0447352, -0.998999, -9.31323e-09, 0.998998, 0.0447353, 1.49012e-08, 0.0799968, 0.00772658 )
-shape = SubResource( 65 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 99 )
 
 [node name="clavicle_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.306673, -0.949473, -0.0667137, -0.706336, 0.274002, -0.652695, 0.637996, -0.153041, -0.754677, -0.0416859, 1.25152, 0.484163 )
-collision_layer = 4
-collision_mask = 1035
 script = ExtResource( 2 )
 bone_name = "clavicle.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/clavicle_r"]
-transform = Transform( 1, 0, -8.19564e-08, -5.96046e-08, -3.72529e-08, -1, -2.98023e-08, 1, -2.98023e-08, 5.96046e-08, 0.0702385, 2.38419e-07 )
-shape = SubResource( 66 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 100 )
 
 [node name="upperarm_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.825055, -0.137244, -0.548131, 0.454311, -0.737922, -0.49907, -0.335984, -0.660783, 0.671179, -0.170291, 1.28863, 0.463434 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.331633
 script = ExtResource( 2 )
 bone_name = "upperarm.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/upperarm_r"]
-transform = Transform( 1, -2.98023e-08, -1.49012e-08, 0, -8.9407e-08, -1, -4.47035e-08, 1, -2.98023e-08, -5.96046e-08, 0.117073, 5.96046e-08 )
-shape = SubResource( 67 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 101 )
 
 [node name="lowerarm_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.784346, -0.0918697, -0.613481, 0.231134, -0.960842, -0.15156, -0.575656, -0.260616, 0.77503, -0.206247, 1.09531, 0.29032 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.190816
 script = ExtResource( 2 )
 bone_name = "lowerarm.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/lowerarm_r"]
-transform = Transform( 0.999999, -3.8743e-07, 0, -4.47035e-08, 4.47035e-08, -0.999999, -1.19209e-07, 1, 2.98023e-08, 1.49012e-08, 0.110763, 4.47035e-08 )
-shape = SubResource( 68 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 102 )
 
 [node name="hand_r" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.237247, -0.0825523, -0.967934, 0.147617, -0.987883, 0.0480756, -0.96017, -0.131423, 0.246556, -0.225293, 0.896104, 0.236289 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.0663265
 script = ExtResource( 2 )
 bone_name = "hand.r"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/hand_r"]
-transform = Transform( 1, 4.47035e-08, 0, -8.9407e-08, -2.6077e-08, -1, 0, 1, -4.84288e-08, -0.00869548, 0.0636514, -4.47035e-07 )
-shape = SubResource( 78 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 103 )
 
 [node name="clavicle_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.312847, 0.948344, 0.0526228, 0.707905, 0.26975, -0.652767, -0.633242, -0.166964, -0.755729, 0.0455161, 1.25132, 0.483512 )
-collision_layer = 4
-collision_mask = 1035
 script = ExtResource( 2 )
 bone_name = "clavicle.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/clavicle_l"]
-transform = Transform( 1, -2.98023e-08, 4.47035e-08, -1.49012e-08, -1.49012e-08, -1, 2.98023e-08, 1, -7.45058e-08, 1.78814e-07, 0.0706944, 1.19209e-07 )
-shape = SubResource( 70 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 104 )
 
 [node name="upperarm_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.792713, 0.146961, 0.591615, -0.068404, -0.98582, 0.153228, 0.605745, 0.0809951, 0.791526, 0.173968, 1.28786, 0.460896 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.331633
 script = ExtResource( 2 )
 bone_name = "upperarm.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/upperarm_l"]
-transform = Transform( 1, -1.78814e-07, 7.45058e-09, 1.11759e-08, -2.98023e-08, -1, 2.98023e-08, 1, -5.96046e-08, 2.68221e-07, 0.126839, 1.19209e-07 )
-shape = SubResource( 71 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 105 )
 
 [node name="lowerarm_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.769474, 0.14367, 0.622309, 0.594656, -0.194306, 0.780143, 0.233015, 0.970316, 0.0640827, 0.212469, 1.02959, 0.482115 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.190816
 script = ExtResource( 2 )
 bone_name = "lowerarm.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/lowerarm_l"]
-transform = Transform( 1, -2.41213e-07, -1.49012e-08, -4.47035e-08, 2.98023e-08, -1, 1.03377e-07, 0.999999, -7.82311e-08, 0, 0.106711, -3.57628e-07 )
-shape = SubResource( 72 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 106 )
 
 [node name="hand_l" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( -0.322173, 0.0994732, 0.941444, 0.919759, -0.202578, 0.33616, 0.224158, 0.974196, -0.0262311, 0.242255, 0.989307, 0.683282 )
-collision_layer = 8
-collision_mask = 1035
-mass = 0.0663265
 script = ExtResource( 2 )
 bone_name = "hand.l"
 
 [node name="CollisionShape" type="CollisionShape" parent="root/Skeleton/hand_l"]
-transform = Transform( 1, 7.45058e-08, 1.19209e-07, -4.47035e-08, -2.42144e-08, -1, 9.31323e-09, 1, -5.40167e-08, 0.00335252, 0.060169, -1.78814e-07 )
-shape = SubResource( 79 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 107 )
 
 [node name="JOINT_pelvis_thigh_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.195641, -0.0192035, 0.980492, 0.673725, -0.723843, -0.148612, 0.712611, 0.689615, -0.128683, 0.106927, 0.797619, 0.290623 )
 nodes/node_a = NodePath("../pelvis")
 nodes/node_b = NodePath("../thigh_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 0
 BONE_B_INDEX = 1
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_thigh_l_calf_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.0750088, -0.181694, 0.980494, -0.322385, -0.934826, -0.148584, 0.943651, -0.304975, -0.128699, 0.0994495, 0.515789, 0.55913 )
 nodes/node_a = NodePath("../thigh_l")
 nodes/node_b = NodePath("../calf_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 1
 BONE_B_INDEX = 2
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_calf_l_foot_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.992095, 0.10754, 0.0640495, -0.0307903, -0.705709, 0.707834, 0.121307, 0.700273, 0.703592, 0.0216948, 0.115738, 0.428618 )
 nodes/node_a = NodePath("../calf_l")
 nodes/node_b = NodePath("../foot_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 2
 BONE_B_INDEX = 3
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_foot_l_ball_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.999104, 0.0392585, -0.0130022, -0.00762964, -0.134261, -0.990882, -0.0406271, 0.990257, -0.133948, 0.0354528, 0.0256365, 0.518013 )
 nodes/node_a = NodePath("../foot_l")
 nodes/node_b = NodePath("../ball_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 3
 BONE_B_INDEX = 4
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_pelvis_thigh_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.147535, 0.00379142, -0.989044, 0.101376, -0.994778, 0.0113087, -0.983847, -0.101933, -0.147149, -0.0967015, 0.791207, 0.284058 )
 nodes/node_a = NodePath("../pelvis")
 nodes/node_b = NodePath("../thigh_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 0
 BONE_B_INDEX = 5
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_thigh_r_calf_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.0596486, 0.134978, -0.989044, 0.881369, 0.472225, 0.0113065, 0.468637, -0.870945, -0.147151, -0.0952237, 0.403885, 0.244371 )
 nodes/node_a = NodePath("../thigh_r")
 nodes/node_b = NodePath("../calf_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 5
 BONE_B_INDEX = 6
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_calf_r_foot_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.983965, -0.130458, -0.121233, 0.121188, 0.00834256, -0.992586, 0.13046, -0.991422, 0.00750148, -0.0374611, 0.60597, -0.128343 )
 nodes/node_a = NodePath("../calf_r")
 nodes/node_b = NodePath("../foot_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 6
 BONE_B_INDEX = 7
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_foot_r_ball_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.99466, -0.0931393, 0.0435277, -0.0911566, -0.603233, 0.792314, -0.0474888, -0.792229, -0.608392, -0.0542163, 0.607071, -0.254904 )
 nodes/node_a = NodePath("../foot_r")
 nodes/node_b = NodePath("../ball_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 7
 BONE_B_INDEX = 8
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_pelvis_spine_01" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.999593, 0.00521549, -0.0280636, -0.011946, 0.969361, -0.245351, 0.0259242, 0.245586, 0.969028, -0.000273946, 0.938372, 0.313956 )
 nodes/node_a = NodePath("../pelvis")
 nodes/node_b = NodePath("../spine_01")
-angular_limit_x/damping = 10.0
-angular_limit_y/damping = 10.0
-angular_limit_z/damping = 10.0
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 0
 BONE_B_INDEX = 9
-matching_velocity_multiplier = 12.5
 
 [node name="JOINT_spine_01_spine_02" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.999969, 0.00612253, 0.00484624, -0.00223399, 0.819013, -0.573769, -0.00748205, 0.573741, 0.819, 0.000691567, 1.11782, 0.359418 )
 nodes/node_a = NodePath("../spine_01")
 nodes/node_b = NodePath("../spine_02")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 9
 BONE_B_INDEX = 10
-matching_velocity_multiplier = 12.0
 
 [node name="JOINT_spine_02_neck_01" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.999851, 0.00758561, 0.0153034, 0.00937504, 0.505201, -0.862949, -0.0142773, 0.862967, 0.505055, 0.00219776, 1.3193, 0.500561 )
 nodes/node_a = NodePath("../spine_02")
 nodes/node_b = NodePath("../neck_01")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 10
 BONE_B_INDEX = 11
-matching_velocity_multiplier = 10.0
 
 [node name="JOINT_neck_01_head" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( 0.999543, 0.00442179, -0.0299232, -0.0127584, 0.958585, -0.284521, 0.0274258, 0.284774, 0.958204, 0.00282728, 1.36123, 0.57218 )
 nodes/node_a = NodePath("../neck_01")
 nodes/node_b = NodePath("../head")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 11
 BONE_B_INDEX = 12
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_spine_02_clavicle_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.306673, -0.949473, -0.0667137, -0.706336, 0.274002, -0.652695, 0.637996, -0.153041, -0.754677, -0.0416859, 1.25152, 0.484163 )
 nodes/node_a = NodePath("../spine_02")
 nodes/node_b = NodePath("../clavicle_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 10
 BONE_B_INDEX = 13
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_clavicle_r_upperarm_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.825055, -0.137244, -0.548131, 0.454311, -0.737922, -0.49907, -0.335984, -0.660783, 0.671179, -0.170291, 1.28863, 0.463434 )
 nodes/node_a = NodePath("../clavicle_r")
 nodes/node_b = NodePath("../upperarm_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 13
 BONE_B_INDEX = 14
-matching_velocity_multiplier = 6.0
 
 [node name="JOINT_upperarm_r_lowerarm_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.784346, -0.0918697, -0.613481, 0.231134, -0.960842, -0.15156, -0.575656, -0.260616, 0.77503, -0.206247, 1.09531, 0.29032 )
 nodes/node_a = NodePath("../upperarm_r")
 nodes/node_b = NodePath("../lowerarm_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 14
 BONE_B_INDEX = 15
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_lowerarm_r_hand_r" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.237247, -0.0825523, -0.967934, 0.147617, -0.987883, 0.0480756, -0.96017, -0.131423, 0.246556, -0.225293, 0.896104, 0.236289 )
 nodes/node_a = NodePath("../lowerarm_r")
 nodes/node_b = NodePath("../hand_r")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 15
 BONE_B_INDEX = 16
-matching_velocity_multiplier = 2.0
 
 [node name="JOINT_spine_02_clavicle_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.312847, 0.948344, 0.0526228, 0.707905, 0.26975, -0.652767, -0.633242, -0.166964, -0.755729, 0.0455161, 1.25132, 0.483512 )
 nodes/node_a = NodePath("../spine_02")
 nodes/node_b = NodePath("../clavicle_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 10
 BONE_B_INDEX = 29
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_clavicle_l_upperarm_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.792713, 0.146961, 0.591615, -0.068404, -0.98582, 0.153228, 0.605745, 0.0809951, 0.791526, 0.173968, 1.28786, 0.460896 )
 nodes/node_a = NodePath("../clavicle_l")
 nodes/node_b = NodePath("../upperarm_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 29
 BONE_B_INDEX = 30
-matching_velocity_multiplier = 6.0
 
 [node name="JOINT_upperarm_l_lowerarm_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.769474, 0.14367, 0.622309, 0.594656, -0.194306, 0.780143, 0.233015, 0.970316, 0.0640827, 0.212469, 1.02959, 0.482115 )
 nodes/node_a = NodePath("../upperarm_l")
 nodes/node_b = NodePath("../lowerarm_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 30
 BONE_B_INDEX = 31
-matching_velocity_multiplier = 5.0
 
 [node name="JOINT_lowerarm_l_hand_l" type="Generic6DOFJoint" parent="root/Skeleton"]
 transform = Transform( -0.322173, 0.0994732, 0.941444, 0.919759, -0.202578, 0.33616, 0.224158, 0.974196, -0.0262311, 0.242255, 0.989307, 0.683282 )
 nodes/node_a = NodePath("../lowerarm_l")
 nodes/node_b = NodePath("../hand_l")
 script = ExtResource( 3 )
-animation_skeleton = NodePath("../../../../ANIMATED_MODEL/root/Skeleton")
 BONE_A_INDEX = 31
 BONE_B_INDEX = 32
-matching_velocity_multiplier = 2.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/air_jump = SubResource( 38 )
