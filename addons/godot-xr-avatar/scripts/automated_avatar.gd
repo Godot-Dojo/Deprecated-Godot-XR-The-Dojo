@@ -17,14 +17,18 @@ export (NodePath) var right_hand_path = null
 export(Array, NodePath) var head_mesh_node_paths = []
 
 #export variable to decide whether to turn avatar skeelton 180 degrees (on by default)
-export var turn_character_180 := true
+export var turn_character_180 : bool = true
+
+#export variables to fine tune how to rotate avatar hands with respect to controller position [defaults tend to work with most models]
+export var left_hand_rotation_degs : Vector3 = Vector3(0, 90, -90)
+export var right_hand_rotation_degs : Vector3 = Vector3(0, -90, 90)
 
 #export variables to hide head or physics hand mesh
-export var head_visible := false
-export var hand_mesh_visible := false
+export var head_visible : bool = false
+export var hand_mesh_visible : bool = false
 
 #export variables for whether someone will use LipSync or not, and if so, identify node that will contain mouth visemes
-export var use_automated_lipsync := false
+export var use_automated_lipsync : bool = false
 export (NodePath) var face_mesh_with_visemes_path = null
 
 #export variable for whether using automated animation player and animation tree creation based on provided Godot-XR-avatar animations
@@ -34,6 +38,7 @@ enum AutomaticAnimation {
 	MIXAMO,			# Use automatic animation creation for mixamo avatar
 	READYPLAYERME   # Use automatic animation creation for readyplayerme avatar
 }
+
 #set default not to create animations so as to not overwrite what may have been custom created for imported avatar
 export (AutomaticAnimation) var auto_anim_choice: int = AutomaticAnimation.NO
 
@@ -134,6 +139,7 @@ var default_step_distance := 0.0
 var default_step_height := 0.0
 var strafe_step_distance := 0.0
 var strafe_step_height := 0.0
+
 #set all nodes 
 onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
 onready var arvrcamera := ARVRHelpers.get_arvr_camera(self, arvrcamera_path)
@@ -146,9 +152,11 @@ onready var skeleton : Skeleton = $Armature/Skeleton
 
 #In the ready function we automatically create most of the nodes used for the IK and set them to the right values
 func _ready():
+	
 	#Display warning message if no animation tree or animation player found
 	if (get_node_or_null("AnimationTree") == null or get_node_or_null("AnimationPlayer") == null) and auto_anim_choice == AutomaticAnimation.NO:
 		print("Either or both of the AnimationTree and AnimationPlayer nodes not found, and auto animation set to no, so animations will not work.")
+	
 	#turn skeleton by 180 degrees if set by export variable (default) so facing the correct direction
 	if turn_character_180 == true:
 		skeleton.rotation_degrees.y = 180.0
@@ -159,9 +167,11 @@ func _ready():
 	#find the bones needed to set Skeleton IK nodes (head, head top, left upper arm and hand, right upper arm and hand, left upper leg and foot, right upper leg and foot)
 	set_key_skeleton_nodes_for_IK(skeleton)
 	
+	#if no proper head_top bone found in skeleton try to make do with head bone as head_top bone with some offsets later applied in code
 	if head_top_bone == null:
 		head_top_bone = head_bone
 		substitute_head_bone = true
+		
 	#create bone attachment nodes and direct them to left and right foot bones
 	left_foot = BoneAttachment.new()
 	left_foot.name = "left_foot"
@@ -173,7 +183,6 @@ func _ready():
 	right_foot.name = "right_foot"
 	skeleton.add_child(right_foot, true)
 	right_foot.set_bone_name(skeleton.get_bone_name(right_foot_bone))
-	
 	
 	
 	#create character height bone attachment node and attach it to avatar head top end bone
@@ -208,6 +217,7 @@ func _ready():
 	else:
 		SkeletonIKR.set_magnet_position(Vector3(3, -5, -10))
 	
+	
 	#create SkeletonIK node called SkeletonIKLegL and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegL = SkeletonIK.new()
 	SkeletonIKLegL.name = "SkeletonIKLegL"
@@ -219,6 +229,7 @@ func _ready():
 		SkeletonIKLegL.set_magnet_position(Vector3(.2,0,1))
 	else:
 		SkeletonIKLegL.set_magnet_position(Vector3(-.2,0,1))
+	
 	
 	#create SkeletonIK node called SkeletonIKLegR and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegR = SkeletonIK.new()
@@ -235,6 +246,7 @@ func _ready():
 	#set avatar height to player
 	if substitute_head_bone == false:
 		avatar_height = character_height.transform.origin.y
+	
 	#if we didn't originally find a head end bone in the skeleton, look for alternatives
 	else:
 		#check for spatial that could be set by dev called "HeadEndBone", if exists, use that instead
@@ -254,8 +266,9 @@ func _ready():
 	left_hand_target = Position3D.new()
 	left_hand_target.name = "left_target"
 	left_hand.add_child(left_hand_target, true)
-	left_hand_target.rotation_degrees.y = 90
-	left_hand_target.rotation_degrees.z = -90
+	left_hand_target.rotation_degrees = left_hand_rotation_degs
+	#left_hand_target.rotation_degrees.y = 90
+	#left_hand_target.rotation_degrees.z = -90
 	
 	#VRM values
 	#left_hand_target.rotation_degrees.y = -90
@@ -264,8 +277,9 @@ func _ready():
 	right_hand_target = Position3D.new()
 	right_hand_target.name = "right_target"
 	right_hand.add_child(right_hand_target, true)
-	right_hand_target.rotation_degrees.y = -90
-	right_hand_target.rotation_degrees.z = 90
+	right_hand_target.rotation_degrees = right_hand_rotation_degs
+	#right_hand_target.rotation_degrees.y = -90
+	#right_hand_target.rotation_degrees.z = 90
 	
 	#VRM values
 	#right_hand_target.rotation_degrees.y = 90
@@ -354,10 +368,12 @@ func _ready():
 			var head_mesh_part : MeshInstance = get_node(mesh_path)
 			head_mesh_part.layers = 1 << 19
 			
+			
 	#hide XR tools hand meshes if export variable so indicates
 	if hand_mesh_visible == false:
 		left_hand.visible = false
 		right_hand.visible = false
+		
 		
 	#create automatic animations if option selected
 	if auto_anim_choice == AutomaticAnimation.NO:
@@ -397,6 +413,8 @@ func _ready():
 	
 	#The following line can be uncommented for further tweaking avatar legs/height (prevent "bowed legs")		
 	#player_body.player_height_offset = height_offset
+
+	
 #function use to place avatar feet on surfaces procedurally
 func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachment, d_b: Basis, avatar_height: float, hit_offset: float) -> void:
 	var bone_pos = bone_attach.global_transform.origin
@@ -410,7 +428,6 @@ func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachme
 		if raycast.get_collision_normal() != Vector3.UP:
 			target.global_transform.basis = look_at_y(Vector3.ZERO,$Armature.global_transform.basis.z,raycast.get_collision_normal())
 	target.rotation.y = $Armature.rotation.y
-
 
 
 #function used for LipSync if activated, set visemes to the corresponding blend shapes in the facial mesh
@@ -465,6 +482,7 @@ func process_visemes(delta:float) -> void:
 		face_mesh.set("blend_shapes/eyeBlinkRight", 0)  # unblink
 		blinktime = 0
 		blink_time_set = false  # set next blink time randomly again
+
 
 #function used to generate procedural walk instead of using baked animations
 func process_procedural_walk(delta: float, move: Vector2) -> void:
@@ -552,10 +570,6 @@ func process_procedural_walk(delta: float, move: Vector2) -> void:
 			legs_anim_timer += delta
 		
 		
-		#Animate body up and down depending on distance between legs and factor set with variable if option chosen
-		#if use_procedural_bounce == true:
-		#	skeleton.global_transform.origin += (Vector3.DOWN * (get_legs_spread(l_leg_pos, r_leg_pos) / max_legs_spread * bounce_factor))
-			
 		# if timer time is greater than whole animation time then stop animating
 		if legs_anim_timer >= step_anim_time:
 			is_walking_legs = false
@@ -595,7 +609,6 @@ func _physics_process(delta: float) -> void:
 		$AnimationTree.set("parameters/righthandposetrig/blend_amount", right_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER))
 	
 		
-
 	# Calculate foot movement based on players actual ground-movement velocity
 	#var player_velocity := player_body.velocity# - player_body.ground_velocity
 	#player_velocity = $Armature.global_transform.basis.xform_inv(player_velocity)
@@ -620,6 +633,7 @@ func _physics_process(delta: float) -> void:
 			$Armature/Skeleton/SkeletonIKLegL.magnet = lerp($Armature/Skeleton/SkeletonIKLegL.magnet, Vector3(-.2,0,1), delta)
 			$Armature/Skeleton/SkeletonIKLegR.magnet = lerp($Armature/Skeleton/SkeletonIKLegR.magnet, Vector3(.2,0,1), delta)
 	
+	
 	# Perform player movement animation
 	if get_node_or_null("AnimationTree") != null and use_procedural_walk == false:
 		$AnimationTree.set("parameters/movement/blend_position",lerp(prev_move,move,smoothing))
@@ -639,6 +653,7 @@ func _physics_process(delta: float) -> void:
 		skeleton.global_transform.origin += Vector3.DOWN * ((get_legs_spread(left_target.global_transform.origin, right_target.global_transform.origin) / max_legs_spread) * bounce_factor)
 	
 	prev_move = move
+
 
 
 
@@ -722,6 +737,23 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 						print(skeleton_node.get_bone_name(i))
 						r_upperleg_set = true
 		
+		#fall back to wrist bone as hand if no matching hand bones; don't set l_hand_set = true and r_hand_set = true here, though, so if hand bone is later in bone chain it will still overwrite the wrist-as-hand selection
+		elif bone_name.matchn("*wrist*") and check_if_finger_bone(bone_name) == false:
+			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
+				if l_hand_set == false:
+					left_hand_bone = skeleton_node.find_bone(bone_name)
+					print(left_hand_bone)
+					print("Left hand bone name is:")
+					print(skeleton_node.get_bone_name(i))
+					
+			else:
+				if r_hand_set == false:
+					right_hand_bone = skeleton_node.find_bone(bone_name)	
+					print(right_hand_bone)
+					print("Right hand bone is")
+					print(skeleton_node.get_bone_name(i))
+					
+		
 		elif bone_name.matchn("*hand*") and check_if_finger_bone(bone_name) == false:
 			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
 				if l_hand_set == false:
@@ -738,23 +770,7 @@ func set_key_skeleton_nodes_for_IK(skeleton_node):
 					print(skeleton_node.get_bone_name(i))
 					r_hand_set = true
 		
-		#fall back to wrist bone if no matching hand bones
-		elif bone_name.matchn("*wrist*") and check_if_finger_bone(bone_name) == false:
-			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
-				if l_hand_set == false:
-					left_hand_bone = skeleton_node.find_bone(bone_name)
-					print(left_hand_bone)
-					print("Left hand bone name is:")
-					print(skeleton_node.get_bone_name(i))
-					l_hand_set = true
-			else:
-				if r_hand_set == false:
-					right_hand_bone = skeleton_node.find_bone(bone_name)	
-					print(right_hand_bone)
-					print("Right hand bone is")
-					print(skeleton_node.get_bone_name(i))
-					r_hand_set = true
-				
+						
 		elif bone_name.matchn("*foot*") or bone_name.matchn("*ankle*"):
 			if bone_name.matchn("*left*") or bone_name.matchn("*l_*") or bone_name.ends_with("_l") or bone_name.ends_with("_L"):
 				if l_foot_set == false:
@@ -781,6 +797,7 @@ func check_if_finger_bone(bone):
 		#print("Possible hand bone detected, checked if it was a finger and it was not")
 		return false
 			
+			
 #Get distance between legs (used with procedural animation code)			
 func get_legs_spread(left_leg_position : Vector3, right_leg_position: Vector3):
 	return Vector2(left_leg_position.x, left_leg_position.z).distance_to(Vector2(right_leg_position.x, right_leg_position.z))
@@ -789,6 +806,7 @@ func get_legs_spread(left_leg_position : Vector3, right_leg_position: Vector3):
 #Get current player height
 func get_current_player_height() -> float:
 	 return arvrcamera.transform.origin.y
+
 
 #Use to set rotation
 func look_at_y(from: Vector3, to: Vector3, up_ref := Vector3.UP) -> Basis:
