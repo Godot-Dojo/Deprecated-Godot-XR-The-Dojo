@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=1]
 [ext_resource path="res://addons/godot-xr-tools/assets/PlayerBody.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://addons/godot-xr-avatar/scripts/automated_avatar.gd" type="Script" id=13]
 [ext_resource path="res://addons/godot-xr-avatar/materials/sybot_mat.tres" type="Material" id=14]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Pickup.tscn" type="PackedScene" id=15]
+[ext_resource path="res://addons/godot-xr-precise-throwing/Function_pickup_precise_throwing.tscn" type="PackedScene" id=16]
 
 [sub_resource type="SpatialMaterial" id=1]
 vertex_color_use_as_albedo = true
@@ -330,28 +331,7 @@ strafe = true
 [node name="LeftPhysicsHand" parent="FPController/LeftHandController" index="1" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.03, -0.05, 0.15 )
 collision_layer = 655360
-
-[node name="Skeleton" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left" index="0"]
-bones/0/bound_children = [  ]
-bones/1/bound_children = [  ]
-bones/2/bound_children = [  ]
-bones/3/bound_children = [  ]
-bones/4/bound_children = [  ]
-bones/5/bound_children = [  ]
-bones/6/bound_children = [  ]
-bones/7/bound_children = [  ]
-bones/8/bound_children = [  ]
-bones/9/bound_children = [  ]
-bones/10/bound_children = [  ]
-bones/11/bound_children = [  ]
-bones/12/bound_children = [  ]
-bones/13/bound_children = [  ]
-bones/14/bound_children = [  ]
-bones/15/bound_children = [  ]
-bones/16/bound_children = [  ]
-bones/17/bound_children = [  ]
-bones/18/bound_children = [  ]
-bones/19/bound_children = [  ]
+margin = 0.004
 
 [node name="BoneRoot" parent="FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="1"]
 transform = Transform( 1, 0, 1.51496e-08, 1.51445e-08, -0.025905, -0.999665, 3.92449e-10, 0.999664, -0.025905, 0, 0.000360775, -0.0235019 )
@@ -424,13 +404,16 @@ smooth_rotation = true
 [node name="RightPhysicsHand" parent="FPController/RightHandController" index="2" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, -0.05, 0.15 )
 collision_layer = 655360
+margin = 0.004
 
 [node name="Function_Jump_movement" parent="FPController/RightHandController" index="3" instance=ExtResource( 5 )]
 jump_button_id = 7
 
 [node name="Function_Crouch_movement" parent="FPController/RightHandController" index="4" instance=ExtResource( 9 )]
 
-[node name="Function_Pickup" parent="FPController/RightHandController" index="5" instance=ExtResource( 15 )]
+[node name="Function_Pickup" parent="FPController/RightHandController" index="5" instance=ExtResource( 16 )]
+aiming_controller_nodepath = NodePath("../../LeftHandController")
+precise_aim_activate_button_id = 1
 
 [node name="avatar" type="Spatial" parent="FPController"]
 script = ExtResource( 13 )

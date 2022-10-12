@@ -10,6 +10,7 @@ subdivide_depth = 20
 
 [node name="Function_Pickup" type="Spatial"]
 script = ExtResource( 1 )
+use_precise_aiming = true
 
 [node name="Aiming_Target" type="MeshInstance" parent="."]
 visible = false

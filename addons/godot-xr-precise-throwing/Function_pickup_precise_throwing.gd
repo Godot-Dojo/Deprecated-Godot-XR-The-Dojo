@@ -64,13 +64,20 @@ export var velocity_samples: int = 5
 
 ## Variables for using precising throwing, default false
 export var use_precise_aiming : bool = false setget _set_precise_aiming
-export var precise_aiming_distance : float = 25.0 setget _set_precise_aiming_distance
+
+## Precise aiming distance - should be realistic based on the game and room size (if any) player is in - setting too high vs. environment will break physics
+export var precise_aiming_distance : float = 10.0 setget _set_precise_aiming_distance
+
+## Set to the other hand's controller
 export (NodePath) var aiming_controller_nodepath = null
-export (Buttons) var precise_aim_activate_button_id = Buttons.VR_BUTTON_AX
+
+## Button player will press to activate aiming raycast and override normal throwing as long as held 
+export (Buttons) var precise_aim_activate_button_id = Buttons.VR_BUTTON_BY
+
+## Set nodes 
 onready var aiming_controller : ARVRController = get_node(aiming_controller_nodepath)
 onready var aiming_raycast : RayCast = $AimingRaycast
 onready var aiming_target : MeshInstance = $Aiming_Target
-var last_object_held : Spatial = null
 
 # Public fields
 var closest_object: Spatial = null
@@ -86,6 +93,10 @@ var _grab_collision: CollisionShape
 var _ranged_area: Area
 var _ranged_collision: CollisionShape
 var _controller: ARVRController
+
+#Private field for precise aiming to hold last object's node for potential future use
+var _last_object_held : Spatial = null
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -150,7 +161,7 @@ func _process(delta):
 	if is_instance_valid(picked_up_object) and picked_up_object.is_picked_up():
 		# Average velocity of picked up object
 		_velocity_averager.add_transform(delta, picked_up_object.global_transform)
-		last_object_held = picked_up_object
+		
 	else:
 		# Average velocity of this pickup
 		_velocity_averager.add_transform(delta, global_transform)
@@ -211,7 +222,7 @@ func _set_ranged_collision_mask(var new_value: int) -> void:
 func _set_precise_aiming(var new_value : bool) -> void:
 	use_precise_aiming = new_value
 	
-	
+# Called to enter a new precise aiming distance; this could be used for transitions between closed corridor and open world scenes for instance	
 func _set_precise_aiming_distance(var new_value : float) -> void:
 	precise_aiming_distance = new_value
 	aiming_raycast.cast_to = Vector3(0,0,-precise_aiming_distance)
@@ -337,25 +348,39 @@ func _get_closest_ranged() -> Spatial:
 func drop_object() -> void:
 	if not is_instance_valid(picked_up_object):
 		return
-
+	
+	#Default function pickup behavior
 	if use_precise_aiming == false or (use_precise_aiming == true and !_controller.is_button_pressed(precise_aim_activate_button_id)): # let go of this object
 		picked_up_object.let_go(
 			_velocity_averager.linear_velocity() * impulse_factor,
 			_velocity_averager.angular_velocity())
 		picked_up_object = null
 		emit_signal("has_dropped")
-
+	
+	#Precise aiming pickup and throw behavior - if hold down activate button while gripping object, and then release grip with minimal velocity, directly throw to target
 	elif use_precise_aiming == true and _controller.is_button_pressed(precise_aim_activate_button_id) and (_velocity_averager.linear_velocity().x > .25 or _velocity_averager.linear_velocity().y > .25 or _velocity_averager.linear_velocity().z > .25):
 		if aiming_raycast.is_colliding():
 			var velocity_to_target = aiming_raycast.get_collision_point() - picked_up_object.global_transform.origin
 			picked_up_object.let_go(velocity_to_target * precise_aiming_distance, Vector3(0,0,0))
+			picked_up_object = null
 			emit_signal("has_dropped")
+		
+		#if not aiming raycast is not colliding, revert to normal function_pickup throwing behavior when grip released
 		else:
-			picked_up_object.let_go(Vector3(0,0,0), Vector3(0,0,0))
-#			picked_up_object.let_go(
-#			_velocity_averager.linear_velocity() * impulse_factor,
-#			_velocity_averager.angular_velocity())
+			#picked_up_object.let_go(Vector3(0,0,0), Vector3(0,0,0))
+			picked_up_object.let_go(
+				_velocity_averager.linear_velocity() * impulse_factor,
+				_velocity_averager.angular_velocity())
+			picked_up_object = null
 			emit_signal("has_dropped")
+	
+	#In any other fringe cases, revert to default throwing behavior		
+	else:
+		picked_up_object.let_go(
+			_velocity_averager.linear_velocity() * impulse_factor,
+			_velocity_averager.angular_velocity())
+		picked_up_object = null
+		emit_signal("has_dropped")
 
 func _pick_up_object(target: Spatial) -> void:
 	# check if already holding an object
@@ -383,6 +408,7 @@ func _pick_up_object(target: Spatial) -> void:
 
 	# If object picked up then emit signal
 	if is_instance_valid(picked_up_object):
+		_last_object_held = picked_up_object
 		emit_signal("has_picked_up", picked_up_object)
 
 
