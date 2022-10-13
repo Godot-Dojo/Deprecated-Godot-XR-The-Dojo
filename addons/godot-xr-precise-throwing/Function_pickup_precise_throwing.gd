@@ -31,6 +31,8 @@ enum Buttons {
 # Constant for worst-case grab distance
 const MAX_GRAB_DISTANCE2: float = 1000000.0
 
+## Set to the other hand's controller
+export (NodePath) var grabbing_controller_nodepath = null
 
 ## Grip controller button
 export (Buttons) var pickup_button_id = Buttons.VR_GRIP
@@ -75,6 +77,7 @@ export (NodePath) var aiming_controller_nodepath = null
 export (Buttons) var precise_aim_activate_button_id = Buttons.VR_BUTTON_BY
 
 ## Set nodes 
+onready var _controller : ARVRController = get_node(grabbing_controller_nodepath)
 onready var aiming_controller : ARVRController = get_node(aiming_controller_nodepath)
 onready var aiming_raycast : RayCast = $AimingRaycast
 onready var aiming_target : MeshInstance = $Aiming_Target
@@ -92,7 +95,7 @@ var _grab_area: Area
 var _grab_collision: CollisionShape
 var _ranged_area: Area
 var _ranged_collision: CollisionShape
-var _controller: ARVRController
+#var _controller: ARVRController
 
 #Private field for precise aiming to hold last object's node for potential future use
 var _last_object_held : Spatial = null
@@ -104,7 +107,7 @@ func _ready():
 	if Engine.editor_hint:
 		return
 
-	_controller = get_parent()
+	#_controller = get_parent()
 	aiming_raycast.cast_to = Vector3(0,0,-precise_aiming_distance)
 	
 	# Create the grab collision shape

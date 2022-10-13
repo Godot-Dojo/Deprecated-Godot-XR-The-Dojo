@@ -83,9 +83,12 @@ transform = Transform( 0.740024, -0.658406, -0.137349, -0.308624, -0.150972, -0.
 [node name="BonePinkyDistal" parent="avatar_player/FPController/LeftHandController/LeftPhysicsHand/LeftHand/Armature_Left/Skeleton" index="20"]
 transform = Transform( 0.463311, -0.822464, -0.329992, -0.51281, 0.0548708, -0.856747, 0.722751, 0.566163, -0.396346, -0.0115318, -0.044608, 0.108884 )
 
+[node name="Function_Pickup" parent="avatar_player/FPController/RightHandController" index="5"]
+grabbing_controller_nodepath = NodePath("..")
+
 [node name="avatar" parent="avatar_player/FPController" index="4"]
 use_procedural_bounce = true
-step_anim_time = 0.8
+step_distance = 0.25
 
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
@@ -137,6 +140,8 @@ player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandControll
 player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
 player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
 height_offset = 0.0
+use_procedural_walk = true
+use_procedural_bounce = true
 
 [node name="shadow2" parent="." instance=ExtResource( 14 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 1.96281, 0, -3.04401 )
@@ -147,7 +152,11 @@ player_right_controller_path = NodePath("../avatar_player/FPController/RightHand
 player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
 player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
 player_avatar_body_path = NodePath("../avatar_player/FPController/avatar")
-height_offset = 0.15
+max_body_angle = 90.0
+body_turn_duration = 2.0
+use_procedural_walk = true
+use_procedural_bounce = true
+step_distance = 0.25
 
 [node name="shadow3" parent="." instance=ExtResource( 15 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -1.69741, 0, -3.27056 )
