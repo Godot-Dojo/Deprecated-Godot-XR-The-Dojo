@@ -50,6 +50,9 @@ export var ik_raycast_height := 2.0
 export var min_max_interpolation := Vector2(0.03, 0.9)
 export var smoothing := 0.8
 export var avatar_z_offset := .125
+export(float, 0.0, 120.0, 5.0) var max_body_angle := 30.0
+export(float, 0.1, 5.0) var body_turn_duration := 1.0
+
 
 #variables used for SkeletonIK nodes and bone attachment nodes
 var left_foot : BoneAttachment = null
@@ -139,6 +142,7 @@ var default_step_distance := 0.0
 var default_step_height := 0.0
 var strafe_step_distance := 0.0
 var strafe_step_height := 0.0
+var body_direction : Vector3
 
 #set all nodes 
 onready var arvrorigin := ARVRHelpers.get_arvr_origin(self, arvrorigin_path)
@@ -203,7 +207,7 @@ func _ready():
 		SkeletonIKL.set_magnet_position(Vector3(3,-5,-10))
 	else:
 		SkeletonIKL.set_magnet_position(Vector3(-3, -5, -10))
-	
+	SkeletonIKL.min_distance = .001
 	
 	#create SkeletonIK node called SkeletonIKR and set it to use the upper arm and hand bones with a magnet for IK
 	SkeletonIKR = SkeletonIK.new()
@@ -216,7 +220,7 @@ func _ready():
 		SkeletonIKR.set_magnet_position(Vector3(-3,-5,-10))
 	else:
 		SkeletonIKR.set_magnet_position(Vector3(3, -5, -10))
-	
+	SkeletonIKR.min_distance = .001
 	
 	#create SkeletonIK node called SkeletonIKLegL and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegL = SkeletonIK.new()
@@ -229,7 +233,7 @@ func _ready():
 		SkeletonIKLegL.set_magnet_position(Vector3(.2,0,1))
 	else:
 		SkeletonIKLegL.set_magnet_position(Vector3(-.2,0,1))
-	
+	SkeletonIKLegL.min_distance = .001
 	
 	#create SkeletonIK node called SkeletonIKLegR and set it to use the upper leg and foot with a magnet for IK
 	SkeletonIKLegR = SkeletonIK.new()
@@ -242,6 +246,7 @@ func _ready():
 		SkeletonIKLegR.set_magnet_position(Vector3(-.2,0,1))
 	else:
 		SkeletonIKLegR.set_magnet_position(Vector3(.2,0,1))
+	SkeletonIKLegR.min_distance = .001
 	
 	#set avatar height to player
 	if substitute_head_bone == false:
@@ -267,8 +272,6 @@ func _ready():
 	left_hand_target.name = "left_target"
 	left_hand.add_child(left_hand_target, true)
 	left_hand_target.rotation_degrees = left_hand_rotation_degs
-	#left_hand_target.rotation_degrees.y = 90
-	#left_hand_target.rotation_degrees.z = -90
 	
 	#VRM values
 	#left_hand_target.rotation_degrees.y = -90
@@ -278,8 +281,6 @@ func _ready():
 	right_hand_target.name = "right_target"
 	right_hand.add_child(right_hand_target, true)
 	right_hand_target.rotation_degrees = right_hand_rotation_degs
-	#right_hand_target.rotation_degrees.y = -90
-	#right_hand_target.rotation_degrees.z = 90
 	
 	#VRM values
 	#right_hand_target.rotation_degrees.y = 90
@@ -405,7 +406,8 @@ func _ready():
 		animationtree.name = "AnimationTree"
 		add_child(animationtree, true)
 		animationtree.active = true	
-		
+	
+	# Set variables for procedural walk		
 	default_step_distance = step_distance
 	default_step_height = step_anim_height
 	strafe_step_distance = step_distance*strafe_step_modifier
@@ -413,6 +415,9 @@ func _ready():
 	
 	#The following line can be uncommented for further tweaking avatar legs/height (prevent "bowed legs")		
 	#player_body.player_height_offset = height_offset
+	
+	# Calculate the body direction (in origin-space) from the head forward direction
+	body_direction = Plane.PLANE_XZ.project(arvrcamera.transform.basis.z).normalized()
 
 	
 #function use to place avatar feet on surfaces procedurally
@@ -579,10 +584,24 @@ func process_procedural_walk(delta: float, move: Vector2) -> void:
 func _physics_process(delta: float) -> void:
 	if use_automated_lipsync == true:
 		process_visemes(delta)
-	
-	# Move the avatar under the camera and facing in the direction of the camera
+
+	# Calculate the head direction, and from it the body angle (from the head)
+	var head_direction := Plane.PLANE_XZ.project(arvrcamera.transform.basis.z).normalized()
+	var body_angle := rad2deg(head_direction.signed_angle_to(body_direction, Vector3.UP))
+
+	# Clamp the body angle and step it towards zero
+	body_angle = clamp(body_angle, -max_body_angle, max_body_angle)
+	var turn_scale := clamp(abs(body_angle) / 10.0, 0.2, 1.0)
+	var turn_rate := turn_scale * max_body_angle * delta / body_turn_duration
+	var body_angle_step := min(abs(body_angle), turn_rate)
+	body_angle -= body_angle_step * sign(body_angle)
+
+	# Calculate the new body direction
+	body_direction = head_direction.rotated(Vector3.UP, deg2rad(body_angle)).normalized()
+
+	# Move the avatar under the camera and facing in the direction of the body
 	var avatar_pos: Vector3 = arvrorigin.global_transform.xform(Plane.PLANE_XZ.project(arvrcamera.transform.origin))
-	var avatar_dir_z := Plane.PLANE_XZ.project(arvrcamera.global_transform.basis.z).normalized()
+	var avatar_dir_z: Vector3 = arvrorigin.global_transform.basis.xform(body_direction).normalized()
 	var avatar_dir_x := Vector3.UP.cross(avatar_dir_z)
 	$Armature.global_transform = Transform(avatar_dir_x, Vector3.UP, avatar_dir_z, avatar_pos)
 	$Armature.global_scale(armature_scale*self.scale) #without this, armature scale reverts to pre-scaling values
@@ -596,7 +615,7 @@ func _physics_process(delta: float) -> void:
 	var head := skeleton.get_bone_pose(head_bone)
 	var angles := arvrcamera.rotation
 	angles.x *= -1;angles.z *= -1
-	angles.y -= lerp_angle(angles.y,arvrcamera.rotation.y,delta)
+	#angles.y -= lerp_angle(angles.y,arvrcamera.rotation.y,delta)
 	head.basis = Basis(angles)
 	skeleton.set_bone_pose(head_bone,head)
 
