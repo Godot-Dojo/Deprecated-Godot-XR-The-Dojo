@@ -614,8 +614,7 @@ func _physics_process(delta: float) -> void:
 	# Rotate the head Y bone (look up/down)
 	var head := skeleton.get_bone_pose(head_bone)
 	var angles := arvrcamera.rotation
-	angles.x *= -1;angles.z *= -1
-	#angles.y -= lerp_angle(angles.y,arvrcamera.rotation.y,delta)
+	angles.x *= -1; angles.z *= -1
 	head.basis = Basis(angles)
 	skeleton.set_bone_pose(head_bone,head)
 
