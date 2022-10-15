@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://addons/godot-xr-avatar/scripts/automated_avatar.gd" type="Script" id=1]
 [ext_resource path="res://weapons_CC0/Mag_Automatic_AK.tscn" type="PackedScene" id=2]
@@ -6,11 +6,13 @@
 [ext_resource path="res://addons/godot-openxr/scenes/controller.gd" type="Script" id=4]
 [ext_resource path="res://dojo/environment/DojoWithColliders.tscn" type="PackedScene" id=5]
 [ext_resource path="res://addons/godot-xr-tools/assets/RightPhysicsHand.tscn" type="PackedScene" id=6]
+[ext_resource path="res://weapons_CC0/Mag_9mm.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Turn_movement.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/godot-xr-tools/assets/PlayerBody.tscn" type="PackedScene" id=9]
 [ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar_Precise_Throwing.gd" type="Script" id=10]
 [ext_resource path="res://addons/godot-xr-tools/assets/LeftPhysicsHand.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=12]
+[ext_resource path="res://weapons_CC0/Gun_Pistol_Automatic.tscn" type="PackedScene" id=13]
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.gd" type="Script" id=14]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Jump_movement.tscn" type="PackedScene" id=15]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Crouch_movement.tscn" type="PackedScene" id=16]
@@ -783,6 +785,7 @@ bone_name = "hand_l"
 transform = Transform( -1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, -0.04, 0.15, -0.08 )
 script = ExtResource( 10 )
 grabbing_controller_nodepath = NodePath("../../../../../LeftHandController")
+grab_collision_mask = 65537
 use_precise_aiming = true
 aiming_controller_nodepath = NodePath("../../../../../RightHandController")
 
@@ -802,6 +805,7 @@ bone_name = "hand_r"
 transform = Transform( -1, -8.74228e-08, 3.82137e-15, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.04, 0.15, -0.08 )
 script = ExtResource( 10 )
 grabbing_controller_nodepath = NodePath("../../../../../RightHandController")
+ranged_collision_mask = 65537
 use_precise_aiming = true
 aiming_controller_nodepath = NodePath("../../../../../LeftHandController")
 
@@ -820,3 +824,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49642, 0.528664, -1.90237 )
 
 [node name="Stabber_Dagger2" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.369058, 0.528664, -1.90237 )
+
+[node name="Pickable_Gun_Pistol_Automatic" parent="." instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.94115, 0.651818, 0.289391 )
+
+[node name="Mag_9mm" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.90164, 0.32292, 0.963955 )
+
+[node name="Mag_9mm2" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.22673, 0.305481, 1.37276 )

@@ -741,6 +741,7 @@ transform = Transform( 0.740024, -0.658406, -0.137349, -0.308624, -0.150972, -0.
 transform = Transform( 0.463311, -0.822464, -0.329992, -0.51281, 0.0548708, -0.856747, 0.722751, 0.566163, -0.396346, -0.0115318, -0.044608, 0.108884 )
 
 [node name="Function_Pickup" parent="avatar_player/FPController/LeftHandController" index="2" instance=ExtResource( 20 )]
+grab_collision_mask = 65537
 
 [node name="Function_Direct_movement" parent="avatar_player/FPController/RightHandController" index="0" instance=ExtResource( 2 )]
 max_speed = 2.0
@@ -759,6 +760,7 @@ jump_button_id = 7
 [node name="Function_Crouch_movement" parent="avatar_player/FPController/RightHandController" index="4" instance=ExtResource( 23 )]
 
 [node name="Function_Pickup" parent="avatar_player/FPController/RightHandController" index="5" instance=ExtResource( 20 )]
+grab_collision_mask = 65537
 
 [node name="PlayerBody" parent="avatar_player/FPController" instance=ExtResource( 22 )]
 

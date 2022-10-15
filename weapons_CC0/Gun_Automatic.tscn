@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://weapons_CC0/scripts/weapon_base.gd" type="Script" id=1]
 [ext_resource path="res://dojo/backpack/ring_long.png" type="Texture" id=2]
@@ -6,8 +6,6 @@
 [ext_resource path="res://weapons_CC0/sfx/freesound.org/514228__superphat__sniper-rifle.wav" type="AudioStream" id=4]
 [ext_resource path="res://weapons/materials/trailmaterial.tres" type="Material" id=5]
 [ext_resource path="res://weapons_CC0/scripts/firearm_slide.gd" type="Script" id=6]
-[ext_resource path="res://weapons_CC0/ammo/Casing.tscn" type="PackedScene" id=7]
-[ext_resource path="res://weapons_CC0/ammo/Bullet.tscn" type="PackedScene" id=8]
 [ext_resource path="res://weapons_CC0/materials/gun_automatic_mat.tres" type="Material" id=9]
 
 [sub_resource type="ConvexPolygonShape" id=14]
@@ -216,9 +214,6 @@ __meta__ = {
 "_editor_description_": ""
 }
 group_name = "Automatic"
-bullet_scene = ExtResource( 8 )
-casing_scene = ExtResource( 7 )
-max_bullets = 30
 is_full_automatic = true
 triggerPath = NodePath("automatic/M4A1/Parts/Trigger")
 
@@ -346,6 +341,7 @@ mesh = SubResource( 13 )
 material/0 = ExtResource( 9 )
 
 [node name="FirearmSlide" type="RigidBody" parent="."]
+collision_layer = 65536
 script = ExtResource( 6 )
 z_end_translation = 0.066
 

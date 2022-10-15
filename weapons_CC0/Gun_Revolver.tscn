@@ -185,6 +185,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00517058, 0.0343934 )
 shape = SubResource( 17 )
 
 [node name="FirearmSlide" type="RigidBody" parent="."]
+collision_layer = 65536
 collision_mask = 131073
 script = ExtResource( 1 )
 slide_recover_speed = 0.2
