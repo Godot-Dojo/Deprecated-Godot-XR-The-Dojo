@@ -4760,6 +4760,12 @@ graph_offset = Vector2( -324.135, -65.4675 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=86]
 
 [node name="EXAMPLE_MODEL" type="KinematicBody"]
+axis_lock_motion_x = true
+axis_lock_motion_y = true
+axis_lock_motion_z = true
+move_lock_x = true
+move_lock_y = true
+move_lock_z = true
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.856405, -0.00732607 )
@@ -4999,9 +5005,6 @@ bone_whitelist = "0-16,29-32"
 [node name="body001" type="MeshInstance" parent="root/Skeleton"]
 mesh = SubResource( 1 )
 skin = SubResource( 2 )
-material/0 = null
-material/1 = null
-material/2 = null
 
 [node name="pelvis" type="RigidBody" parent="root/Skeleton"]
 transform = Transform( 0.998983, -0.0374975, -0.0250276, 0.0312499, 0.976096, -0.215083, 0.0324944, 0.214082, 0.976275, 0.00424036, 0.820861, 0.288183 )

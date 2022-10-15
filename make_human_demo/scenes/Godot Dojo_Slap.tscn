@@ -261,6 +261,7 @@ extents = Vector3( 4, 0.05, 4 )
 
 [node name="EXAMPLE_MODEL" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+motion/sync_to_physics = true
 
 [node name="SliceableWoodenman" parent="." instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 1 )
