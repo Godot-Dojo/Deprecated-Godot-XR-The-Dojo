@@ -17,12 +17,7 @@ var item_in_player_hand_right = null
 var left_function_pickup_node = null
 var right_function_pickup_node = null
 var throttle_countdown = 0
-var grabbing_weapon_two_handed = false
-var secondary_grab_location : Spatial = null
-var secondary_grab_hand : Spatial = null
-var secondary_grab_hand_orig_transform_basis : Basis
-var avatar_left_hand_original_target : NodePath
-var avatar_right_hand_original_target : NodePath
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#connect left and right hand pickup functions
@@ -38,12 +33,6 @@ func _ready():
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone2").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 	get_parent().get_node("HolderForPickableSwords/Snap_Zone3").connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 	
-	for child in get_children():
-		if child is Gun:
-			var gun_secondary_grab_area = child.get_node_or_null("secondary_grab_area")
-			if gun_secondary_grab_area != null:
-				child.connect("grabbed_two_handed", self, "_on_gun_grabbed_two_handed")
-				child.connect("released_two_handed", self, "_on_gun_released_two_handed")
 	#if scene has a backpack, set the weapon snap zones to require a group that does not exist so player can just pick up backpack without triggering snap zones
 	if backpack != null:
 		var inner_pack = backpack.get_node("In")
@@ -57,15 +46,10 @@ func _ready():
 			snap.grap_require = "disabled"
 			snap.connect("has_picked_up", self, "_on_snap_zone_picked_up_object")
 		
-	avatar_left_hand_original_target = ARVRHelpers.get_arvr_origin(left_function_pickup_node).get_node("avatar/Armature/Skeleton/SkeletonIKL").get_target_node()
-	avatar_right_hand_original_target = ARVRHelpers.get_arvr_origin(right_function_pickup_node).get_node("avatar/Armature/Skeleton/SkeletonIKR").get_target_node()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	pass
-	
-	#if grabbing_weapon_two_handed == true:
-	#	secondary_grab_hand.global_transform.basis = secondary_grab_location.global_transform.basis
-	#	secondary_grab_hand.global_transform.origin = secondary_grab_location.global_transform.origin
 	
 	
 	#example code of how to check if object is a given distance, example: 3 units, from player and if so, place back on player character
@@ -89,10 +73,7 @@ func _physics_process(delta):
 #		throttle_countdown = 0	
 
 func _on_left_function_pickup_picked_up_object(object):
-	if object.get_node_or_null("AvatarPickup") != null:
-		ARVRHelpers.get_arvr_origin(left_function_pickup_node).get_node("avatar/Armature/Skeleton/SkeletonIKL").set_target_node(object.get_node("AvatarPickup").get_path())
 	
-		
 	var weapon_to_hold_scene = check_weapon_scene(object)
 	
 	if weapon_to_hold_scene == null:
@@ -129,8 +110,7 @@ func _on_left_function_pickup_picked_up_object(object):
 	item_in_player_hand_left = object
 	
 func _on_left_function_pickup_dropped_object():
-	ARVRHelpers.get_arvr_origin(left_function_pickup_node).get_node("avatar/Armature/Skeleton/SkeletonIKL").set_target_node(avatar_left_hand_original_target)	
-
+	
 	if item_in_player_hand_left == null:
 		return
 		
@@ -147,8 +127,6 @@ func _on_left_function_pickup_dropped_object():
 	item_in_player_hand_left = null
 	
 func _on_right_function_pickup_picked_up_object(object):
-	if object.get_node_or_null("AvatarPickup") != null:
-		ARVRHelpers.get_arvr_origin(right_function_pickup_node).get_node("avatar/Armature/Skeleton/SkeletonIKR").set_target_node(object.get_node("AvatarPickup").get_path())
 	
 	var weapon_to_hold_scene = check_weapon_scene(object)
 	
@@ -186,7 +164,7 @@ func _on_right_function_pickup_picked_up_object(object):
 	item_in_player_hand_right = object
 
 func _on_right_function_pickup_dropped_object():
-	ARVRHelpers.get_arvr_origin(right_function_pickup_node).get_node("avatar/Armature/Skeleton/SkeletonIKR").set_target_node(avatar_right_hand_original_target)
+	
 	if item_in_player_hand_right == null:
 		return
 		
@@ -250,43 +228,3 @@ func _on_Backpack_dropped(pickable):
 		#put on empty shoulder slot if one is available
 			if holster.picked_up_object == null:
 				holster._pick_up_object(backpack)
-
-func _on_gun_grabbed_two_handed(weapon, controller, grab_point):
-	if controller == left_function_pickup_node.get_parent():
-		#secondary_grab_hand_orig_transform_basis = controller.get_node("LeftPhysicsHand").global_transform.basis
-		#controller.get_node("LeftPhysicsHand").set_as_toplevel(true)
-		#controller.get_node("LeftPhysicsHand").global_transform.origin = grab_point.global_transform.origin
-		ARVRHelpers.get_arvr_origin(controller).get_node("avatar/Armature/Skeleton/SkeletonIKL").set_target_node(grab_point.get_path())
-		grabbing_weapon_two_handed = true
-		secondary_grab_location = grab_point
-		secondary_grab_hand = controller.get_node("LeftPhysicsHand")
-		
-		
-	elif controller == right_function_pickup_node.get_parent():
-		#secondary_grab_hand_orig_transform_basis = controller.get_node("RightPhysicsHand").global_transform.basis
-		#controller.get_node("RightPhysicsHand").set_as_toplevel(true)
-		#controller.get_node("RightPhysicsHand").global_transform.origin = grab_point.global_transform.origin
-		ARVRHelpers.get_arvr_origin(controller).get_node("avatar/Armature/Skeleton/SkeletonIKR").set_target_node(grab_point.get_path())
-		grabbing_weapon_two_handed = true
-		secondary_grab_location = grab_point
-		secondary_grab_hand = controller.get_node("RightPhysicsHand")
-		
-		
-func _on_gun_released_two_handed(weapon, controller, grab_point):
-	if controller == left_function_pickup_node.get_parent():
-		#controller.get_node("LeftPhysicsHand").set_as_toplevel(false)
-		#controller.get_node("LeftPhysicsHand").global_transform.origin = controller.global_transform.origin
-		#controller.get_node("LeftPhysicsHand").global_transform.basis = secondary_grab_hand_orig_transform_basis
-		ARVRHelpers.get_arvr_origin(controller).get_node("avatar/Armature/Skeleton/SkeletonIKL").set_target_node(avatar_left_hand_original_target)
-		grabbing_weapon_two_handed = false
-		secondary_grab_location = null
-		secondary_grab_hand = null
-		
-	elif controller == right_function_pickup_node.get_parent():
-		#controller.get_node("RightPhysicsHand").set_as_toplevel(false)
-		#controller.get_node("RightPhysicsHand").global_transform.origin = controller.global_transform.origin
-		#controller.get_node("RightPhysicsHand").global_transform.basis = secondary_grab_hand_orig_transform_basis
-		ARVRHelpers.get_arvr_origin(controller).get_node("avatar/Armature/Skeleton/SkeletonIKR").set_target_node(avatar_right_hand_original_target)
-		grabbing_weapon_two_handed = false
-		secondary_grab_location = null
-		secondary_grab_hand = null
