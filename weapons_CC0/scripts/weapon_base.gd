@@ -16,6 +16,9 @@ onready var _muzzleflash: Particles = $FirearmProjectileSpawner/MuzzleParticles
 onready var _smoke: Particles = $FirearmProjectileSpawner/SmokeParticles
 var can_shoot : bool = true
 var magazine_ammo : int = 0
+var grabbed_two_handed : bool = false
+var grabbed_two_handed_spatial : Spatial = null
+var second_hand_controller : ARVRController = null
 
 # initial transform when grabbed -> used for recoil recovery
 var grabbed_transform: Transform = Transform(Basis.IDENTITY, Vector3.ZERO)
@@ -28,6 +31,8 @@ export var recoil_position_offset: Vector3 = Vector3(0, 0, 0.1)
 
 signal shoot
 signal ammo_depleted
+signal grabbed_two_handed(weapon, controller, grab_point)
+signal released_two_handed(weapon, controller, grab_point)
 
 func _ready(): 
 	hold_method = HoldMethod.REMOTE_TRANSFORM
@@ -53,8 +58,10 @@ func action():
 			# If magazine doesn't have bullet, that means there must be "one in the chamber" so use up that bullet instead
 			else:
 				current_ammo -= 1
-			_muzzleflash.restart()
-			_smoke.restart()
+			if _muzzleflash != null:
+				_muzzleflash.restart()
+			if _smoke != null:
+				_smoke.restart()
 			$GunSound.play(.4)
 			recoil()
 			emit_signal("shoot")
@@ -62,8 +69,10 @@ func action():
 			if current_ammo <= 0:
 				emit_signal("ammo_depleted")
 				$ClickSound.play()
+				
 		if current_ammo <= 0:
-			$ClickSound.play()	
+			if get_node_or_null("ClickSound")!=null:
+				$ClickSound.play()	
 		# Make player wait until time designated for gun to allow next shot
 		can_shoot = false
 		$ShotTimer.wait_time = shot_timer_time
@@ -84,7 +93,8 @@ func recoil_recover():
 #When shot timer expires, allow shot again
 func _on_ShotTimer_timeout():
 	if current_ammo <= 0:
-		$ClickSound.stop()
+		if get_node_or_null("ClickSound")!=null:
+			$ClickSound.stop()
 	can_shoot = true
 	
 func _on_Mag_Zone_has_picked_up(what):
@@ -107,8 +117,13 @@ func _process(delta):
 		# recover transform from recoil if not at grabbed transform
 		if !_remote_transform.transform.is_equal_approx(grabbed_transform): 
 			recoil_recover()
-			
-		mag_zone.grap_require = ""
+		
+		#make it impossible to grab magazine while holding gun if it has bullets to prevent misfires when trying to use slide
+		if mag_zone.picked_up_object == null or magazine_ammo == 0:	
+			mag_zone.grap_require = ""
+		else:
+			mag_zone.grap_require = "none"
+		
 		if get_node_or_null("Scope_Zone") != null:
 			$Scope_Zone.grap_require = ""
 		
@@ -117,8 +132,25 @@ func _process(delta):
 			if get_fire_input() > 0.5:
 				action()
 				
+				
+	if grabbed_two_handed == true:
+		emit_signal("grabbed_two_handed", self, second_hand_controller, grabbed_two_handed_spatial)
+	
+				
 func get_fire_input():
 	return by_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER)
 	
 func picked_up(s): 
 	grabbed_transform = _remote_transform.transform
+
+
+func _on_secondary_grab_area_grabbed(grab_area, grip_point, by_controller):
+	grabbed_two_handed = true
+	grabbed_two_handed_spatial = grip_point
+	second_hand_controller =  by_controller
+
+func _on_secondary_grab_area_released(grab_area, grip_point, by_controller):
+	grabbed_two_handed = false
+	grabbed_two_handed_spatial = null
+	second_hand_controller = by_controller
+	emit_signal("released_two_handed", self, second_hand_controller, grip_point)

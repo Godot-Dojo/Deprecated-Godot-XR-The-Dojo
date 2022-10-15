@@ -41,9 +41,11 @@ func _process(delta):
 		_remote_transform.remote_path = NodePath()
 		translation.z = get_parent().to_local(by_controller.global_transform.origin + grabbed_offset).z
 		translation.z = clamp(translation.z, start_translation.z, z_end_translation)
-		slideSFX.play()
+		if slideSFX:
+			slideSFX.play()
 		yield(get_tree().create_timer(0.65), "timeout")
-		slideSFX.stop()
+		if slideSFX:
+			slideSFX.stop()
 	else:
 		var slide_enabled = !slide_stopped and auto_slide_back
 		# return slide to init translation 

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar_Precise_Throwing.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/Function_Pickup_Avatar_Precise_Throwing.tscn" type="PackedScene" id=2]
+
+[node name="RightHandBoneAttachment" type="BoneAttachment"]
+transform = Transform( 0.00442439, -0.344135, 0.93891, 0.881677, -0.441675, -0.16604, 0.471833, 0.828548, 0.301461, -0.523546, 1.14262, 0.218 )
+bone_name = "hand_r"
+
+[node name="Function_Pickup" type="Spatial" parent="." instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 1, 0, 4.37114e-08, 1.91069e-15, -1, -1, -4.37114e-08, -4.37114e-08, 0.05, 0.15, 0.04 )
+script = ExtResource( 1 )
+grabbing_controller_nodepath = NodePath("../../../../../RightHandController")
+aiming_controller_nodepath = NodePath("../../../../../LeftHandController")
