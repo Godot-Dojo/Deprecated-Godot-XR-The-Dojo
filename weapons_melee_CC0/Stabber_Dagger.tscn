@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://weapons/scripts/dagger.gd" type="Script" id=1]
 [ext_resource path="res://addons/slicer/slicer.gd" type="Script" id=2]
@@ -25,6 +25,12 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 486
 }
+
+[sub_resource type="SpatialMaterial" id=5]
+params_diffuse_mode = 1
+albedo_color = Color( 0.490196, 0.47451, 0.47451, 1 )
+metallic = 1.0
+roughness = 0.35
 
 [node name="Stabber_Dagger" type="RigidBody"]
 collision_mask = 131073
@@ -77,7 +83,7 @@ shape = SubResource( 2 )
 [node name="Dagger" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
 skeleton = NodePath("")
-material/0 = null
+material/0 = SubResource( 5 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="."]
 shape = SubResource( 3 )

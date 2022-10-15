@@ -6,7 +6,7 @@
 [ext_resource path="res://managers/SceneManager.tscn" type="PackedScene" id=4]
 [ext_resource path="res://dojo/environment/SliceableWoodenman.tscn" type="PackedScene" id=5]
 [ext_resource path="res://weapons/Slicing_Katana_S.tscn" type="PackedScene" id=6]
-[ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_lipsync_player.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/avatar_lipsync.tscn" type="PackedScene" id=7]
 [ext_resource path="res://weapons/Slicing_Katana_Long.tscn" type="PackedScene" id=8]
 [ext_resource path="res://dojo/environment/HolderForPickableSwords.tscn" type="PackedScene" id=9]
 [ext_resource path="res://weapons/Slicing_Katana_M.tscn" type="PackedScene" id=10]
@@ -65,7 +65,6 @@ script = ExtResource( 1 )
 
 [node name="SceneManager" parent="." instance=ExtResource( 4 )]
 
-[node name="avatar_player" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.67555 )
-
 [node name="Dojo" parent="." instance=ExtResource( 11 )]
+
+[node name="avatar_player" parent="." instance=ExtResource( 7 )]

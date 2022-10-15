@@ -61,7 +61,7 @@ filter_enabled = true
 filters = [ "Armature/Skeleton:index_01_r", "Armature/Skeleton:index_02_r", "Armature/Skeleton:index_03_r", "Armature/Skeleton:index_03_r_end" ]
 
 [sub_resource type="AnimationNodeBlendTree" id=9]
-graph_offset = Vector2( -3.05176e-05, 7.62939e-06 )
+graph_offset = Vector2( 788, -26 )
 nodes/Add2/node = SubResource( 1 )
 nodes/Add2/position = Vector2( 400, 120 )
 nodes/Animation/node = SubResource( 2 )
@@ -85,7 +85,7 @@ nodes/righthandpose/node = SubResource( 12 )
 nodes/righthandpose/position = Vector2( 1220, 120 )
 nodes/righthandposetrig/node = SubResource( 13 )
 nodes/righthandposetrig/position = Vector2( 1500, 120 )
-node_connections = [ "Add2", 0, "Animation", "Add2", 1, "movement", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "output", 0, "righthandposetrig" ]
+node_connections = [ "output", 0, "righthandposetrig", "righthandpose", 0, "lefthandposetrig", "righthandpose", 1, "rightGrip", "lefthandpose", 0, "Add2", "lefthandpose", 1, "leftGrip", "righthandposetrig", 0, "righthandpose", "righthandposetrig", 1, "rightTrigger", "lefthandposetrig", 0, "lefthandpose", "lefthandposetrig", 1, "leftTrigger", "Add2", 0, "Animation", "Add2", 1, "movement" ]
 
 [node name="AnimationTree" type="AnimationTree"]
 tree_root = SubResource( 9 )

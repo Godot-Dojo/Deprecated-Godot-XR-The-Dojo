@@ -247,6 +247,7 @@ transform = Transform( 0.01, 0, 0, 0, -1.19209e-09, -0.01, 0, 0.01, -1.19209e-09
 shape = SubResource( 30 )
 
 [node name="FirearmSlide" type="RigidBody" parent="."]
+collision_layer = 65536
 script = ExtResource( 8 )
 z_end_translation = 0.135
 
@@ -264,7 +265,7 @@ material/0 = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0373259, -0.0196273 )
 
 [node name="grip_point" parent="secondary_grab_area" index="1"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+transform = Transform( 8.74228e-08, 4.37114e-08, 1, -1, 4.37114e-08, 8.74228e-08, -4.37114e-08, -1, 4.37114e-08, 0, 0, 0 )
 
 [node name="ClickSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 6 )

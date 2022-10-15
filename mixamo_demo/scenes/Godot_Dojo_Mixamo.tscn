@@ -332,8 +332,16 @@ texture = SubResource( 9 )
 [node name="SceneManager" parent="." instance=ExtResource( 3 )]
 
 [node name="automated_shadow_player" parent="." instance=ExtResource( 5 )]
+transform = Transform( -0.135629, 0, -0.99076, 0, 1, 0, 0.99076, 0, -0.135629, -0.0647376, -1.19209e-07, -2.11912 )
+player_arvrorigin_path = NodePath("../avatar_player/FPController")
+player_arvrcamera_path = NodePath("../avatar_player/FPController/ARVRCamera")
+player_left_controller_path = NodePath("../avatar_player/FPController/LeftHandController")
+player_right_controller_path = NodePath("../avatar_player/FPController/RightHandController")
+player_left_hand_path = NodePath("../avatar_player/FPController/LeftHandController/LeftPhysicsHand")
+player_right_hand_path = NodePath("../avatar_player/FPController/RightHandController/RightPhysicsHand")
 player_avatar_body_path = NodePath("../avatar_player/FPController/mixamo_avatar")
 auto_anim_choice = 2
+use_procedural_bounce = true
 
 [node name="avatar" type="Spatial" parent="automated_shadow_player/FPController" index="3"]
 
@@ -700,4 +708,5 @@ material/0 = ExtResource( 6 )
 
 [editable path="avatar_player"]
 [editable path="avatar_player/FPController"]
+[editable path="SceneManager"]
 [editable path="automated_shadow_player"]

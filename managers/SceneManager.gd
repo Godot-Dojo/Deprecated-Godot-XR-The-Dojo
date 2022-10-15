@@ -12,7 +12,7 @@ func _ready():
 		scene_match = "three_shadows"
 	if current_scene.get_filename() == "res://make_human_demo/scenes/Godot Dojo_Female.tscn":
 		scene_match = "female_avatar"
-	if current_scene.get_filename() == "res://make_human_demo/scenes/Godot Dojo_SnapZone_Inventory.tscn":
+	if current_scene.get_filename() == "res://make_human_demo/scenes/Godot Dojo_Shurikens.tscn":
 		scene_match = "weapons"
 	if current_scene.get_filename() == "res://mixamo_demo/scenes/Godot_Dojo_Mixamo.tscn":
 		scene_match = "mixamo"
@@ -31,7 +31,7 @@ func _on_Feature_RadialMenu_entry_selected(entry):
 	elif entry == "female_avatar":
 		get_tree().change_scene("res://make_human_demo/scenes/Godot Dojo_Female.tscn")
 	elif entry == "weapons":
-		get_tree().change_scene("res://make_human_demo/scenes/Godot Dojo_SnapZone_Inventory.tscn")
+		get_tree().change_scene("res://make_human_demo/scenes/Godot Dojo_Shurikens.tscn")
 	elif entry == "mixamo":
 		get_tree().change_scene("res://mixamo_demo/scenes/Godot_Dojo_Mixamo.tscn")
 	elif entry == "ready_player":
