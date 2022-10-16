@@ -361,10 +361,11 @@ func _get_closest_ranged() -> Spatial:
 func drop_object() -> void:
 	if not is_instance_valid(picked_up_object):
 		return
-	
-	if picked_up_object.find_node("secondary_grab_area"):
-		picked_up_object.find_node("secondary_grab_area").disconnect("secondary_grab_area_grabbed", self, "_on_secondary_grab_area_grabbed")
-		picked_up_object.find_node("secondary_grab_area").disconnect("secondary_grab_area_released", self, "_on_secondary_grab_area_released")
+	var secondary_grab_area = picked_up_object.find_node("secondary_grab_area")
+	if secondary_grab_area != null:
+		secondary_grab_area.release()
+		secondary_grab_area.disconnect("secondary_grab_area_grabbed", self, "_on_secondary_grab_area_grabbed")
+		secondary_grab_area.disconnect("secondary_grab_area_released", self, "_on_secondary_grab_area_released")
 	
 	#Default function pickup behavior
 	if use_precise_aiming == false or (use_precise_aiming == true and !_controller.is_button_pressed(precise_aim_activate_button_id)): # let go of this object
