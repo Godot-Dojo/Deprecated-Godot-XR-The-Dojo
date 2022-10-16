@@ -144,6 +144,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-xr-tools/assets/PlayerBody.gd"
 }, {
+"base": "XRToolsPickable",
+"class": "StabWeapon",
+"language": "GDScript",
+"path": "res://weapons/scripts/dagger.gd"
+}, {
 "base": "Reference",
 "class": "VelocityAverager",
 "language": "GDScript",
@@ -287,6 +292,7 @@ _global_script_class_icons={
 "OQClass_Object": "",
 "Object_climbable": "res://addons/godot-xr-tools/editor/icons/XRToolsHand.svg",
 "PlayerBody": "res://addons/godot-xr-tools/editor/icons/XRToolsBody.svg",
+"StabWeapon": "",
 "VelocityAverager": "",
 "VelocityAveragerLinear": "",
 "VirtualKeyboard2D": "",
