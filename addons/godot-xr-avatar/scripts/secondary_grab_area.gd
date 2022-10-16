@@ -43,3 +43,7 @@ func _on_secondary_grab_area_entered(_body):
 	
 func _on_secondary_grab_area_exited(_body):
 	_start_monitoring = false
+	
+func release():
+	if _gripping_controller != null:
+		emit_signal("secondary_grab_area_released", self, $grip_point, _gripping_controller)
