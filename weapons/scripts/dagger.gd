@@ -3,6 +3,7 @@ class_name StabWeapon
 
 onready var last_position = global_transform.origin
 onready var debug = $debug
+onready var joint_debug = $'../debug'
 #export var impulse_factor = 5.0
 export var enabled:bool = true
 export var path_base:NodePath
@@ -27,6 +28,7 @@ func _ready():
 	for child in get_children():# starts from base 
 		if child is RayCast:
 			raycast = child
+	
 
 func look_at_with_x(trans,new_x,v_up):
 	trans.basis.x=new_x.normalized()
@@ -39,27 +41,26 @@ func look_at_with_x(trans,new_x,v_up):
 	return trans
 
 func create_joint(collider,collision_mormal,collision_point):
-	print("stuck",collider.name,collision_point,collision_mormal)
 	joint = SliderJoint.new()
-	joint.set("nodes/node_a",collider.get_path())
-	joint.set("nodes/node_b",self.get_path())
-	print(" tip:",tip.global_transform.origin ," point:",collision_point," base:",base.global_transform.origin)
-	print("collsiion_to_tip ",(collision_point-tip.global_transform.origin).length())
-	print("collsiion_to_base ",(collision_point-base.global_transform.origin).length())
-	#joint.set("linear_limit/upper_distance",0)
-	#joint.set("linear_limit/lower_distance",0)
-	get_parent().add_child(joint)
 	joint.global_transform.origin = collision_point
 	joint.transform = look_at_with_x(joint.transform,collision_mormal,Vector3.UP)
+	joint_debug.global_transform = joint.transform
+	joint.set("nodes/node_a",collider.get_path())
+	joint.set("nodes/node_b",get_path())
+	joint.set("linear_limit/upper_distance",0)
+	joint.set("linear_limit/lower_distance",-.1)
+	joint.set("linear_limit/softness",.01)
+	joint.set("linear_limit/restitution",.01)
+	joint.set("linear_limit/damping",16)
+	joint.set("linear_ortho/softness",.01)
+	joint.set("linear_ortho/restitution",.01)
+	joint.set("linear_ortho/damping",16)
+	joint.set("linear_motion/softness",.01)
+	joint.set("linear_motion/restitution",.01)
+	joint.set("linear_motion/damping",16)
+	joint.set("collision/excluse_nodes",true)
+	get_parent().add_child(joint)
 	#self.sleeping = true
-	print(joint.transform.basis.x)
-	print(joint,joint,global_transform.origin)
-
-func lock_axes(value):
-	axis_lock_angular_x = value
-	axis_lock_angular_z = value
-	axis_lock_linear_x = value
-	axis_lock_linear_z = value
 
 func _physics_process(delta):
 	if not enabled:
@@ -68,20 +69,16 @@ func _physics_process(delta):
 		states.STUCK:
 			if raycast.is_colliding():# need to constraint to axis when pulling out, need to figure that out 
 				return
-			print("unstuck")
 			joint.queue_free()
 			newMaterial.albedo_color = Color.red
 			debug.material_override = newMaterial
-			#lock_axes(false)
 			state = states.NOT_STUCK
 		states.NOT_STUCK:
-			if joint:
-				return
 			var velocity:Vector3 = self.linear_velocity
 			var entry_direction:Vector3 = tip.global_transform.origin - base.global_transform.origin
 			#project the linear velocity on entry_direction 
 			var projected_vector = velocity.project(entry_direction.normalized())
-			print(velocity,entry_direction.normalized(),projected_vector,projected_vector.length())
+			#print(velocity,entry_direction.normalized(),projected_vector,projected_vector.length())
 			if projected_vector.length() < velocity_threshold:
 				return
 			newMaterial.albedo_color = Color.yellow
@@ -102,17 +99,21 @@ func _physics_process(delta):
 			if  entry_angle > angle_threshold:
 				return  
 			create_joint(collider,entry_direction,collision_point)
-			#lock_axes(true)
 			newMaterial.albedo_color = Color.green
 			debug.material_override = newMaterial
-			print("stuck")
-			linear_velocity = Vector3.ZERO
 			state = states.STUCK
-			
-func _integrate_forces(state):
-	match state:
-		states.STUCK:
-			var velocity:Vector3 = state.get_linear_velocity()
-			var entry_direction:Vector3 = tip.global_transform.origin - base.global_transform.origin
-			var projected_vector = velocity.project(entry_direction.normalized())
-			state.set_linear_velocity(projected_vector)
+
+#func _integrate_forces(s):
+#	if state == states.STUCK:
+#		var velocity = s.get_linear_velocity()
+#		var angular_vel = s.get_angular_velocity()
+#		var lvelocity = global_transform.basis.xform_inv(velocity)
+#		var langvelocity = global_transform.basis.xform_inv(angular_vel)
+#		lvelocity.x = 0 
+#		lvelocity.z = 0
+#		langvelocity.x = 0 
+#		langvelocity.z = 0
+#		velocity = global_transform.basis.xform(lvelocity)
+#		angular_vel = global_transform.basis.xform(langvelocity)
+#		s.set_linear_velocity(velocity) 
+#		s.set_linear_velocity(angular_vel) 
