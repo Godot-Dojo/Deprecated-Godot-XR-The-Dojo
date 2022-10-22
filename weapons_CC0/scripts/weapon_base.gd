@@ -21,8 +21,6 @@ var grabbed_two_handed_spatial : Spatial = null
 var second_hand_controller : ARVRController = null
 var two_handed_recoil_rotation_offset : Vector3
 var two_handed_recoil_position_offset : Vector3
-var two_handed_recoil_recover_speed : float
-var secondary_grip_point_default_rotation_degrees : Vector3
 # initial transform when grabbed -> used for recoil recovery
 var grabbed_transform: Transform = Transform(Basis.IDENTITY, Vector3.ZERO)
 # recoil recover speed 
@@ -44,10 +42,7 @@ func _ready():
 	connect("picked_up", self, "picked_up")
 	two_handed_recoil_rotation_offset = two_handed_recoil_multiplier * recoil_rotation_offset
 	two_handed_recoil_position_offset = two_handed_recoil_multiplier * recoil_position_offset
-	two_handed_recoil_recover_speed = two_handed_recoil_multiplier * recoil_recover_speed
-	if get_node_or_null("secondary_grab_area") != null:
-		secondary_grip_point_default_rotation_degrees = $secondary_grab_area/grip_point.rotation_degrees
-
+	
 
 func action():
 	if can_shoot:
@@ -105,15 +100,11 @@ func recoil():
 		)
 func recoil_recover(): 
 	# lerp transform to grabbed transform 
-	if grabbed_two_handed == false:
-		_remote_transform.transform = _remote_transform.transform.interpolate_with(
-			grabbed_transform, recoil_recover_speed
-		)
-	else:
-		_remote_transform.transform = _remote_transform.transform.interpolate_with(
-			grabbed_transform, two_handed_recoil_recover_speed
-		)
-		
+	
+	_remote_transform.transform = _remote_transform.transform.interpolate_with(
+		grabbed_transform, recoil_recover_speed
+	)
+	
 #When shot timer expires, allow shot again
 func _on_ShotTimer_timeout():
 	if current_ammo <= 0:
@@ -159,9 +150,6 @@ func _process(delta):
 				action()
 				
 				
-	#if grabbed_two_handed == true:
-	#	emit_signal("grabbed_two_handed", self, second_hand_controller, grabbed_two_handed_spatial)
-	
 				
 func get_fire_input():
 	return by_controller.get_joystick_axis(JOY_VR_ANALOG_TRIGGER)
@@ -176,14 +164,16 @@ func _on_secondary_grab_area_grabbed(grab_area, grip_point, by_controller):
 	second_hand_controller =  by_controller
 	emit_signal("grabbed_two_handed", self, second_hand_controller, grabbed_two_handed_spatial)
 	if second_hand_controller.name.matchn("*right*"):
-		grip_point.rotation_degrees.x = 180.0
+		grip_point.rotation_degrees = grab_area.secondary_grab_area_rotation_degrees_right 
+		grip_point.translation = grab_area.secondary_grab_area_local_position_right
 		
 	else:
-		grip_point.rotation_degrees.x = secondary_grip_point_default_rotation_degrees.x
+		grip_point.rotation_degrees = grab_area.secondary_grab_area_rotation_degrees_left 
+		grip_point.translation = grab_area.secondary_grab_area_local_position_left
 		
 func _on_secondary_grab_area_released(grab_area, grip_point, by_controller):
 	grabbed_two_handed = false
 	grabbed_two_handed_spatial = null
 	second_hand_controller = by_controller
 	emit_signal("released_two_handed", self, second_hand_controller, grip_point)
-	grip_point.rotation_degrees = secondary_grip_point_default_rotation_degrees
+	
