@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://addons/godot-xr-avatar/scripts/automated_avatar.gd" type="Script" id=1]
 [ext_resource path="res://weapons_CC0/Mag_Automatic_AK.tscn" type="PackedScene" id=2]
@@ -18,7 +18,6 @@
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Crouch_movement.tscn" type="PackedScene" id=16]
 [ext_resource path="res://weapons_CC0/Gun_Automatic_AK.tscn" type="PackedScene" id=17]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Direct_movement.tscn" type="PackedScene" id=18]
-[ext_resource path="res://addons/godot-xr-avatar/materials/hand_african_mat.tres" type="Material" id=19]
 [ext_resource path="res://addons/godot-xr-avatar/materials/sybot_mat.tres" type="Material" id=20]
 [ext_resource path="res://addons/godot-xr-avatar/materials/avatar_eye.tres" type="Material" id=21]
 [ext_resource path="res://addons/godot-xr-tools/materials/pointer.tres" type="Material" id=22]
@@ -411,7 +410,6 @@ left_hand_rotation_degs = Vector3( 90, -90, 90 )
 right_hand_rotation_degs = Vector3( 90, -90, 90 )
 auto_anim_choice = 1
 use_procedural_walk = true
-use_procedural_bounce = true
 
 [node name="Armature" type="Spatial" parent="avatar_player/FPController/avatar"]
 
@@ -760,12 +758,12 @@ material/0 = ExtResource( 21 )
 [node name="mesh_Hand_L" type="MeshInstance" parent="avatar_player/FPController/avatar/Armature/Skeleton"]
 mesh = SubResource( 5 )
 skin = SubResource( 3 )
-material/0 = ExtResource( 19 )
+material/0 = ExtResource( 20 )
 
 [node name="mesh_Hand_R" type="MeshInstance" parent="avatar_player/FPController/avatar/Armature/Skeleton"]
 mesh = SubResource( 6 )
 skin = SubResource( 3 )
-material/0 = ExtResource( 19 )
+material/0 = ExtResource( 20 )
 
 [node name="mesh_Head" type="MeshInstance" parent="avatar_player/FPController/avatar/Armature/Skeleton"]
 mesh = SubResource( 8 )
