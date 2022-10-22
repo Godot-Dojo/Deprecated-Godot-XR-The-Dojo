@@ -43,9 +43,7 @@ func _process(delta):
 		translation.z = clamp(translation.z, start_translation.z, z_end_translation)
 		if slideSFX:
 			slideSFX.play()
-		yield(get_tree().create_timer(0.65), "timeout")
-		if slideSFX:
-			slideSFX.stop()
+		
 	else:
 		var slide_enabled = !slide_stopped and auto_slide_back
 		# return slide to init translation 
@@ -67,9 +65,9 @@ func is_back() -> bool:
 		start_translation.y, 
 		z_end_translation
 	))
-	slideSFX.play()
-	yield(get_tree().create_timer(0.65), "timeout")
-	slideSFX.stop()
+	if slideSFX:
+		slideSFX.play()
+	
 
 func picked_up(s): 
 	grabbed_offset = global_transform.origin - by_controller.global_transform.origin
