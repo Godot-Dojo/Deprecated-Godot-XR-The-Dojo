@@ -452,11 +452,15 @@ func _on_button_release(p_button) -> void:
 func _on_secondary_grab_area_grabbed(grab_area, grip_point, controller):
 	if controller.name.matchn("*left*"):
 		get_parent().get_parent().get_node("SkeletonIKL").set_target_node(grip_point.get_path())
+		get_parent().get_parent().get_node("SkeletonIKL").set_magnet_position(Vector3(15,-5,-10))
 	elif controller.name.matchn("*right*"):
 		get_parent().get_parent().get_node("SkeletonIKR").set_target_node(grip_point.get_path())
+		get_parent().get_parent().get_node("SkeletonIKR").set_magnet_position(Vector3(-15,-5,-10))
 
 func _on_secondary_grab_area_released(grab_area, grip_point, controller):
 	if controller.name.matchn("*left*"):
 		get_parent().get_parent().get_node("SkeletonIKL").set_target_node(_avatar_left_hand_target)
+		get_parent().get_parent().get_node("SkeletonIKL").set_magnet_position(Vector3(3,-5,-10))
 	elif controller.name.matchn("*right*"):
 		get_parent().get_parent().get_node("SkeletonIKR").set_target_node(_avatar_right_hand_target)
+		get_parent().get_parent().get_node("SkeletonIKR").set_magnet_position(Vector3(-3,-5,-10))
