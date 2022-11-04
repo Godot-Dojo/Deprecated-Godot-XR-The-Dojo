@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://addons/godot-xr-avatar/scripts/automated_avatar.gd" type="Script" id=1]
 [ext_resource path="res://weapons_CC0/Mag_Automatic_AK.tscn" type="PackedScene" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://weapons_CC0/Mag_9mm.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/godot-xr-tools/functions/Function_Turn_movement.tscn" type="PackedScene" id=8]
 [ext_resource path="res://addons/godot-xr-tools/assets/PlayerBody.tscn" type="PackedScene" id=9]
-[ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar_Precise_Throwing.gd" type="Script" id=10]
+[ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar.gd" type="Script" id=10]
 [ext_resource path="res://addons/godot-xr-tools/assets/LeftPhysicsHand.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/godot-xr-tools/misc/VR_Common_Shader_Cache.tscn" type="PackedScene" id=12]
 [ext_resource path="res://weapons_CC0/Gun_Pistol_Automatic.tscn" type="PackedScene" id=13]
@@ -21,7 +21,6 @@
 [ext_resource path="res://managers/dagger_debug.tscn" type="PackedScene" id=19]
 [ext_resource path="res://addons/godot-xr-avatar/materials/sybot_mat.tres" type="Material" id=20]
 [ext_resource path="res://addons/godot-xr-avatar/materials/avatar_eye.tres" type="Material" id=21]
-[ext_resource path="res://addons/godot-xr-tools/materials/pointer.tres" type="Material" id=22]
 [ext_resource path="res://addons/godot-openxr/config/OpenXRConfig.gdns" type="Script" id=23]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -321,16 +320,6 @@ surfaces/0 = {
 "skeleton_aabb": [ AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( 0, 0, 0, -1, -1, -1 ), AABB( -0.0721318, 1.73888, 0.0537842, 0.144264, 0.0314059, 0.0220842 ), AABB( -0.0721318, 1.6148, 0.0412689, 0.144264, 0.209959, 0.158914 ) ],
 "vertex_count": 89
 }
-
-[sub_resource type="CubeMesh" id=11]
-resource_local_to_scene = true
-size = Vector3( 0.05, 0.05, 0.05 )
-subdivide_depth = 20
-
-[sub_resource type="CubeMesh" id=12]
-resource_local_to_scene = true
-size = Vector3( 0.05, 0.05, 0.05 )
-subdivide_depth = 20
 
 [node name="NewAvatarGrabTest" type="Spatial"]
 
@@ -786,16 +775,6 @@ script = ExtResource( 10 )
 grabbing_controller_nodepath = NodePath("../../../../../LeftHandController")
 grab_distance = 0.1
 grab_collision_mask = 65537
-use_precise_aiming = true
-aiming_controller_nodepath = NodePath("../../../../../RightHandController")
-
-[node name="Aiming_Target" type="MeshInstance" parent="avatar_player/FPController/avatar/Armature/Skeleton/LeftHandBoneAttachment/Function_Pickup"]
-visible = false
-mesh = SubResource( 11 )
-material/0 = ExtResource( 22 )
-
-[node name="AimingRaycast" type="RayCast" parent="avatar_player/FPController/avatar/Armature/Skeleton/LeftHandBoneAttachment/Function_Pickup"]
-cast_to = Vector3( 0, 0, 0 )
 
 [node name="RightHandBoneAttachment" type="BoneAttachment" parent="avatar_player/FPController/avatar/Armature/Skeleton"]
 transform = Transform( 0.788792, -0.344143, -0.509286, -0.61466, -0.441639, -0.653564, -4.4331e-07, 0.828565, -0.559892, -0.523551, 1.14251, 0.217999 )
@@ -808,16 +787,6 @@ grabbing_controller_nodepath = NodePath("../../../../../RightHandController")
 grab_distance = 0.1
 grab_collision_mask = 65537
 ranged_collision_mask = 65537
-use_precise_aiming = true
-aiming_controller_nodepath = NodePath("../../../../../LeftHandController")
-
-[node name="Aiming_Target" type="MeshInstance" parent="avatar_player/FPController/avatar/Armature/Skeleton/RightHandBoneAttachment/Function_Pickup"]
-visible = false
-mesh = SubResource( 12 )
-material/0 = ExtResource( 22 )
-
-[node name="AimingRaycast" type="RayCast" parent="avatar_player/FPController/avatar/Armature/Skeleton/RightHandBoneAttachment/Function_Pickup"]
-cast_to = Vector3( 0, 0, 0 )
 
 [node name="PlayerBody" parent="avatar_player/FPController" instance=ExtResource( 9 )]
 

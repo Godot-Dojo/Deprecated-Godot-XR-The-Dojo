@@ -80,9 +80,9 @@ _global_script_classes=[ {
 "path": "res://addons/godot-xr-tools/functions/Function_Pickup.gd"
 }, {
 "base": "Spatial",
-"class": "Function_Pickup_Avatar_Precise_Throwing",
+"class": "Function_Pickup_Avatar",
 "language": "GDScript",
-"path": "res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar_Precise_Throwing.gd"
+"path": "res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar.gd"
 }, {
 "base": "Spatial",
 "class": "Function_Pickup_Precise_Throwing",
@@ -279,7 +279,7 @@ _global_script_class_icons={
 "Function_Jump": "",
 "Function_JumpDetect": "",
 "Function_Pickup": "res://addons/godot-xr-tools/editor/icons/XRToolsFunction.svg",
-"Function_Pickup_Avatar_Precise_Throwing": "res://addons/godot-xr-tools/editor/icons/XRToolsFunction.svg",
+"Function_Pickup_Avatar": "res://addons/godot-xr-tools/editor/icons/XRToolsFunction.svg",
 "Function_Pickup_Precise_Throwing": "res://addons/godot-xr-tools/editor/icons/XRToolsFunction.svg",
 "Function_TurnMovement": "",
 "Function_WindMovement": "",

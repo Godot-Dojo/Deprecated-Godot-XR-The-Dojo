@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://weapons_CC0/materials/gun_pistol_automatic_mat.tres" type="Material" id=1]
 [ext_resource path="res://addons/godot-xr-tools/objects/Snap_Zone.tscn" type="PackedScene" id=2]
@@ -13,7 +13,6 @@
 [ext_resource path="res://weapons_CC0/particles/SmokeParticles.tscn" type="PackedScene" id=11]
 [ext_resource path="res://weapons_CC0/sfx/opengameart/click.ogg" type="AudioStream" id=12]
 [ext_resource path="res://weapons_CC0/sfx/opengameart/slide.ogg" type="AudioStream" id=13]
-[ext_resource path="res://addons/godot-xr-avatar/scenes/secondary_grab_area.tscn" type="PackedScene" id=14]
 [ext_resource path="res://weapons/materials/trailmaterial.tres" type="Material" id=15]
 
 [sub_resource type="ArrayMesh" id=1]
@@ -85,10 +84,6 @@ surfaces/0 = {
 "skeleton_aabb": [  ],
 "vertex_count": 57
 }
-
-[sub_resource type="SphereShape" id=9]
-margin = 0.005
-radius = 0.05
 
 [node name="Pickable_Gun_Pistol_Automatic" type="RigidBody"]
 collision_mask = 131073
@@ -207,14 +202,6 @@ visible = false
 mesh = SubResource( 3 )
 material/0 = ExtResource( 1 )
 
-[node name="secondary_grab_area" parent="." instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.152936, 0.0838316 )
-
-[node name="CollisionShape" parent="secondary_grab_area" index="0"]
-shape = SubResource( 9 )
-
 [connection signal="timeout" from="ShotTimer" to="." method="_on_ShotTimer_timeout"]
 [connection signal="has_dropped" from="Mag_Zone" to="." method="_on_Mag_Zone_has_dropped"]
 [connection signal="has_picked_up" from="Mag_Zone" to="." method="_on_Mag_Zone_has_picked_up"]
-
-[editable path="secondary_grab_area"]

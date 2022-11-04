@@ -1,6 +1,9 @@
-class_name Function_Pickup_Avatar_Precise_Throwing, "res://addons/godot-xr-tools/editor/icons/XRToolsFunction.svg"
+class_name Function_Pickup_Avatar, "res://addons/godot-xr-tools/editor/icons/XRToolsFunction.svg"
 extends Spatial
 
+## This node can be used to directly attach the function pickup to an avatar bone instead of being a 
+## child of a controller.  This allows the pickup to be more "sticky" to the avatar hand when using IK, 
+## instead of "floaty" when it is attached to a controller transform.
 
 ## Signal emitted when the pickup picks something up
 signal has_picked_up(what)
@@ -64,23 +67,10 @@ export var impulse_factor: float = 1.0
 ## Throw velocity averaging
 export var velocity_samples: int = 5
 
-## Variables for using precising throwing, default false
-export var use_precise_aiming : bool = false setget _set_precise_aiming
-
-## Precise aiming distance - should be realistic based on the game and room size (if any) player is in - setting too high vs. environment will break physics
-export var precise_aiming_distance : float = 10.0 setget _set_precise_aiming_distance
-
-## Set to the other hand's controller
-export (NodePath) var aiming_controller_nodepath = null
-
-## Button player will press to activate aiming raycast and override normal throwing as long as held 
-export (Buttons) var precise_aim_activate_button_id = Buttons.VR_BUTTON_BY
 
 ## Set nodes 
 onready var _controller : ARVRController = get_node(grabbing_controller_nodepath)
-onready var aiming_controller : ARVRController = get_node(aiming_controller_nodepath)
-onready var aiming_raycast : RayCast = $AimingRaycast
-onready var aiming_target : MeshInstance = $Aiming_Target
+
 
 # Public fields
 var closest_object: Spatial = null
@@ -95,13 +85,6 @@ var _grab_area: Area
 var _grab_collision: CollisionShape
 var _ranged_area: Area
 var _ranged_collision: CollisionShape
-var _avatar_left_hand_target : NodePath 
-var _avatar_right_hand_target : NodePath
-var _skeleton_ik_nodes_set : bool = false
-#var _controller: ARVRController
-
-#Private field for precise aiming to hold last object's node for potential future use
-var _last_object_held : Spatial = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -110,9 +93,6 @@ func _ready():
 	if Engine.editor_hint:
 		return
 
-	#_controller = get_parent()
-	aiming_raycast.cast_to = Vector3(0,0,-precise_aiming_distance)
-	
 	# Create the grab collision shape
 	_grab_collision = CollisionShape.new()
 	_grab_collision.set_name("GrabCollisionShape")
@@ -164,12 +144,6 @@ func _process(delta):
 	if !_controller.get_is_active():
 		return
 
-	# cache original skeletonIK nodes for use in re-setting later
-	if _skeleton_ik_nodes_set == false:
-		_avatar_left_hand_target = get_parent().get_parent().get_node("SkeletonIKL").get_target_node()
-		_avatar_right_hand_target = get_parent().get_parent().get_node("SkeletonIKR").get_target_node()
-		_skeleton_ik_nodes_set = true
-
 	# Calculate average velocity
 	if is_instance_valid(picked_up_object) and picked_up_object.is_picked_up():
 		# Average velocity of picked up object
@@ -179,20 +153,6 @@ func _process(delta):
 		# Average velocity of this pickup
 		_velocity_averager.add_transform(delta, global_transform)
 
-	if use_precise_aiming == true and _controller.is_button_pressed(precise_aim_activate_button_id):
-		aiming_raycast.global_transform = aiming_controller.global_transform.orthonormalized()
-		aiming_raycast.enabled = true
-		if aiming_raycast.is_colliding():
-			aiming_target.global_transform.origin  = aiming_raycast.get_collision_point()
-			aiming_target.global_transform = aiming_target.global_transform.orthonormalized()
-			aiming_target.visible = true
-		else:
-			aiming_target.visible = false	
-	
-	else:
-		aiming_raycast.enabled = false
-		aiming_target.visible = false
-		
 	_update_closest_object()
 
 
@@ -230,16 +190,6 @@ func _set_ranged_collision_mask(var new_value: int) -> void:
 	if is_inside_tree() and _ranged_collision:
 		_ranged_collision.collision_mask = new_value
 
-
-# Called when the toggle for precise aiming has been modified
-func _set_precise_aiming(var new_value : bool) -> void:
-	use_precise_aiming = new_value
-	
-# Called to enter a new precise aiming distance; this could be used for transitions between closed corridor and open world scenes for instance	
-func _set_precise_aiming_distance(var new_value : float) -> void:
-	precise_aiming_distance = new_value
-	aiming_raycast.cast_to = Vector3(0,0,-precise_aiming_distance)
-	
 	
 # Update the colliders geometry
 func _update_colliders() -> void:
@@ -361,45 +311,15 @@ func _get_closest_ranged() -> Spatial:
 func drop_object() -> void:
 	if not is_instance_valid(picked_up_object):
 		return
-	var secondary_grab_area = picked_up_object.find_node("secondary_grab_area")
-	if secondary_grab_area != null:
-		secondary_grab_area.release()
-		secondary_grab_area.disconnect("secondary_grab_area_grabbed", self, "_on_secondary_grab_area_grabbed")
-		secondary_grab_area.disconnect("secondary_grab_area_released", self, "_on_secondary_grab_area_released")
 	
-	#Default function pickup behavior
-	if use_precise_aiming == false or (use_precise_aiming == true and !_controller.is_button_pressed(precise_aim_activate_button_id)): # let go of this object
-		picked_up_object.let_go(
-			_velocity_averager.linear_velocity() * impulse_factor,
-			_velocity_averager.angular_velocity())
-		picked_up_object = null
-		emit_signal("has_dropped")
-	
-	#Precise aiming pickup and throw behavior - if hold down activate button while gripping object, and then release grip with minimal velocity, directly throw to target
-	elif use_precise_aiming == true and _controller.is_button_pressed(precise_aim_activate_button_id) and (_velocity_averager.linear_velocity().x > .25 or _velocity_averager.linear_velocity().y > .25 or _velocity_averager.linear_velocity().z > .25):
-		if aiming_raycast.is_colliding():
-			var velocity_to_target = aiming_raycast.get_collision_point() - picked_up_object.global_transform.origin
-			picked_up_object.let_go(velocity_to_target * precise_aiming_distance, Vector3(0,0,0))
-			picked_up_object = null
-			emit_signal("has_dropped")
-		
-		#if not aiming raycast is not colliding, revert to normal function_pickup throwing behavior when grip released
-		else:
-			#picked_up_object.let_go(Vector3(0,0,0), Vector3(0,0,0))
-			picked_up_object.let_go(
-				_velocity_averager.linear_velocity() * impulse_factor,
-				_velocity_averager.angular_velocity())
-			picked_up_object = null
-			emit_signal("has_dropped")
-	
-	#In any other fringe cases, revert to default throwing behavior		
-	else:
-		picked_up_object.let_go(
-			_velocity_averager.linear_velocity() * impulse_factor,
-			_velocity_averager.angular_velocity())
-		picked_up_object = null
-		emit_signal("has_dropped")
 
+	picked_up_object.let_go(
+		_velocity_averager.linear_velocity() * impulse_factor,
+		_velocity_averager.angular_velocity())
+	picked_up_object = null
+	emit_signal("has_dropped")
+	
+	
 func _pick_up_object(target: Spatial) -> void:
 	# check if already holding an object
 	if is_instance_valid(picked_up_object):
@@ -426,12 +346,8 @@ func _pick_up_object(target: Spatial) -> void:
 
 	# If object picked up then emit signal
 	if is_instance_valid(picked_up_object):
-		_last_object_held = picked_up_object
 		emit_signal("has_picked_up", picked_up_object)
 
-	if picked_up_object.find_node("secondary_grab_area"):
-		picked_up_object.find_node("secondary_grab_area").connect("secondary_grab_area_grabbed", self, "_on_secondary_grab_area_grabbed")
-		picked_up_object.find_node("secondary_grab_area").connect("secondary_grab_area_released", self, "_on_secondary_grab_area_released")
 
 func _on_button_pressed(p_button) -> void:
 	if p_button == pickup_button_id:
@@ -448,19 +364,3 @@ func _on_button_release(p_button) -> void:
 	if p_button == pickup_button_id:
 		if is_instance_valid(picked_up_object) and picked_up_object.press_to_hold:
 			drop_object()
-
-func _on_secondary_grab_area_grabbed(grab_area, grip_point, controller):
-	if controller.name.matchn("*left*"):
-		get_parent().get_parent().get_node("SkeletonIKL").set_target_node(grip_point.get_path())
-		get_parent().get_parent().get_node("SkeletonIKL").set_magnet_position(Vector3(15,-5,-10))
-	elif controller.name.matchn("*right*"):
-		get_parent().get_parent().get_node("SkeletonIKR").set_target_node(grip_point.get_path())
-		get_parent().get_parent().get_node("SkeletonIKR").set_magnet_position(Vector3(-15,-5,-10))
-
-func _on_secondary_grab_area_released(grab_area, grip_point, controller):
-	if controller.name.matchn("*left*"):
-		get_parent().get_parent().get_node("SkeletonIKL").set_target_node(_avatar_left_hand_target)
-		get_parent().get_parent().get_node("SkeletonIKL").set_magnet_position(Vector3(3,-5,-10))
-	elif controller.name.matchn("*right*"):
-		get_parent().get_parent().get_node("SkeletonIKR").set_target_node(_avatar_right_hand_target)
-		get_parent().get_parent().get_node("SkeletonIKR").set_magnet_position(Vector3(-3,-5,-10))

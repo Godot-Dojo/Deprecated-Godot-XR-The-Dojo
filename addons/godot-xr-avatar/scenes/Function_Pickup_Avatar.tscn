@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar.gd" type="Script" id=2]
+
+[node name="Function_Pickup" type="Spatial"]
+script = ExtResource( 2 )

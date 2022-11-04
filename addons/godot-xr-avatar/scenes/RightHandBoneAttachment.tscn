@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar_Precise_Throwing.gd" type="Script" id=1]
-[ext_resource path="res://addons/godot-xr-avatar/scenes/Function_Pickup_Avatar_Precise_Throwing.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/godot-xr-avatar/scripts/Function_Pickup_Avatar.gd" type="Script" id=1]
+[ext_resource path="res://addons/godot-xr-avatar/scenes/Function_Pickup_Avatar.tscn" type="PackedScene" id=2]
+
 
 [node name="RightHandBoneAttachment" type="BoneAttachment"]
 transform = Transform( 0.00442439, -0.344135, 0.93891, 0.881677, -0.441675, -0.16604, 0.471833, 0.828548, 0.301461, -0.523546, 1.14262, 0.218 )
