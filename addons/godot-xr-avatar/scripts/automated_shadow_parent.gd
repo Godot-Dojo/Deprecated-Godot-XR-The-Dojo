@@ -332,22 +332,11 @@ func _ready():
 	right_target_transform.rotation_degrees.y = right_foot.rotation_degrees.y + $FPController/avatar/Armature/Skeleton.rotation_degrees.y
 	right_target_transform.rotation_degrees.z = right_foot.rotation_degrees.z + + $FPController/avatar/Armature/Skeleton.rotation_degrees.z
 	
-	
 	#Set skeleton targets to the automatically generated target nodes
-	if player_left_controller_path != null:
-		SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/" + left_hand.name + "/left_target"))
-	else:
-		print("Left controller path not found, assuming just using hand node.")
-		SkeletonIKL.set_target_node(NodePath("../../../../" + left_hand.name + "/left_target"))
-	
-	if player_right_controller_path != null:
-		SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/" + right_hand.name + "/right_target"))
-	else:
-		print("Right controller path not found, assuming just using hand node.")
-		SkeletonIKR.set_target_node(NodePath("../../../../" + right_hand.name + "/right_target"))
-	
-	SkeletonIKLegL.set_target_node(NodePath("../../../LL_c/LL_t"))
-	SkeletonIKLegR.set_target_node(NodePath("../../../RL_c/Rl_t"))
+	SkeletonIKL.set_target_node(left_hand_target.get_path())
+	SkeletonIKR.set_target_node(right_hand_target.get_path())
+	SkeletonIKLegL.set_target_node(left_target_transform.get_path())
+	SkeletonIKLegR.set_target_node(right_target_transform.get_path())
 	
 	#set other used variables
 	RL_dB = left_target.transform.basis
@@ -366,8 +355,6 @@ func _ready():
 	Raycast_R.enabled = true
 	Raycast_R.cast_to = Vector3(0,-4,0)
 	
-	
-	
 	#set shadow avatar node transforms
 	if player_left_controller_path != null:
 		$FPController/LeftHandController.transform = get_left_controller_transform()
@@ -385,7 +372,6 @@ func _ready():
 	SkeletonIKR.start()
 	SkeletonIKLegL.start()
 	SkeletonIKLegR.start()
-	
 	
 	#if player chose to use LipSync in the export variables, create LipSync node
 	if use_automated_lipsync == true:

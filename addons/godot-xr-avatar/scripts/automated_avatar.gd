@@ -317,22 +317,11 @@ func _ready():
 	right_target_transform.rotation_degrees.y = right_foot.rotation_degrees.y + $Armature/Skeleton.rotation_degrees.y
 	right_target_transform.rotation_degrees.z = right_foot.rotation_degrees.z + + $Armature/Skeleton.rotation_degrees.z
 	
-	
 	#Set skeleton targets to the automatically generated target nodes
-	if left_controller_path != null:
-		SkeletonIKL.set_target_node(NodePath("../../../../" + left_controller.name + "/" + left_hand.name + "/left_target"))
-	else:
-		print("Left controller path not found, assuming just using hand node.")
-		SkeletonIKL.set_target_node(NodePath("../../../../" + left_hand.name + "/left_target"))
-	
-	if right_controller_path != null:
-		SkeletonIKR.set_target_node(NodePath("../../../../" + right_controller.name + "/" + right_hand.name + "/right_target"))
-	else:
-		print("Right controller path not found, assuming just using hand node.")
-		SkeletonIKR.set_target_node(NodePath("../../../../" + right_hand.name + "/right_target"))
-	
-	SkeletonIKLegL.set_target_node(NodePath("../../../LL_c/LL_t"))
-	SkeletonIKLegR.set_target_node(NodePath("../../../RL_c/Rl_t"))
+	SkeletonIKL.set_target_node(left_hand_target.get_path())
+	SkeletonIKR.set_target_node(right_hand_target.get_path())
+	SkeletonIKLegL.set_target_node(left_target_transform.get_path())
+	SkeletonIKLegR.set_target_node(right_target_transform.get_path())
 	
 	#set other used variables in IK
 	RL_dB = left_target.transform.basis
@@ -423,7 +412,7 @@ func _ready():
 	# Calculate the body direction (in origin-space) from the head forward direction
 	body_direction = Plane.PLANE_XZ.project(arvrcamera.transform.basis.z).normalized()
 
-		
+
 #function use to place avatar feet on surfaces procedurally
 func update_ik_anim(target: Spatial, raycast: RayCast, bone_attach: BoneAttachment, d_b: Basis, avatar_height: float, hit_offset: float) -> void:
 	var bone_pos = bone_attach.global_transform.origin
